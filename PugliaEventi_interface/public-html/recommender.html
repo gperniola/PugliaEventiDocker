@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta name="description" content="Evento -Event Html Template">
+    <meta name="keywords" content="Evento , Event , Html, Template">
+    <meta name="author" content="ColorLib">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- ========== Title ========== -->
+    <title> Suggerimenti - Recommender Html Template</title>
+    <!-- ========== Favicon Ico ========== -->
+    <!--<link rel="icon" href="fav.ico">-->
+    <!-- ========== STYLESHEETS ========== -->
+    <!-- Bootstrap CSS -->
+    <!--<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap2-toggle.min.css" rel="stylesheet">-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts Icon CSS -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/et-line.css" rel="stylesheet">
+    <link href="assets/css/ionicons.min.css" rel="stylesheet">
+    <!-- Carousel CSS -->
+    <link href="assets/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="assets/css/owl.theme.default.min.css" rel="stylesheet">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <!-- Custom styles for this template -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+    
+    <link href="assets/css/spinner.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="loader">
+    <div class="loader-outter"></div>
+    <div class="loader-inner"></div>
+</div>
+
+<!--header start here -->
+<header class="header navbar fixed-top navbar-expand-md">
+    <div class="container">
+        <a class="navbar-brand logo" href="#">
+            <img src="assets/img/logo.png" alt="Evento"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#headernav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="lnr lnr-text-align-right"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-sm-row-reverse" id="headernav">
+            <ul class=" nav navbar-nav menu">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="profile.html" >Personal Page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="events.html" >Eventi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="places.html" >Luoghi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#" >Suggerimenti</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!--header end here-->
+
+<!--page title section-->
+<section class="inner_cover parallax-window" data-parallax="scroll" data-image-src="assets/img/bg/bg-img.png">
+    <div class="overlay_dark"></div>
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12">
+                <div class="inner_cover_content">
+                    <h3>
+                       Eventi suggeriti per te!
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="breadcrumbs">
+            <ul>
+                <li><a href="#">Home</a>  |   </li>
+                <li><span>Suggerimenti</span></li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--page title section end-->
+
+<!--events section -->
+<section class="pt100 pb100">
+    <div class="container">
+    	<div class="border border-danger" style="margin-top:5px; margin-bottom:15px;"></div>
+    	<div>
+  			<h5>Filtri aggiuntivi per i suggerimenti</h5>
+  			<form>
+				<div class="form-group form-inline">
+					<label for="comune" class="col-sm-2 col-form-label">Città in cui cercare </label>
+					<div class="col-sm-4"><input type="text" class="form-control" id="comune" name="comune"  nome ="comune" /></div>
+				</div>
+				<div class="form-group form-inline">
+					<label for="slider" class="col-sm-2 col-form-label">Raggio di ricerca </label>
+					<div class="col-sm-4"><span id="slider" style="width:100px;display:inline-block"></span>&nbsp;&nbsp;&nbsp;&nbsp;<strong><span id="slider-value">150</span>&nbsp;km</strong></div><div class="col-sm-5"></div>
+				</div>
+				<div class="form-group form-inline">
+					<label for="sliderMeteo" class="col-sm-2 col-form-label">Condizioni meteo </label>
+					<div class="col-sm-4"><span id="sliderMeteo" style="width:100px;display:inline-block"></span>&nbsp;&nbsp;&nbsp;&nbsp;<strong><span id="sliderMeteo-label">Qualsiasi</span></strong><span class="d-none" id="sliderMeteo-value">0</span></div>
+				</div>
+				<div class="form-group form-inline">
+  					<label class="form-check-label col-sm-4" for="checkNoMeteoData">Mostra eventi con previsioni non disponibili</label>
+  					<input class="form-check-input" type="checkbox" value="" id="checkNoMeteoData" checked>	
+				</div>
+  				<div class="form-group form-inline">
+	    			<label for="emotion" class="col-sm-2 col-form-label">Stato emotivo </label>
+	    			<div class="col-sm-2"><select class="form-control " id="emotion">
+		      			<option value="joyful">Felice</option>
+		      			<option value ="sad">Triste</option>
+		      			<option value="angry">Arrabbiato</option>
+	    			</select></div>
+					<label for="companionship" class="col-sm-2 col-form-label">Numero di persone </label>
+	    			<div class="col-sm-2"><select class="form-control" id="companionship">
+		      			<option value="withFriends">In compagnia</option>
+		      			<option value="alone">Solo</option>
+	    			</select></div>
+	    		</div>
+	    		<div class="form-group">
+	    			<a  class=" btn btn-primary btn-rounded mb-2" style="color:white;" onclick="loadRecommenders();">Cerca suggerimenti</a>
+	    		</div>
+  			</form>
+		</div>
+		
+    	<div class="border border-danger" style="margin-top:5px; margin-bottom:15px;"></div>
+    	<div id ="waiting"></div>
+    	
+		<div class="row">
+        	<div id ="eventiContainer1" class="col-sm"></div>
+        	<div id ="eventiContainer2" class="col-sm"></div>
+        </div>
+		
+	</div>
+	
+</section>
+<!--event section end -->
+
+<!--footer start -->
+<footer>
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-md-4 col-12">
+                <div class="footer_box">
+                    <div class="footer_header">
+                        <div class="footer_logo">
+                            <img src="assets/img/logo.png" alt="evento">
+                        </div>
+                    </div>
+                    <div class="footer_box_body">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rhoncus massa nec gravida tempus. Integer iaculis in aazzzCurabitur a pulvinar nunc. Maecenas laoreet finibus lectus, at volutpat ligula euismod.
+                        </p>
+                        <ul class="footer_social">
+                            <li>
+                                <a href="#"><i class="ion-social-pinterest"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="ion-social-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="ion-social-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="ion-social-dribbble"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="ion-social-instagram"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="footer_box">
+                    <div class="footer_header">
+                        <h4 class="footer_title">
+                            instagram
+                        </h4>
+                    </div>
+                    <div class="footer_box_body">
+                        <ul class="instagram_list">
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/c1.png" alt="instagram">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/c2.png" alt="instagram">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/c3.png" alt="instagram">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/c3.png" alt="instagram">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/c2.png" alt="instagram">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/c1.png" alt="instagram">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="footer_box">
+                    <div class="footer_header">
+                        <h4 class="footer_title">
+                            subscribe to our newsletter
+                        </h4>
+                    </div>
+                    <div class="footer_box_body">
+                        <div class="newsletter_form">
+                            <input type="email" class="form-control" placeholder="E-Mail here">
+                            <button class="btn btn-rounded btn-block btn-primary">SUBSCRIBE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="copyright_footer">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-12">
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            </div>
+            <div class="col-12 col-md-6 ">
+                <ul class="footer_menu">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Speakers</a>
+                    </li>
+                    <li>
+                        <a href="#">Events</a>
+                    </li>
+                    <li>
+                        <a href="#">News</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--footer end -->
+
+<!-- jquery -->
+<script src="assets/js/jquery.min.js"></script>
+<!-- bootstrap -->
+<script src="assets/js/popper.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/waypoints.min.js"></script>
+<!--slick carousel -->
+<script src="assets/js/owl.carousel.min.js"></script>
+<!--parallax -->
+<script src="assets/js/parallax.min.js"></script>
+<!--Counter up -->
+<script src="assets/js/jquery.counterup.min.js"></script>
+<!--Counter down -->
+<script src="assets/js/jquery.countdown.min.js"></script>
+<!-- WOW JS -->
+<script src="assets/js/wow.min.js"></script>
+<!-- Custom js -->
+<script src="assets/js/custom/main.js"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.js"></script>
+
+<!-- Date picker -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<!-- Custom js - Functions and constants -->
+<script src="assets/js/custom/constants.js"></script>
+<script src="assets/js/custom/utils.js"></script> 
+
+<script>
+console.log("starting getuserconfig call...");
+$.ajax({
+    type: 'post',
+    url: DJANGO_API_ADDR+'getUserConfig/',
+    data:{
+    	'username': sessionStorage.getItem('userPugliaEvent'),
+    },
+    success: function (response) {
+    	console.log("response received");
+    	firstConfigDone = response.first_config_done;
+    	if(!firstConfigDone)
+    		window.location.replace("places.html");
+    },
+    error: function(e) {
+      var je = JSON.parse(e.responseText);
+       alert("ko");
+    }
+});
+
+$(document).ready(function(){
+	document.getElementById("comune").value = sessionStorage.getItem('userLocation');	  
+});
+
+
+$("#slider").slider(
+{
+	value:150,
+	min: 0,
+	max: 200,
+	step: 10,
+ 	slide: function( event, ui ) {
+    	$( "#slider-value" ).html( ui.value );
+ 	}
+});
+
+$("#sliderMeteo").slider(
+		{
+            value:0,
+            min: 0,
+            max: 4,
+            step: 1,
+            slide: function( event, ui ) {
+            	var descr = "";
+            	if (ui.value == 0) descr = "Qualsiasi";
+            	if (ui.value == 1) descr = "Pioggia o migliore";
+            	if (ui.value == 2) descr = "Nuvoloso o migliore";
+            	if (ui.value == 3) descr = "Sereno o poco nuvoloso";
+            	if (ui.value == 4) descr = "Solo sereno";
+                $( "#sliderMeteo-label" ).html(descr);
+                $( "#sliderMeteo-value" ).html(ui.value);
+            }
+		}
+);
+
+ 
+ function loadRecommenders(){
+	 var noWeatherData = 0;
+		if (document.getElementById("checkNoMeteoData").checked) noWeatherData = 1;  
+  	document.getElementById("waiting").innerHTML ='<div style="text-align:center;"><div class="lds-dual-ring"></div><div><h5>Stiamo processando le tue informazioni. Potrebbe volerci qualche minuto.</h5></div></div>';
+  	document.getElementById("eventiContainer1").innerHTML ="";
+  	document.getElementById("eventiContainer2").innerHTML ="";
+  	
+  	console.log("loading Recommenders...");
+   
+	var messages = 10;
+	   $.ajax({	////////// FIRST AJAX
+			 type: 'post',
+			 //getting wordcloud of interests
+		     //url: MYRROR_API_ADDR+'api/stats/interests/wordcloud',
+		     
+		     //getting twitter messages
+		     url: MYRROR_API_ADDR+'api/twitter/user_timeline',
+		     contentType: "application/json",
+		     
+		     /*data: { 
+		    	    db: sessionStorage.getItem('userPugliaEvent'), 
+		    	    source: "message_tag"
+		   			},*/
+		   	 data:JSON.stringify({messages}),
+		     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
+		     success: function (response) {
+		    	 var myjson = JSON.stringify(response, null, 2);
+		    	 var info = JSON.parse(myjson);    
+		    	 
+		    	 /*var op = info.map(function(item) {
+		    		  return item.value;*/
+		    	var op = info.messages.map(function(item) {
+		    		  return item.text;
+		    		});
+		    	 //console.log(op);
+		    	 //myrror_getOpinionMining(op.slice(0,10));
+		    	 
+		    	 var messages = op.slice(0,10);
+		    	 
+		    	/*** DEBUG ***/
+		    	$.ajax({	////////// SECOND AJAX
+		  			 type: 'post',
+		  		     url: 'http://90.147.170.25:8080/PersonalityEmpathy/rest/UserService/opinionMining',
+		  		     contentType: "application/json",
+		  		     data: JSON.stringify({messages}),
+		  	
+		  		     success: function (response) {
+							var payload = createPayloadData(response, noWeatherData);
+							//var payload = createPayloadData(JSON.parse('{"results":{"entry":[{"key":"politics_joy","value":"1"},{"key":"sport_surprise","value":"1"},{"key":"travel_surprise","value":"1"},{"key":"travel_joy","value":"1"}]}}'), noWeatherData);
+	
+			  		    	$.ajax({	//////////// THIRD AJAX
+			  		        	type: 'post',
+			  		          	//url: 'http://127.0.0.1:8080/PugliaEventi/rest/services/emotionRec',
+			  		          	url: DJANGO_API_ADDR+'RuleBasedRecommender/',
+			  		          	contentType: "application/json",
+			  		          	data: payload,
+			  		          	success: function (response) {
+			  		          		//**********************************************
+			  		          		//*********** DO STUFF HERE ********************
+			  		          		//**********************************************
+				  		    	 	//document.getElementById("emotionRecommenderLoading").innerHTML = JSON.stringify(response);
+			  		          		//var element = document.getElementById("waiting");
+									//element.parentNode.removeChild(element);
+									document.getElementById("waiting").innerHTML = "";
+									document.getElementById("eventiContainer1").innerHTML = "<h3>Lista 1 (rule-based)</h3>";
+			  		          		//document.getElementById("waiting").innerHTML="";
+				  		    	 	for (var i = 0; i < Math.min(10, response.length); i++){
+				  		              //var obj = response[i];
+				  		              printEventi(response[i],i,i+0, "eventiContainer1");
+				  		            }
+				  		            //setMore();
+			  		          	}
+			  		    	}) //close third ajax call
+			  		    	
+			  		    	
+			  		    	$.ajax({	//////////// Python call
+			  		        	type: 'post',
+			  		          	url: DJANGO_API_ADDR+'FindEventRecommendations/',
+			  		          	//contentType: "application/json",
+			  		          	data: {
+			  		          		"username":sessionStorage.getItem('userPugliaEvent'),
+			  		          		"location":document.getElementById("comune").value,
+			  		          		"emotion":document.getElementById("emotion").value,
+			  		          		"companionship":document.getElementById("companionship").value,
+			  		          		"range":document.getElementById("slider-value").innerHTML,
+			  		          		"weather": document.getElementById("sliderMeteo-value").innerHTML,
+			  		        		"no-weather-data": noWeatherData
+			  		          	},
+			  		          	
+			  	         	success: function(response){
+			  	         		document.getElementById("eventiContainer2").innerHTML = "<h3>Lista 2 (LightFM)</h3>";
+			  	         		//document.getElementById("eventiContainer2").innerHTML=response;
+			  	         		for (var i = 0; i < Math.min(10, response.length); i++){
+				  		              printEventi(response[i],i,i+10, "eventiContainer2");
+				  		            }
+			  	         		setMore();
+				  		            
+			  	             }
+			  		    	}) //close python
+			  		    	
+		  		    	 	     
+		  		     /********DEBUG*/
+		  		     },
+		  		     error: function(e) {
+		  		       var je = JSON.parse(e.responseText);
+		  		       alert("failure opinionMining");
+		  		       //return false;
+		  		     }
+		    	   	}) //close second ajax call
+		    	   	
+		    	   	
+		    	 
+		    },
+		   	error: function(e) {
+	       var je = JSON.parse(e.responseText);
+	       alert("failure getInterests");
+	       //return false;
+	    }
+	  })  //close first ajax call  
+  
+  }
+
+</script>
+
+</body>
+</html>

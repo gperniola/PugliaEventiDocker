@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+ 	
+ 	<!-- Bootstrap CSS -->
+    <!--<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap2-toggle.min.css" rel="stylesheet">-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts Icon CSS -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/et-line.css" rel="stylesheet">
+    <link href="assets/css/ionicons.min.css" rel="stylesheet">
+    <!-- Carousel CSS -->
+    <link href="assets/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="assets/css/owl.theme.default.min.css" rel="stylesheet">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <!-- Custom styles for this template -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+    
+    <link href="assets/css/spinner.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        
+
+  <script>
+  function on() {
+      document.getElementById("overlay").style.display = "block";
+      document.getElementById("overlay").style.zIndex = "1031";
+  }
+
+  function off() {
+      document.getElementById("overlay").style.display = "none";
+      document.getElementById("overlay").style.zIndex = "1";
+  }
+
+  function onIscr() {
+      document.getElementById("overlayIscr").style.display = "block";
+      document.getElementById("overlayIscr").style.zIndex = "1031";
+  }
+
+  function offIscr() {
+      document.getElementById("overlayIscr").style.display = "none";
+      document.getElementById("overlayIscr").style.zIndex = "1";
+  }
+  </script>
+
+
+
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta name="description" content="Evento -Event Html Template">
+    <meta name="keywords" content="Evento , Event , Html, Template">
+    <meta name="author" content="ColorLib">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- ========== Title ========== -->
+    <title> Evento - Event Html Template</title>
+    <!-- ========== Favicon Ico ========== -->
+    <!--<link rel="icon" href="fav.ico">-->
+    <!-- ========== STYLESHEETS ========== -->
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts Icon CSS -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/et-line.css" rel="stylesheet">
+    <link href="assets/css/ionicons.min.css" rel="stylesheet">
+    <!-- Carousel CSS -->
+    <link href="assets/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="assets/css/owl.theme.default.min.css" rel="stylesheet">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <!-- Custom styles for this template -->
+    <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body>
+<div class="loader">
+    <div class="loader-outter"></div>
+    <div class="loader-inner"></div>
+</div>
+
+<!-- Login Modal-->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Effettua il login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="login" name = "login" method ='post' enctype='multipart/form-data'>
+      	<div class="modal-body" >
+      	<div style="text-align:center;" class="d-none" id="loginSpinner"><div class="lds-dual-ring"></div><div><h5>Accesso in corso..</h5></div></div>
+      	<div class="d-none" id="loginForm">
+		<div class="form-group form-inline">
+			<label for="email" class="col-form-label col-sm-3">Email</label>
+			<input type="email" class="form-control col-sm-8" id="email" name="email"  nome ="email" required>
+		</div>
+		<div class="form-group form-inline">
+			<label for="password" class="col-form-label col-sm-3">Password</label>
+			<input type="password" class="form-control col-sm-8" id="password" name="password"  nome ="password" required>
+		</div>
+		<div class="form-group form-inline">
+			<input class=" btn btn-primary btn-rounded col-sm-4" type="submit" name="submitEntra" id="submitEntra" value="Entra"/>
+			<div class = "col-sm-8" id ="loginRes" style="color:red;"></div>
+		</div>
+		</div>	
+		</div>
+		<div class="modal-footer">
+				<div id="loginFooter" class="d-none"><a href= # data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#iscrModal">Non sei ancora iscritto? <b>Iscriviti ora!</b></a></div>	
+		</div>
+    </form>  
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Iscrizione Modal-->
+<div class="modal fade" id="iscrModal" tabindex="-1" role="dialog" aria-labelledby="iscrModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="iscrModalLabel">Iscriviti alla piattaforma!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="signup" name = "signup" method ='post' enctype='multipart/form-data'>
+      	<div class="modal-body" id="iscrModalBody">
+      	<div style="text-align:center;"><div class="lds-dual-ring d-none" id="iscrSpinner"></div><div><h5>Accesso in corso..</h5></div></div>
+      	<div class="d-none" id="iscrForm">
+      	<div class="form-group form-inline">
+			<label for="usernameIscr" class="col-form-label col-sm-4">Username</label>
+			<input type="text" class="form-control col-sm-8" id="usernameIscr" name="username"  nome ="username" placeholder="nome utente" required>
+		</div>
+		<div class="form-group form-inline">
+			<label for="emailIscr" class="col-form-label col-sm-4">Email</label>
+			<input type="email" class="form-control col-sm-8" id="emailIscr" name="email"  nome ="email" placeholder="nome@dominio.com" required>
+		</div>
+		<div class="form-group form-inline">
+			<label for="passwordIscr" class="col-form-label col-sm-4">Password</label>
+			<input type="password" class="form-control col-sm-8" id="passwordIscr" name="password"  nome ="password" required>
+		</div>
+		<div class="form-group form-inline">
+			<label for="passwordIscr2" class="col-form-label col-sm-4">Re-Password</label>
+			<input type="password" class="form-control col-sm-8" id="passwordIscr2" name="password2"  nome ="password2" required>
+		</div>
+		<div class="form-group form-inline">
+			<label for="comune" class="col-form-label col-sm-4">Residenza</label>
+			<input type="text" class="form-control col-sm-8" id="comune" name="comune"  nome ="comune" required placeholder="comune di residenza">
+		</div>
+		<div class="form-group form-inline">
+			<input class=" btn btn-primary btn-rounded col-sm-4" type="submit" name="submitIscr" id="submitIscr" value="Iscriviti"/>
+			<div class = "col-sm-8" id ="signupRes" style="color:red;"></div>
+		</div>
+		</div>
+		</div>	
+		<div class="modal-footer">
+				<div id="iscrFooter" class="d-none"><a href= # data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#loginModal">Hai già un account? <b>Entra!</b></a></div>	
+		</div>
+    </form>  
+    </div>
+  </div>
+</div>
+
+
+<!--header start here -->
+<header class="header navbar fixed-top navbar-expand-md">
+    <div class="container">
+        <a class="navbar-brand logo" href="#">
+            <img src="assets/img/logo.png" alt="Evento"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#headernav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="lnr lnr-text-align-right"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-sm-row-reverse" id="headernav">
+            <ul class=" nav navbar-nav menu">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#"  data-toggle="modal" data-target="#loginModal">Entra</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " data-toggle="modal" data-target="#iscrModal">Iscriviti</a>
+                </li>
+                <li class="search_btn">
+                    <a  href="#info">
+                       <i class="ion-information-circled"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<!--header end here-->
+
+
+
+<!--cover section slider -->
+<section id="home" class="home-cover">
+    <div class="cover_slider owl-carousel owl-theme">
+        <div class="cover_item" style="background: url('assets/img/bg/slider.png');">
+             <div class="slider_content">
+                <div class="slider-content-inner">
+                    <div class="container">
+                        <div class="slider-content-center">
+                          <h3 class="cover-title">
+                              Prepare yourself for living Apulia
+                          </h3>
+                          <strong class="cover-xl-text" style ="font-size:1w;">feeling at home!</strong>
+                          <p class="cover-date">
+                              Eventi, attività e luoghi in cui andare con gli amici! <br>
+                              Tutto incentrato sui tuoi interessi
+                          </p>
+                          <a href="#" class=" btn btn-primary btn-rounded"  data-toggle="modal" data-target="#loginModal">
+                              Entra!
+                          </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cover_item" style="background: url('assets/img/bg/slider.png');">
+            <div class="slider_content">
+                <div class="slider-content-inner">
+                    <div class="container">
+                        <div class="slider-content-left">
+                          <h3 class="cover-title">
+                              Prepare yourself for living Apulia
+                          </h3>
+                          <strong class="cover-xl-text" style ="font-size:1w;">feeling at home!</strong>
+                          <p class="cover-date">
+                              Eventi, attività e luoghi in cui andare con gli amici! <br>
+                              Tutto incentrato sui tuoi interessi
+                          </p>
+                          <a href="#" class=" btn btn-primary btn-rounded"  data-toggle="modal" data-target="#loginModal">
+                              Entra!
+                          </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cover_item" style="background: url('assets/img/bg/slider.png');">
+            <div class="slider_content">
+                <div class="slider-content-inner">
+                    <div class="container">
+                        <div class="slider-content-center">
+                          <h3 class="cover-title">
+                              Prepare yourself for living Apulia
+                          </h3>
+                          <strong class="cover-xl-text" style ="font-size:1w;">feeling at home!</strong>
+                          <p class="cover-date">
+                              Eventi, attività e luoghi in cui andare con gli amici! <br>
+                              Tutto incentrato sui tuoi interessi
+                          </p>
+                          <a href="#" class=" btn btn-primary btn-rounded"  data-toggle="modal" data-target="#loginModal">
+                              Entra!
+                          </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cover_nav">
+        <ul class="cover_dots">
+            <li class="active" data="0"><span>1</span></li>
+            <li  data="1"><span>2</span></li>
+            <li  data="2"><span>3</span></li>
+        </ul>
+    </div>
+</section>
+<!--cover section slider end -->
+
+<!--about the event -->
+<section class="pt100 pb100">
+    <div class="container">
+        <div class="section_title">
+            <h3 class="title">
+                About the project
+            </h3>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6">
+                <p>
+                    Il progetto mira a rispondere alla necessità di sapere cosa si può fare sul territorio pugliese in manira personalizzata ed efficace!
+                </p>
+            </div>
+            <div class="col-12 col-md-6">
+                <p>
+                    Chiunque si può sentire a casa in puglia partecipando ad eventi sul territorio a cui partecipano le persone del luogo! Noi capiamo cosa ti piace fare e tu scegli dove andare.
+                </p>
+            </div>
+        </div>
+
+        <!--event features-->
+        <div class="row justify-content-center mt30">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="icon_box_one">
+                    <i class="lnr lnr-mic"></i>
+                    <div class="content">
+                        <h4>Eventi e tanto altro</h4>
+                        <p>
+                           Ti proponiamo una serie di eventi in luoghi in cui bere e mangiare da solo o in compagnia in base a come tu preferisci!
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="icon_box_one">
+                    <i class="lnr lnr-rocket"></i>
+                    <div class="content">
+                        <h4>Personalizzazione</h4>
+                        <p>
+                            Capiamo cosa ti interessa dalle interazioni con i social network e ti suggeriamo solo ciò che ti piace!<br><br><br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="icon_box_one">
+                    <i class="lnr lnr-bullhorn"></i>
+                    <div class="content">
+                        <h4>Varietà dei contenuti</h4>
+                        <p>
+                          Ti suggeriamo una grande varietà di eventi, da festival locali ad attività sociali e culturali! Scegli tu cosa vuoi fare nei prossimi giorni!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="icon_box_one">
+                    <i class="lnr lnr-clock"></i>
+                    <div class="content">
+                        <h4>Aggiornati e recenti</h4>
+                        <p>
+                          Tutti gli eventi proposti sono aggiornati e reperiti dal web quotidianamente. Poichè sappiamo che il tuto tempo conta!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--event features end-->
+    </div>
+</section>
+<!--about the event end -->
+
+<!--footer start -->
+<footer>
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-md-4 col-12">
+                <div class="footer_box">
+                  <h4 class="footer_title">
+                     About us
+                  </h4>
+                    <div class="footer_header">
+                        <div style="">
+                            <img src="assets/img/logo.png" alt="evento">
+                        </div>
+                    </div>
+                    <div class="footer_box_body">
+                      <div class="newsletter_form">
+                          Send an email to:<br>
+                          <a href="mailto:marco.polignano@uniba.it">marco.polignano@uniba.it</a>
+                      </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="footer_box">
+                    <div class="footer_header">
+                        <h4 class="footer_title">
+                            Eventi
+                        </h4>
+                    </div>
+                    <div class="footer_box_body">
+                        <ul class="instagram_list">
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/c1.png" alt="instagram">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/c2.png" alt="instagram">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/c3.png" alt="instagram">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/cinema.jpg" alt="instagram">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/bar.jpg" alt="instagram">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/img/cleander/museo.jpg" alt="instagram">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="footer_box">
+                    <div class="footer_header">
+                        <h4 class="footer_title">
+                           Disclamer
+                        </h4>
+                    </div>
+                    <div class="footer_box_body">
+                      <p>
+                        Il progetto ha scopo di ricerca e non commerciale. Tutti i dati raccolti sono stati reperiti da fonti gratuite sul web. I dati degli utnti saranno trattati con il rispetto della più recente norma della privacy, non divulgati ed elaborati automaticamnte da un algoritmo che non mantiene traccia delle vostre identità. Tutti i dati forniti sono solamente utilizzati a fini di personalizzazione dei contenuti proposti e a fini statistici.
+                      </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="copyright_footer">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-12">
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            </div>
+            <div class="col-12 col-md-6 ">
+                <ul class="footer_menu">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Entra</a>
+                    </li>
+                    <li>
+                        <a href="#">Iscriviti</a>
+                    </li>
+                    <li>
+                        <a href="#">Info</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--footer end -->
+
+<!-- jquery -->
+<script src="assets/js/jquery.min.js"></script>
+<!-- bootstrap -->
+<script src="assets/js/popper.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/waypoints.min.js"></script>
+<!--slick carousel -->
+<script src="assets/js/owl.carousel.min.js"></script>
+<!--parallax -->
+<script src="assets/js/parallax.min.js"></script>
+<!--Counter up -->
+<script src="assets/js/jquery.counterup.min.js"></script>
+<!--Counter down -->
+<script src="assets/js/jquery.countdown.min.js"></script>
+<!-- WOW JS -->
+<script src="assets/js/wow.min.js"></script>
+<!-- Custom js -->
+<script src="assets/js/custom/main.js"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.js"></script>
+
+<!-- Date picker -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	
+<!-- Custom js - Functions and constants -->
+<script src="assets/js/custom/constants.js"></script>
+<script src="assets/js/custom/utils.js"></script> 
+
+<script type='text/javascript'>
+$(document).ready(function(){ 
+	$("#loginForm").toggleClass('d-none');
+	$("#iscrForm").toggleClass('d-none');
+	$("#loginFooter").toggleClass('d-none');
+	$("#iscrFooter").toggleClass('d-none');
+});
+
+
+	function toJSONString( form ) {
+		var obj = {};
+		var elements = form.querySelectorAll( "input, select, textarea" );
+		for( var i = 0; i < elements.length; ++i ) {
+			var element = elements[i];
+			var name = element.name;
+			var value = element.value;
+
+			if( name ) {
+				obj[ name ] = value;
+			}
+		}
+
+		return JSON.stringify( obj );
+	}
+		
+  function setcookie(name, value, days)
+  {
+    if (days)
+    {
+      var date = new Date();
+      date.setTime(date.getTime()+days*24*60*60*1000); // ) removed
+      var expires = "; expires=" + date.toGMTString(); // + added
+    }
+    else
+      var expires = "";
+    document.cookie = name+"=" + value+expires + ";path=/"; // + and " added
+  }
+
+$("#login").submit(function(e) {
+			$("#loginSpinner").toggleClass('d-none');
+			$("#loginForm").toggleClass('d-none');
+			$("#loginFooter").toggleClass('d-none');
+  			var json = toJSONString( this );
+                e.preventDefault();
+                var email = document.getElementById('email').value;
+                $.ajax({
+                    type: 'post',
+                    crossDomain: true,
+                    url: MYRROR_API_ADDR+'auth/login',
+                    data: json,
+                    contentType: "application/json",
+                    success: function (response) {
+                    //  var je = JSON.parse(response.responseText);
+
+                      
+                      //---------------------
+                      sessionStorage.clear();
+                      sessionStorage.setItem('tokenPugliaEvent', response.token);
+                      sessionStorage.setItem('userPugliaEvent', response.username);
+                      sessionStorage.setItem('emailPugliaEvent', email);
+                      
+                      $.ajax({	//////////// Python call to get user location
+							url: DJANGO_API_ADDR+'GetUserLocation/',
+		  		        	type: 'POST',
+							crossDomain: true,
+		  		          	contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		  		          	data: {"username": response.username},
+		  	         		success: function(response){
+		                        $("#loginRes").text("Success!");
+		  	         			var loc = response.user_location;
+		  	         			sessionStorage.setItem('userLocation', loc);
+		  	         			getData();
+			                    	                
+		  	             	},
+		                    error: function(e) { //Python backend error
+		                    	$("#loginRes").text("Errore di connessione al backend server. Contattare l'amministratore.");
+		                        $("#loginSpinner").toggleClass('d-none'); $("#loginForm").toggleClass('d-none'); $("#loginFooter").toggleClass('d-none');
+		                    }
+		  		    		}) //close python    	           
+                    },
+                    error: function(e) { //Myrror error
+                      var je = JSON.parse(e.responseText);
+                       $("#loginRes").text(je.message);
+                       $("#loginSpinner").toggleClass('d-none'); $("#loginForm").toggleClass('d-none'); $("#loginFooter").toggleClass('d-none');
+                    }
+                });
+        });
+
+        $("#signup").submit(function(e) {
+        	$("#iscrSpinner").toggleClass('d-none');
+			$("#iscrForm").toggleClass('d-none');
+			$("#iscrFooter").toggleClass('d-none');
+          e.preventDefault();
+          var username = document.getElementById('usernameIscr').value;
+          var email = document.getElementById('emailIscr').value;
+          var password = document.getElementById('passwordIscr').value;
+          var password2 = document.getElementById('passwordIscr2').value;
+          var comune = document.getElementById('comune').value;
+			
+
+          if (password == password2 && username != "" && email !="" && comune != "" && password != ""){
+                        var json = toJSONString( this );
+
+                        $.ajax({
+                            type: 'post',
+                            crossDomain: true,
+                            url: MYRROR_API_ADDR+'auth/signup',
+                            data: json,
+                            contentType: "application/json",
+                            success: function (response) {  
+                              sessionStorage.setItem('tokenPugliaEvent', response.token);
+                              sessionStorage.setItem('userPugliaEvent', username);
+                              sessionStorage.setItem('emailPugliaEvent', email);
+                              $.ajax({	//////////// Python call to add new user
+  			  		        	type: 'post',
+  			  		          	url: DJANGO_API_ADDR+'AddUser/',
+  			  		          	//contentType: "application/json",
+  			  		          	data: {"username": username, "location": comune},
+  			  	         		success: function(response){
+  								//success
+  								$("#signupRes").text("Success!");
+  			  	         		sessionStorage.setItem('userLocation', comune);
+  			  	         		getData();
+  			  	             }, 
+                             error: function(e) {//python backend error
+                                  $("#signupRes").text("Errore di connessione al backend server. Contattare l'amministratore.");
+                                  $("#iscrSpinner").toggleClass('d-none'); $("#iscrForm").toggleClass('d-none'); $("#iscrFooter").toggleClass('d-none');
+                             }
+  			  		    	}) //close python
+                            }, 
+                            error: function(e) {//Myrror error
+                              var je = JSON.parse(e.responseText);
+                               $("#signupRes").text(je.message);
+                               $("#iscrSpinner").toggleClass('d-none'); $("#iscrForm").toggleClass('d-none'); $("#iscrFooter").toggleClass('d-none');
+                            }
+                        });
+                      }else{ //form error
+                        $("#signupRes").text("Errore di iscrizione. Ricontrollare i dati.");
+                        $("#iscrSpinner").toggleClass('d-none'); $("#iscrForm").toggleClass('d-none'); $("#iscrFooter").toggleClass('d-none');
+                      }
+
+                });
+        
+        
+        
+function getData(){
+	var obj={};
+	obj["username"] = sessionStorage.getItem('userPugliaEvent');
+	var json = JSON.stringify(obj)
+	$.ajax({
+		 type: 'post',
+		 crossDomain: true,
+	     url: MYRROR_API_ADDR+'api/user',
+	     contentType: "application/json",
+	     data: json,
+	     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
+	     success: function (response) {
+	    	 sessionStorage.setItem('userData', JSON.stringify(response));
+	    	 document.location.href = "profile.html";  
+	    	 
+	     },
+	     error: function(e) {
+	    	 var je = JSON.parse(e.responseText);
+             $("#signupRes").text(je.message);
+             $("#iscrSpinner").toggleClass('d-none'); $("#iscrForm").toggleClass('d-none'); $("#iscrFooter").toggleClass('d-none');
+	     }
+	});
+	
+	
+}
+        
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+version: '3'
+services:
+    postgres:
+        build:
+            context: ./PugliaEventi_db 
+        ports:
+            - "5432:5432"
+    django:
+        build:
+            context: ./PugliaEventi_recommender
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./PugliaEventi_recommender:/code
+        ports:
+            - "8000:8000"
+        depends_on:
+            - postgres
+    apache:
+        build:
+            context: ./PugliaEventi_interface
+        ports:
+            - "8080:80"
+        volumes:
+            - ./PugliaEventi_interface/public-html:/usr/local/apache2/htdocs/
+        depends_on:
+            - postgres
+            - django
