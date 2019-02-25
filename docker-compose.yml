@@ -25,3 +25,8 @@ services:
         depends_on:
             - postgres
             - django
+    crawler:
+        build:
+            context: ./PugliaEventi_crawler
+        command: tail -F anything
+         
