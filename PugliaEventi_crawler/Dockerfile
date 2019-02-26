@@ -1,21 +1,17 @@
-FROM openjdk:8-jre
+#FROM openjdk:8-jre
+FROM openjdk:8-alpine
 
-COPY crawlerEventi.jar /usr/src/myapp
-WORKDIR /usr/src/myapp
+#RUN mkdir /usr/src/myapp
+#COPY crawlerEventi.jar /usr/src/myapp
+#WORKDIR /usr/src/myapp
 
-RUN apt-get update && apt-get -y install cron
+RUN mkdir app
+COPY crawlerEventi.jar /app
+WORKDIR /app
 
-# Add crontab file in the cron directory
-ADD crontab /etc/cron.d/crawler-cron
+#RUN apt-get update && apt-get -y install cron && apt-get -y install busybox-static
+# copy crontabs for root user
+COPY cronjobs /etc/crontabs/root
 
-# Give execution rights on the cron job
-RUN chmod 0644 /etc/cron.d/crawler-cron
-
-# Apply cron job
-RUN crontab /etc/cron.d/crawler-cron
-
-# Create the log file to be able to run tail
-RUN touch /var/log/cron.log
-
-# Run the command on container startup
-CMD cron && tail -f /var/log/cron.log
+# start crond with log level 8 in foreground, output to stderr
+CMD ["crond", "-f", "-d", "8"]

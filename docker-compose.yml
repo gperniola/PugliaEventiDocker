@@ -25,9 +25,9 @@ services:
         depends_on:
             - postgres
             - django
-    crawler:
-        build:
-            context: ./PugliaEventi_crawler
-        depends_on:
-            - postgres
+    #crawler:
+    #    build:
+    #        context: ./PugliaEventi_crawler
+    #    depends_on:
+    #        - postgres
          
