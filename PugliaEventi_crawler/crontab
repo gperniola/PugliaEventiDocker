@@ -1,0 +1,1 @@
+30 15 * * * java -jar /usr/src/myapp/crawlerEventi.jar >> /var/log/cron.log 2>&1

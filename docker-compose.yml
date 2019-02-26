@@ -28,6 +28,6 @@ services:
     crawler:
         build:
             context: ./PugliaEventi_crawler
-         depends_on:
+        depends_on:
             - postgres
          
