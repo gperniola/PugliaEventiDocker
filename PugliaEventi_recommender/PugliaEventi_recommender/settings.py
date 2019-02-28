@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'PugliaEventi_recommender.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASE_ROUTERS = ['api.dbrouters.PugliaEventiRouter']
+
 
 DATABASES = {
     'default': {
@@ -100,6 +100,7 @@ DATABASES = {
     }
 }
 
+DATABASE_ROUTERS = ['api.dbrouters.PugliaEventiRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

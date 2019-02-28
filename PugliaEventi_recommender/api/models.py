@@ -258,3 +258,37 @@ class PrevisioniEventi(models.Model):
     class Meta:
         managed = False
         db_table = 'previsioni_eventi'
+
+
+
+class Sperimentazione(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(Utente, on_delete=models.DO_NOTHING, blank=False)
+    schema = models.TextField(blank=True, null=True)
+    ordine_lista_a = models.TextField(blank=True, null=True)
+    ordine_lista_b = models.TextField(blank=True, null=True)
+    ordine_lista_c = models.TextField(blank=True, null=True)
+    data_iscr =  models.DateTimeField(blank=True, null=True)
+    data_fine =  models.DateTimeField(blank=True, null=True)
+    test_completato = models.BooleanField(default=False)
+    l1 = models.BooleanField(default=False)
+    l2 = models.BooleanField(default=False)
+    l3 = models.BooleanField(default=False)
+    l4 = models.BooleanField(default=False)
+    l5 = models.BooleanField(default=False)
+    r1 = models.BooleanField(default=False)
+    r2 = models.BooleanField(default=False)
+    r3 = models.BooleanField(default=False)
+    r4 = models.BooleanField(default=False)
+    r5 = models.BooleanField(default=False)
+    p1 = models.BooleanField(default=False)
+    p2 = models.BooleanField(default=False)
+    p3 = models.BooleanField(default=False)
+    p4 = models.BooleanField(default=False)
+    p5 = models.BooleanField(default=False)
+    lista_preferita = models.TextField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'sperimentazione'
+        app_label = 'api'
+        managed = True
