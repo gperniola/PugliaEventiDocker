@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
  	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
- 	
+
  	<!-- Bootstrap CSS -->
     <!--<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap2-toggle.min.css" rel="stylesheet">-->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -18,11 +18,11 @@
     <!-- Custom styles for this template -->
     <link href="assets/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
-    
+
     <link href="assets/css/spinner.css" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-        
+
 
   <script>
   function on() {
@@ -100,17 +100,18 @@
 		<div class="form-group form-inline">
 			<label for="password" class="col-form-label col-sm-3">Password</label>
 			<input type="password" class="form-control col-sm-8" id="password" name="password"  nome ="password" required>
+      <input type="hidden" id="schemaSperimentazioneLogin" name="schemaSperimentazioneLogin" value="">
 		</div>
 		<div class="form-group form-inline">
 			<input class=" btn btn-primary btn-rounded col-sm-4" type="submit" name="submitEntra" id="submitEntra" value="Entra"/>
 			<div class = "col-sm-8" id ="loginRes" style="color:red;"></div>
 		</div>
-		</div>	
+		</div>
 		</div>
 		<div class="modal-footer">
-				<div id="loginFooter" class="d-none"><a href= # data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#iscrModal">Non sei ancora iscritto? <b>Iscriviti ora!</b></a></div>	
+				<div id="loginFooter" class="d-none"><a href= # data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#iscrModal">Non sei ancora iscritto? <b>Iscriviti ora!</b></a></div>
 		</div>
-    </form>  
+    </form>
     </div>
   </div>
 </div>
@@ -146,6 +147,7 @@
 		<div class="form-group form-inline">
 			<label for="passwordIscr2" class="col-form-label col-sm-4">Re-Password</label>
 			<input type="password" class="form-control col-sm-8" id="passwordIscr2" name="password2"  nome ="password2" required>
+      <input type="hidden" id="schemaSperimentazioneSignup" name="schemaSperimentazioneSignup" value="">
 		</div>
 		<div class="form-group form-inline">
 			<label for="comune" class="col-form-label col-sm-4">Residenza</label>
@@ -156,11 +158,11 @@
 			<div class = "col-sm-8" id ="signupRes" style="color:red;"></div>
 		</div>
 		</div>
-		</div>	
-		<div class="modal-footer">
-				<div id="iscrFooter" class="d-none"><a href= # data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#loginModal">Hai già un account? <b>Entra!</b></a></div>	
 		</div>
-    </form>  
+		<div class="modal-footer">
+				<div id="iscrFooter" class="d-none"><a href= # data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#loginModal">Hai già un account? <b>Entra!</b></a></div>
+		</div>
+    </form>
     </div>
   </div>
 </div>
@@ -496,17 +498,20 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <!-- Date picker -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-	
+
 <!-- Custom js - Functions and constants -->
 <script src="assets/js/custom/constants.js"></script>
-<script src="assets/js/custom/utils.js"></script> 
+<script src="assets/js/custom/utils.js"></script>
 
 <script type='text/javascript'>
-$(document).ready(function(){ 
+$(document).ready(function(){
 	$("#loginForm").toggleClass('d-none');
 	$("#iscrForm").toggleClass('d-none');
 	$("#loginFooter").toggleClass('d-none');
 	$("#iscrFooter").toggleClass('d-none');
+  $("#schemaSperimentazioneLogin").val(sessionStorage.getItem('schemaSperimentazione'));
+  $("#schemaSperimentazioneSignup").val(sessionStorage.getItem('schemaSperimentazione'));
+  console.log("schema: " + sessionStorage.getItem('schemaSperimentazione'));
 });
 
 
@@ -525,7 +530,7 @@ $(document).ready(function(){
 
 		return JSON.stringify( obj );
 	}
-		
+
   function setcookie(name, value, days)
   {
     if (days)
@@ -543,6 +548,7 @@ $("#login").submit(function(e) {
 			$("#loginSpinner").toggleClass('d-none');
 			$("#loginForm").toggleClass('d-none');
 			$("#loginFooter").toggleClass('d-none');
+      var schema = document.getElementById('schemaSperimentazioneSignup').value;
   			var json = toJSONString( this );
                 e.preventDefault();
                 var email = document.getElementById('email').value;
@@ -555,31 +561,37 @@ $("#login").submit(function(e) {
                     success: function (response) {
                     //  var je = JSON.parse(response.responseText);
 
-                      
+
                       //---------------------
                       sessionStorage.clear();
                       sessionStorage.setItem('tokenPugliaEvent', response.token);
                       sessionStorage.setItem('userPugliaEvent', response.username);
                       sessionStorage.setItem('emailPugliaEvent', email);
-                      
+                      sessionStorage.setItem('schemaSperimentazione', schema);
+
                       $.ajax({	//////////// Python call to get user location
-							url: DJANGO_API_ADDR+'GetUserLocation/',
+							url: DJANGO_API_ADDR+'UserLogin/',
 		  		        	type: 'POST',
 							crossDomain: true,
 		  		          	contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-		  		          	data: {"username": response.username},
+		  		          	data: {"username": response.username, "schema-sperimentazione":schema},
 		  	         		success: function(response){
 		                        $("#loginRes").text("Success!");
 		  	         			var loc = response.user_location;
 		  	         			sessionStorage.setItem('userLocation', loc);
-		  	         			getData();
-			                    	                
+                      if (response.sperimentazione_completata == "True"){
+                        document.location.href = "sperimentazionecompletata.html";
+                      }
+                      else{
+                        getData();
+                      }
+
 		  	             	},
 		                    error: function(e) { //Python backend error
 		                    	$("#loginRes").text("Errore di connessione al backend server. Contattare l'amministratore.");
 		                        $("#loginSpinner").toggleClass('d-none'); $("#loginForm").toggleClass('d-none'); $("#loginFooter").toggleClass('d-none');
 		                    }
-		  		    		}) //close python    	           
+		  		    		}) //close python
                     },
                     error: function(e) { //Myrror error
                       var je = JSON.parse(e.responseText);
@@ -591,15 +603,16 @@ $("#login").submit(function(e) {
 
         $("#signup").submit(function(e) {
         	$("#iscrSpinner").toggleClass('d-none');
-			$("#iscrForm").toggleClass('d-none');
-			$("#iscrFooter").toggleClass('d-none');
+			   $("#iscrForm").toggleClass('d-none');
+			   $("#iscrFooter").toggleClass('d-none');
           e.preventDefault();
           var username = document.getElementById('usernameIscr').value;
           var email = document.getElementById('emailIscr').value;
           var password = document.getElementById('passwordIscr').value;
           var password2 = document.getElementById('passwordIscr2').value;
           var comune = document.getElementById('comune').value;
-			
+          var schema = document.getElementById('schemaSperimentazioneSignup').value;
+
 
           if (password == password2 && username != "" && email !="" && comune != "" && password != ""){
                         var json = toJSONString( this );
@@ -610,27 +623,29 @@ $("#login").submit(function(e) {
                             url: MYRROR_API_ADDR+'auth/signup',
                             data: json,
                             contentType: "application/json",
-                            success: function (response) {  
+                            success: function (response) {
+                              sessionStorage.clear();
                               sessionStorage.setItem('tokenPugliaEvent', response.token);
                               sessionStorage.setItem('userPugliaEvent', username);
                               sessionStorage.setItem('emailPugliaEvent', email);
+                              sessionStorage.setItem('schemaSperimentazione', schema);
                               $.ajax({	//////////// Python call to add new user
-  			  		        	type: 'post',
-  			  		          	url: DJANGO_API_ADDR+'AddUser/',
-  			  		          	//contentType: "application/json",
-  			  		          	data: {"username": username, "location": comune},
-  			  	         		success: function(response){
-  								//success
-  								$("#signupRes").text("Success!");
-  			  	         		sessionStorage.setItem('userLocation', comune);
-  			  	         		getData();
-  			  	             }, 
-                             error: function(e) {//python backend error
-                                  $("#signupRes").text("Errore di connessione al backend server. Contattare l'amministratore.");
-                                  $("#iscrSpinner").toggleClass('d-none'); $("#iscrForm").toggleClass('d-none'); $("#iscrFooter").toggleClass('d-none');
-                             }
-  			  		    	}) //close python
-                            }, 
+  			  		        	              type: 'post',
+  			  		          	            url: DJANGO_API_ADDR+'UserSignup/',
+              			  		          	//contentType: "application/json",
+              			  		          	data: {"username": username, "location": comune, "schema-sperimentazione":schema},
+              			  	         		  success: function(response){
+                      								//success
+                      								$("#signupRes").text("Success!");
+                      			  	         		sessionStorage.setItem('userLocation', comune);
+                      			  	         		getData();
+                      			  	             },
+                                       error: function(e) {//python backend error
+                                            $("#signupRes").text("Errore di connessione al backend server. Contattare l'amministratore.");
+                                            $("#iscrSpinner").toggleClass('d-none'); $("#iscrForm").toggleClass('d-none'); $("#iscrFooter").toggleClass('d-none');
+                                            }
+  			  		    	           }) //close python
+                            },
                             error: function(e) {//Myrror error
                               var je = JSON.parse(e.responseText);
                                $("#signupRes").text(je.message);
@@ -643,9 +658,9 @@ $("#login").submit(function(e) {
                       }
 
                 });
-        
-        
-        
+
+
+
 function getData(){
 	var obj={};
 	obj["username"] = sessionStorage.getItem('userPugliaEvent');
@@ -659,8 +674,8 @@ function getData(){
 	     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
 	     success: function (response) {
 	    	 sessionStorage.setItem('userData', JSON.stringify(response));
-	    	 document.location.href = "profile.html";  
-	    	 
+	    	 document.location.href = "profile.html";
+
 	     },
 	     error: function(e) {
 	    	 var je = JSON.parse(e.responseText);
@@ -668,10 +683,10 @@ function getData(){
              $("#iscrSpinner").toggleClass('d-none'); $("#iscrForm").toggleClass('d-none'); $("#iscrFooter").toggleClass('d-none');
 	     }
 	});
-	
-	
+
+
 }
-        
+
 </script>
 </body>
 </html>

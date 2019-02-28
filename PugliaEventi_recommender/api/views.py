@@ -12,7 +12,7 @@ import datedelta
 from .common import lightfm_manager, constant
 from RuleBasedRecommender import Recommender
 #from recommender_webapp.models import Comune, Distanza, Place, Mood, Companionship, Event
-from .models import Place, Mood, Companionship, Valutazione, Utente, Comune, Event, Distanza, PrevisioniEventi, PrevisioniComuni, WeatherConditions
+from .models import Place, Mood, Companionship, Valutazione, Utente, Comune, Event, Distanza, PrevisioniEventi, PrevisioniComuni, WeatherConditions, Sperimentazione
 from .serializers import UtenteSerializer, PlaceSerializer, EventSerializer, ValutazioneSerializer
 
 
@@ -284,42 +284,44 @@ class getAllEvents(APIView):
         return JsonResponse(serializer.data,safe=False, status=201)
 
 
-
-
-class GetUserLocation(APIView):
+class UserLogin(APIView):
     def post(self,request,*args,**kwargs):
         username = str(request.data.get('username'))
-        users = Utente.objects.filter(username=username)
+        schema = str(request.data.get('schema-sperimentazione'))
 
-        if not users:
-            user_id = addUserDb(username,"")
-            users = Utente.objects.filter(username=username)
+        utente = Utente.objects.get(username=username)
 
-        return Response(data={"user_location":str(users[0].location)})
+        if not utente:
+            utente = Utente.create(username,"")
+            utente.save()
+            sp = Sperimentazione.create(utente,schema, datetime.now())
+            sp.save()
+        else:
+            sp = Sperimentazione.objects.filter(user_id=utente)
+            if not sp:
+                sp = Sperimentazione.create(utente,schema, datetime.now())
+                sp.save()
+            else:
+                sp[0].schema = schema
+                sp[0].save()
+
+        return Response(data={"user_location":str(utente.location), "sperimentazione_completata":str(sp.test_completato)}, status=200)
 
 
-class AddUser(APIView):
+class UserSignup(APIView):
     def post(self,request,*args,**kwargs):
-        '''mood_configuration = {}
-        companionship_configuration = {}
-        rated_places = []
-        user_contexts = []'''
-
-
         username = str(request.data.get('username'))
         location = str(request.data.get('location'))
-        user_id = addUserDb(username,location)
+        schema = str(request.data.get('schema-sperimentazione'))
 
-        '''user_ratings = Valutazione.objects.filter(user=utente.id)
-        user_contexts.append({'mood': Mood.joyful, 'companionship': Companionship.withFriends})
-        user_contexts.append({'mood': Mood.joyful, 'companionship': Companionship.alone})
-        user_contexts.append({'mood': Mood.angry, 'companionship': Companionship.withFriends})
-        user_contexts.append({'mood': Mood.angry, 'companionship': Companionship.alone})
-        user_contexts.append({'mood': Mood.sad, 'companionship': Companionship.withFriends})
-        user_contexts.append({'mood': Mood.sad, 'companionship': Companionship.alone})
+        utente = Utente.create(username,location)
+        utente.save()
 
-        lightfm_manager.add_user(int(utente.id),str(location), user_contexts, user_ratings)'''
-        return Response(data={"user_id":user_id})
+        sp = Sperimentazione.create(utente,schema, datetime.now())
+        sp.save()
+
+        return Response(data={"user_id":utente.id})
+
 
 class FindPlaceRecommendations(APIView):
     def post(self,request,*args,**kwargs):

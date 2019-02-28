@@ -292,3 +292,8 @@ class Sperimentazione(models.Model):
         db_table = 'sperimentazione'
         app_label = 'api'
         managed = True
+
+    @classmethod
+    def create(cls, user, schema, data_inizio):
+        sp = cls(user=user, schema=schema, data_iscr=data_inizio)
+        return sp
