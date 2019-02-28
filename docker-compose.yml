@@ -5,6 +5,7 @@ services:
             context: ./PugliaEventi_db 
         ports:
             - "5432:5432"
+        restart: on-failure
     django:
         build:
             context: ./PugliaEventi_recommender
@@ -15,6 +16,7 @@ services:
             - "8000:8000"
         depends_on:
             - postgres
+        restart: on-failure
     apache:
         build:
             context: ./PugliaEventi_interface
@@ -25,6 +27,7 @@ services:
         depends_on:
             - postgres
             - django
+        restart: on-failure
     #crawler:
     #    build:
     #        context: ./PugliaEventi_crawler
