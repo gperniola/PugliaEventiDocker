@@ -1,0 +1,14 @@
+<html lang="en">
+  <head>
+  </head>
+
+  <body>
+      Redirecting...
+
+      <script type='text/javascript'>
+          sessionStorage.clear();
+          sessionStorage.setItem('schemaSperimentazione', 'myrror');
+          document.location.href = "index.html";
+      </script>
+  </body>
+</html>
