@@ -27,7 +27,7 @@
     <!-- Custom styles for this template -->
     <link href="assets/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
-    
+
     <link href="assets/css/spinner.css" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -35,7 +35,7 @@
 
 </head>
 
-<body onload="loadAllEvents();"> 
+<body onload="loadAllEvents();">
 <div class="loader">
     <div class="loader-outter"></div>
     <div class="loader-inner"></div>
@@ -53,7 +53,7 @@
         <div class="collapse navbar-collapse flex-sm-row-reverse" id="headernav">
             <ul class=" nav navbar-nav menu">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Home</a>
+                    <a class="nav-link active" href="access.html">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="profile.html" >Personal Page</a>
@@ -125,9 +125,9 @@
 				</div>
 				<div class="form-group form-inline">
   					<label class="form-check-label col-sm-5" for="checkNoMeteoData">Mostra eventi con previsioni non disponibili nelle date indicate</label>
-  					<input class="form-check-input" type="checkbox" value="" id="checkNoMeteoData" checked>	
+  					<input class="form-check-input" type="checkbox" value="" id="checkNoMeteoData" checked>
 				</div>
-				<!-- 
+				<!--
  				<div class="form-group form-inline">
  					<label class="col-sm-2 col-form-label">Intervallo di tempo</label>
     				<div class="form-check col-sm-2">
@@ -153,7 +153,7 @@
 	    		</div>
   			</form>
 		</div>
-		
+
     	<div class="border border-danger" style="margin-top:5px; margin-bottom:15px;"></div>
     	<div id ="waiting"></div>
 
@@ -328,13 +328,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <!-- Date picker -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-	
+
 <!-- Custom js - Functions and constants -->
 <script src="assets/js/custom/constants.js"></script>
-<script src="assets/js/custom/utils.js"></script> 
-	
+<script src="assets/js/custom/utils.js"></script>
+
 <script>
-$(document).ready(function(){ 
+$(document).ready(function(){
 	document.getElementById("comune").value = sessionStorage.getItem('userLocation');
 });
 
@@ -397,7 +397,7 @@ $(function() {
 	  });
 	});
 
-	
+
 
 
 
@@ -409,7 +409,7 @@ function loadAllEvents() {
 	document.getElementById("counterEvents").innerHTML =""
 	var noWeatherData = 0;
 	if (document.getElementById("checkNoMeteoData").checked) noWeatherData = 1;
-	
+
     $.ajax({
         type: 'post',
         url: DJANGO_API_ADDR+'getAllEvents/',
@@ -429,7 +429,7 @@ function loadAllEvents() {
         	document.getElementById("listPlaceholder").innerHTML= "<h1>Eventi </h1>";
         	document.getElementById("counterEvents").innerHTML= " ("+ allEvents.length + " trovati)";
         	loadPageEvents(1);
-        	
+
         },
         error: function(e) {
           var je = JSON.parse(e.responseText);
