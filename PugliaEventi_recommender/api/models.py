@@ -149,6 +149,86 @@ class Place(models.Model):
     def __str__(self):
         return str(self.placeId) + '|' + self.name + '|' + self.location
 
+    @classmethod
+    def create(cls, nome):
+        p = cls(name=nome, location="nessuna", informale=0, raffinato=0, freeEntry=0, benessere=0, bere=0, mangiare=0, dormire=0, goloso=0, libri=0, romantico=0, museo=0, spiaggia=0, teatro=0, arte=0, avventura=0, cinema=0, cittadinanza=0, musica_classica=0, geek=0, bambini=0, folklore=0, cultura=0, jazz=0, concerti=0, vita_notturna=0)
+        return p
+
+
+
+
+class DummyPlace(models.Model):
+    placeId = models.AutoField(primary_key=True, db_column='pid')
+    #ext_id = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    name = models.TextField(blank=True, null=True, db_column='nomeposto')
+    #rating = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    informale = models.SmallIntegerField(blank=True, null=True, default=0)
+    raffinato = models.SmallIntegerField(blank=True, null=True, default=0)
+    freeEntry = models.SmallIntegerField(blank=True, null=True, db_column='free_entry', default=0)
+    benessere = models.SmallIntegerField(blank=True, null=True, default=0)
+    bere = models.SmallIntegerField(blank=True, null=True, default=0)
+    mangiare = models.SmallIntegerField(blank=True, null=True, default=0)
+    dormire = models.SmallIntegerField(blank=True, null=True, default=0)
+    goloso = models.SmallIntegerField(blank=True, null=True, default=0)
+    libri = models.SmallIntegerField(blank=True, null=True, default=0)
+    romantico = models.SmallIntegerField(blank=True, null=True, default=0)
+    museo = models.SmallIntegerField(blank=True, null=True, default=0)
+    spiaggia = models.SmallIntegerField(blank=True, null=True, default=0)
+    teatro = models.SmallIntegerField(blank=True, null=True, default=0)
+    arte = models.SmallIntegerField(blank=True, null=True, default=0)
+    avventura = models.SmallIntegerField(blank=True, null=True, default=0)
+    cinema = models.SmallIntegerField(blank=True, null=True, default=0)
+    cittadinanza = models.SmallIntegerField(blank=True, null=True, default=0)
+    musica_classica = models.SmallIntegerField(blank=True, null=True, default=0)
+    geek = models.SmallIntegerField(blank=True, null=True, default=0)
+    bambini = models.SmallIntegerField(blank=True, null=True, default=0)
+    folklore = models.SmallIntegerField(blank=True, null=True, default=0)
+    cultura = models.SmallIntegerField(blank=True, null=True, default=0)
+    jazz = models.SmallIntegerField(blank=True, null=True, default=0)
+    concerti = models.SmallIntegerField(blank=True, null=True, default=0)
+    vita_notturna = models.SmallIntegerField(blank=True, null=True, default=0)
+
+    class Meta:
+        managed = True
+        db_table = 'luoghi_dummy'
+
+    def labels(self):
+        labels = ""
+        if self.freeEntry == 1:
+            labels += constant.FREE_ENTRY + ', '
+        if self.bere == 1:
+            labels += constant.BERE + ', '
+        if self.mangiare == 1:
+            labels += constant.MANGIARE + ', '
+        if self.benessere == 1:
+            labels += constant.BENESSERE + ', '
+        if self.dormire == 1:
+            labels += constant.DORMIRE + ', '
+        if self.goloso == 1:
+            labels += constant.GOLOSO + ', '
+        if self.libri == 1:
+            labels += constant.LIBRI + ', '
+        if self.romantico == 1:
+            labels += constant.ROMANTICO + ', '
+        if self.museo == 1:
+            labels += constant.MUSEO + ', '
+        if self.spiaggia == 1:
+            labels += constant.SPIAGGIA + ', '
+        if self.teatro == 1:
+            labels += constant.TEATRO + ', '
+        return labels
+
+    def __str__(self):
+        return str(self.placeId) + '|' + self.name
+
+    @classmethod
+    def create(cls, nome):
+        p = cls(name=nome)
+        return p
+
+
+
+
 class Valutazione(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(Utente, on_delete=models.PROTECT, blank=False)
@@ -204,6 +284,7 @@ class Event(models.Model):
     class Meta:
         managed = False
         db_table = 'eventi'
+        app_label = 'api'
 
     def __str__(self):
         return str(self.eventId) + '|' + self.title + '|' + self.place + '|' \

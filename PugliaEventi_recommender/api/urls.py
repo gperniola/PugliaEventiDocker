@@ -1,10 +1,11 @@
 from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import UserSignup, UserLogin, AddUserModel, FindPlaceRecommendations, FindEventRecommendations, getAllEvents, getAllPlaces, addRating, getRatings, getUserConfig, getComuni, getEventi, getLuoghi, RuleBasedRecommender
+from .views import UserSignup, UserLogin, AddUserModel, FindPlaceRecommendations, FindEventRecommendations, getAllEvents, getAllPlaces, addRating, getRatings, getUserConfig, getComuni, getEventi, getLuoghi, RuleBasedRecommender, CreateMyrrorUserModel
 
 urlpatterns = {
 		url(r'UserSignup/$',UserSignup.as_view()),
 		url(r'UserLogin/$',UserLogin.as_view()),
+		url(r'CreateMyrrorUserModel/$',CreateMyrrorUserModel.as_view()),
 		url(r'AddUserModel/$',AddUserModel.as_view()),
 		url(r'FindPlaceRecommendations/$',FindPlaceRecommendations.as_view()),
 		url(r'FindEventRecommendations/$',FindEventRecommendations.as_view()),

@@ -674,7 +674,12 @@ function getData(){
 	     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
 	     success: function (response) {
 	    	 sessionStorage.setItem('userData', JSON.stringify(response));
-	    	 document.location.href = "profile.html";
+         if (sessionStorage.getItem("schemaSperimentazione") == "myrror"){
+          document.location.href = "profile-myrror.html";
+        }
+        else {
+          document.location.href = "profile-manual.html";
+        }
 
 	     },
 	     error: function(e) {

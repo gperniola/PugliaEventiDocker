@@ -314,9 +314,16 @@
                 </div>
                 <br><br>
                     <h5>1.&nbsp&nbsp<button id="linkAccount" class=" btn btn-primary btn-rounded" onclick="linkAccountClick()" _ngcontent-c18="" class="mat-raised-button mat-primary" color="primary" mat-raised-button=""  style="width:200px;"><span class="mat-button-wrapper">Accedi a Myrror</span><div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div></button> e collega il tuo account Twitter.</h5><br>
-                    <h5>2. <button id="linkAccount" class=" btn btn-primary btn-rounded" onclick="linkAccountClick()" _ngcontent-c18="" class="mat-raised-button mat-primary" color="primary" mat-raised-button=""  style="width:200px;"><span class="mat-button-wrapper">Indica i tuoi interessi</span><div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div></button> e collegali ai nostri tag turistici.</h5>
+                    <h5>2. Attendi almeno 24 ore prima di procedere oltre. Myrror impiega del tempo per analizzare i tuoi dati.</h5><br>
+                    <h5>3. <button id="linkAccount" class=" btn btn-primary btn-rounded" onclick="loadInterests()" _ngcontent-c18="" class="mat-raised-button mat-primary" color="primary" mat-raised-button=""  style="width:200px;"><span class="mat-button-wrapper">Indica i tuoi interessi</span><div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div></button> e collegali ai nostri tag turistici.</h5>
                 </div>
                 </div>
+                <div class="card border-danger text-dark">
+                <div class="card-header text-danger">Qui sotto ti riportiamo gli interessi generati da Myrror per te. Indicaci per ognuno di essi i tag turistici che ritieni più appropriato collegare.<br>Per ogni interesse o concetto selezionato, associare il contesto rappresentato dallo stato emotivo e dalla compagnia. <b>E' necessario selezionare almeno 3 tag.</b></div>
+                <div class="card-body text-dark">
+                  <div class="card-text" id="interessiMyrror"></div>
+                </div>
+              </div>
               </div>
         </div>
     </div>
@@ -476,6 +483,34 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 
 <script type='text/javascript'>
+
+var insertedTags = 0;
+$(document).on('change','.selectInterest',function(){
+    if( $(this).val() != "Nessuno "){
+      insertedTags++;
+    }
+});
+
+console.log("starting getuserconfig call...");
+$.ajax({
+    type: 'post',
+    url: DJANGO_API_ADDR+'getUserConfig/',
+    data:{
+    	'username': sessionStorage.getItem('userPugliaEvent'),
+    },
+    success: function (response) {
+    	console.log("response received");
+    	firstConfigDone = response.first_config_done;
+    	if(firstConfigDone)
+    		window.location.replace("recommender.html");
+    },
+    error: function(e) {
+      var je = JSON.parse(e.responseText);
+       alert("ko");
+    }
+});
+
+
 $(document).ready(function(){
 	var userData = JSON.parse(sessionStorage.getItem('userData'));
 
@@ -548,6 +583,136 @@ function getBehaviorData(data){
 function linkAccountClick(){
 	window.open("http://90.147.102.243:9090/identities/");
 }
+
+
+
+var interests = null;
+
+function sendInterestsData(){
+  if (insertedTags < 3){
+    alert("Inserire almeno 3 tag per proseguire");
+    return;
+  }
+
+  var payload = {
+    username: sessionStorage.getItem('userPugliaEvent'),
+    interessi:[]
+  }
+  for (var i = 0; i < interests.length; i++){
+    var interest = {
+        nome: interests[i],
+        tags: []
+    };
+    for (var j = 0; j < 3; j++){
+      interest.tags.push({
+        tag:$("#tag"+i+"t"+j).val(),
+        mood:$("#emotion"+i+"t"+j).val(),
+        companionship:$("#companionship"+i+"t"+j).val()
+      });
+    }
+    payload.interessi.push(interest);
+  }
+
+$.ajax({
+    type: 'post',
+    url: DJANGO_API_ADDR+'CreateMyrrorUserModel/',
+    contentType: "application/json",
+    data: JSON.stringify(payload),
+    success: function (response) {
+      console.log("success")
+      document.location.href = "recommender.html";
+    },
+    error: function(e) {
+      var je = JSON.parse(e.responseText);
+       alert("ko");
+    }
+});
+
+}
+
+
+
+
+
+
+function loadInterests(){
+  $.ajax({
+   type: 'get',
+     url: MYRROR_API_ADDR+'api/stats/interests/wordcloud',
+     contentType: "application/json",
+     data: {
+          db: sessionStorage.getItem('userPugliaEvent'),
+          source: "message_tag"
+        },
+     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
+     success: function (response) {
+       var myjson = JSON.stringify(response, null, 2);
+
+
+       var info = JSON.parse(myjson);
+       console.log("wo:::" + myjson);
+       //var values = info[0].value;
+
+       var ops = info.map(function(item) {
+          return item.value;
+        });
+       var op = ops.slice(0,9);
+       interests = op;
+       console.log(op);
+       if (op.length > 0){
+         $("#interessiMyrror").empty();
+         var formHTML = "";
+         for (var i = 0; i < op.length; i++){
+           formHTML = formHTML + '<div class="row"><div class="col-sm-3" id="interest'+i+'"><b>'+op[i]+'</b><br><a onClick="formClick('+i+')" style="text-decoration:underline; color:#f50136;"><b>Visualizza i tag &#187;</b></a></div>'+
+                      '<div class="col-sm-9 d-none" id="form-row'+i+'">';
+
+           for (var j = 0; j < 3; j++ ){
+              formHTML = formHTML +
+                '<div class="form-group form-inline col-sm-9">'+
+                '<select class="selectInterest form-control" id="tag'+i+'t'+j+'">'+
+                    '<option value="Nessuno">Nessuno</option>'+
+                    '<option value ="Bere">Bere</option>'+
+                    '<option value="Mangiare">Mangiare</option>'+
+                    '<option value="Benessere">Benessere</option>'+
+                    '<option value="Dormire">Dormire</option>'+
+                    '<option value="Goloso">Goloso</option>'+
+                    '<option value="Libri">Libri</option>'+
+                    '<option value="Romantico">Romantico</option>'+
+                    '<option value="Museo">Museo</option>'+
+                    '<option value="Spiaggia">Spiaggia</option>'+
+                    '<option value="Teatro">Teatro</option>'+
+                '</select>'+
+                '<select class="form-control " id="emotion'+i+'t'+j+'">'+
+                    '<option value="joyful">Felice</option>'+
+                    '<option value ="sad">Triste</option>'+
+                    '<option value="angry">Arrabbiato</option>'+
+                '</select>'+
+                '<select class="form-control" id="companionship'+i+'t'+j+'">'+
+                    '<option value="withFriends">In compagnia</option>'+
+                    '<option value="alone">Solo</option>'+
+                '</select>'+
+                '</div>';
+           }
+           formHTML = formHTML + '</div></div><hr/>';
+         }
+
+          $("#interessiMyrror").append(formHTML + '<div class="form-group"><a  class=" btn btn-primary mb-2" style="color:white;" onclick="sendInterestsData();">Prosegui</a></div>'+'</div>');
+       }
+       else {
+         $("#interessiMyrror").append( "<div class='row'>Myrror non è riuscito a generare degli interessi per te. I tuoi messaggi twitter potrebbero non essere in numero sufficiente oppure Myrror ha bisogno di ulteriore tempo per analizzarli.<br>Riprova nuovamente tra qualche ora.</div>");
+       }
+     },
+     error: function(e) {
+       var je = JSON.parse(e.responseText);
+       alert("failure getInterests");
+     }
+});
+}
+
+function formClick(x){
+  $("#form-row"+x).toggleClass('d-none');
+}
+
 
 
   </script>

@@ -12,9 +12,10 @@ import datedelta
 from .common import lightfm_manager, constant
 from RuleBasedRecommender import Recommender
 #from recommender_webapp.models import Comune, Distanza, Place, Mood, Companionship, Event
-from .models import Place, Mood, Companionship, Valutazione, Utente, Comune, Event, Distanza, PrevisioniEventi, PrevisioniComuni, WeatherConditions, Sperimentazione
+from .models import Place, Mood, Companionship, Valutazione, Utente, Comune, Event, Distanza, PrevisioniEventi, PrevisioniComuni, WeatherConditions, Sperimentazione, DummyPlace
 from .serializers import UtenteSerializer, PlaceSerializer, EventSerializer, ValutazioneSerializer
 
+from .common.data_loader import DataLoader
 
 def addUserDb(username, location):
     utente = Utente.create(username,location)
@@ -297,14 +298,16 @@ class UserLogin(APIView):
             sp = Sperimentazione.create(utente,schema, datetime.now())
             sp.save()
         else:
-            sp = Sperimentazione.objects.filter(user_id=utente)
-            if not sp:
+            sps = Sperimentazione.objects.filter(user_id=utente)
+            if not sps:
                 sp = Sperimentazione.create(utente,schema, datetime.now())
                 sp.save()
             else:
-                sp[0].schema = schema
-                sp[0].save()
+                sp = sps[0]
+                sp.schema = schema
+                sp.save()
 
+        #DataLoader.load_dummy_places()
         return Response(data={"user_location":str(utente.location), "sperimentazione_completata":str(sp.test_completato)}, status=200)
 
 
@@ -321,6 +324,56 @@ class UserSignup(APIView):
         sp.save()
 
         return Response(data={"user_id":utente.id})
+
+
+class CreateMyrrorUserModel(APIView):
+    def post(self,request,*args,**kwargs):
+        username = str(request.data.get('username'))
+        data = request.data["interessi"]
+
+        users = Utente.objects.filter(username=username)
+        user_id = users[0].id
+        user_config_done = users[0].first_configuration
+
+        if not user_config_done:
+            for d in data:
+                print("INT: " +str(d["nome"]))
+                tags = d["tags"]
+                for t in tags:
+                    #print(t)
+                    if str(t["tag"]) != "Nessuno":
+                        p_name = "Dummy Place " + str(t["tag"])
+                        p = Place.objects.get(name=p_name)
+                        dummyplace_id = p.placeId
+                        mood = str(t["mood"])
+                        companionship = str(t["companionship"])
+                        print(str(p) + " (" + mood + " " + companionship +")")
+
+                        user_context_id = str(user_id + 100) + str(Mood[mood].value) + str(Companionship[companionship].value)
+
+                        valutazione = Valutazione.create(users[0],mood,companionship,p)
+                        valutazione.save()
+
+            users[0].first_configuration = True
+            user_zero = Utente.objects.get(username=username)
+            user_zero.first_configuration = True
+            user_zero.save()
+
+            valutazioni_utente = Valutazione.objects.filter(user=users[0])
+
+            user_contexts = []
+            user_contexts.append({'mood': Mood.angry, 'companionship': Companionship.withFriends})
+            user_contexts.append({'mood': Mood.angry, 'companionship': Companionship.alone})
+            user_contexts.append({'mood': Mood.joyful, 'companionship': Companionship.withFriends})
+            user_contexts.append({'mood': Mood.joyful, 'companionship': Companionship.alone})
+            user_contexts.append({'mood': Mood.sad, 'companionship': Companionship.withFriends})
+            user_contexts.append({'mood': Mood.sad, 'companionship': Companionship.alone})
+
+            print("+++ creating new user model")
+            lightfm_manager.add_user(users[0].id, users[0].location, user_contexts, valutazioni_utente)
+
+        return Response(status=200)
+
 
 
 class FindPlaceRecommendations(APIView):

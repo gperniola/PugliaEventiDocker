@@ -99,7 +99,14 @@ def _get_dimensions(train_data, test_data):
     rows = max(uids) + 1
     cols = max(iids) + 1
 
-    return rows, cols
+
+    print("max: " + str(max(uids)) + "  len: " + str(len(uids)))
+    cut = str(max(uids))[:-2]
+    print("last digit removed " + cut)
+    newmax = cut + "32"
+    print("new max: " + newmax)
+    #return rows, cols
+    return int(newmax), cols
 
 
 def _build_interaction_matrix(rows, cols, data, min_rating):
@@ -174,11 +181,15 @@ def _parse_item_user_metadata(num_items, item_metadata_raw, item_tags_raw, num_u
         if not line:
             continue
 
+        #print (str(line))
+        #print("size: " + str(len(uid_feature_labels)))
         splt = line.split(',')
 
         # Zero-based indexing
         uid = int(splt[0]) - 1
         user_city = splt[1]
+
+        #print (str(uid) + " - " + str(user_city))
 
         uid_feature_labels[uid] = "{0}.{1}".format("username", user_city)
 
