@@ -8,6 +8,7 @@ FROM openjdk:8-alpine
 RUN mkdir app
 COPY crawlerEventi.jar /app
 WORKDIR /app
+ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
 
 #RUN apt-get update && apt-get -y install cron && apt-get -y install busybox-static
 # copy crontabs for root user
