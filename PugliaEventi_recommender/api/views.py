@@ -8,9 +8,11 @@ from rest_framework.parsers import JSONParser
 
 from datetime import datetime, timedelta
 import datedelta
+import random
 
 from .common import lightfm_manager, constant
 from RuleBasedRecommender import Recommender
+from PopularityRecommender import Recommender as PopRecommender
 #from recommender_webapp.models import Comune, Distanza, Place, Mood, Companionship, Event
 from .models import Place, Mood, Companionship, Valutazione, Utente, Comune, Event, Distanza, PrevisioniEventi, PrevisioniComuni, WeatherConditions, Sperimentazione, DummyPlace
 from .serializers import UtenteSerializer, PlaceSerializer, EventSerializer, ValutazioneSerializer
@@ -290,14 +292,15 @@ class UserLogin(APIView):
         username = str(request.data.get('username'))
         schema = str(request.data.get('schema-sperimentazione'))
 
-        utente = Utente.objects.get(username=username)
+        utenti = Utente.objects.filter(username=username)
 
-        if not utente:
-            utente = Utente.create(username,"")
+        if not utenti:
+            utente = Utente.create(username,"Bari")
             utente.save()
             sp = Sperimentazione.create(utente,schema, datetime.now())
             sp.save()
         else:
+            utente = utenti[0]
             sps = Sperimentazione.objects.filter(user_id=utente)
             if not sps:
                 sp = Sperimentazione.create(utente,schema, datetime.now())
@@ -454,6 +457,66 @@ class FindEventRecommendations(APIView):
         serializer = EventSerializer(instance=recommended_events, many=True, context={'user_location':location_filter})
         return JsonResponse(serializer.data,safe=False, status=201)
 
+class FindEventRecommendationsAllRecommenders(APIView):
+    def post(self,request,*args,**kwargs):
+        username = str(request.data.get('username'))
+
+        location_filter = str(request.data.get('location'))
+        range = str(request.data.get('range'))
+        mood = str(request.data.get('emotion'))
+        companionship = str(request.data.get('companionship'))
+        weather_conditions = int(request.data.get('weather'))
+        no_weather_data = int(request.data.get('noweatherdata'))
+
+        data = request.data
+
+
+
+
+
+        users = Utente.objects.filter(username=username)
+        user_id = users[0].id
+
+
+        if location_filter == '':
+            location = users[0].location
+            range = 250
+        else:
+            location = location_filter
+
+        user_context_id = str(user_id + 100) + str(Mood[mood].value) + str(Companionship[companionship].value)
+
+        recsRules = Recommender.find_recommendations(data, location_filter, range, weather_conditions, no_weather_data)
+        recsLightFM = lightfm_manager.find_events_recommendations(user_context_id,location,range, weather_conditions, no_weather_data)
+        recsPopular = PopRecommender.find_recommendations()
+
+        serializerRules = EventSerializer(instance=recsRules, many=True, context={'user_location':location_filter})
+        serializerLightFM = EventSerializer(instance=recsLightFM, many=True, context={'user_location':location_filter})
+        serializerPopular = EventSerializer(instance=recsPopular, many=True, context={'user_location':location_filter})
+
+        lists="RLP" #Rulebased, Lightfm, Popularity
+        shuffled_lists = ''.join(random.sample(lists,len(lists)))
+
+        i = 1
+        resp = {}
+        for c in shuffled_lists:
+            if c == 'R':
+                resp["Lista"+str(i)] = serializerRules.data
+            elif c == 'L':
+                resp["Lista"+str(i)] = serializerLightFM.data
+            else:
+                resp["Lista"+str(i)] = serializerPopular.data
+            i = i + 1
+
+        print(shuffled_lists)
+        sp = Sperimentazione.objects.get(user=users[0])
+        sp.ordine_lista_a = shuffled_lists[:1]
+        sp.ordine_lista_b = shuffled_lists[1:2]
+        sp.ordine_lista_c = shuffled_lists[2:3]
+        sp.save()
+
+        return JsonResponse(resp,safe=False, status=201)
+
 
 
 class AddUserModel(APIView):
@@ -544,12 +607,103 @@ class AddUserModel(APIView):
         return Response(data={"id":str(utente[0].id), "place":str(place)})
 
 
+class SendSperimentazione(APIView):
+    def post(self,request,*args,**kwargs):
+        username = str(request.data.get('username'))
+
+        user = Utente.objects.get(username=username)
+        sp = Sperimentazione.objects.get(user=user)
 
 
+        lista_interesse = str(request.data.get('listaInteressante'))
+        lista_personalita = str(request.data.get('listaPersonalita'))
 
 
+        if lista_interesse == "A":
+            sp.lista_preferita_interesse = sp.ordine_lista_a
+        elif lista_interesse == "B":
+            sp.lista_preferita_interesse = sp.ordine_lista_b
+        else:
+            sp.lista_preferita_interesse = sp.ordine_lista_c
 
 
+        if lista_personalita == "A":
+            sp.lista_preferita_personalita = sp.ordine_lista_a
+        elif lista_personalita == "B":
+            sp.lista_preferita_personalita = sp.ordine_lista_b
+        else:
+            sp.lista_preferita_personalita = sp.ordine_lista_c
+
+
+        sp.note= str(request.data.get('comment'))
+
+        ordine_A = sp.ordine_lista_a
+        ordine_B = sp.ordine_lista_b
+        ordine_C = sp.ordine_lista_c
+
+        if ordine_A == "L":
+            sp.l1 = bool(request.data.get('A1'))
+            sp.l2 = bool(request.data.get('A2'))
+            sp.l3 = bool(request.data.get('A3'))
+            sp.l4 = bool(request.data.get('A4'))
+            sp.l5 = bool(request.data.get('A5'))
+        elif ordine_A == "R":
+            sp.r1 = bool(request.data.get('A1'))
+            sp.r2 = bool(request.data.get('A2'))
+            sp.r3 = bool(request.data.get('A3'))
+            sp.r4 = bool(request.data.get('A4'))
+            sp.r5 = bool(request.data.get('A5'))
+        else:
+            sp.p1 = bool(request.data.get('A1'))
+            sp.p2 = bool(request.data.get('A2'))
+            sp.p3 = bool(request.data.get('A3'))
+            sp.p4 = bool(request.data.get('A4'))
+            sp.p5 = bool(request.data.get('A5'))
+
+        if ordine_B == "L":
+            sp.l1 = bool(request.data.get('B1'))
+            sp.l2 = bool(request.data.get('B2'))
+            sp.l3 = bool(request.data.get('B3'))
+            sp.l4 = bool(request.data.get('B4'))
+            sp.l5 = bool(request.data.get('B5'))
+        elif ordine_B == "R":
+            sp.r1 = bool(request.data.get('B1'))
+            sp.r2 = bool(request.data.get('B2'))
+            sp.r3 = bool(request.data.get('B3'))
+            sp.r4 = bool(request.data.get('B4'))
+            sp.r5 = bool(request.data.get('B5'))
+        else:
+            sp.p1 = bool(request.data.get('B1'))
+            sp.p2 = bool(request.data.get('B2'))
+            sp.p3 = bool(request.data.get('B3'))
+            sp.p4 = bool(request.data.get('B4'))
+            sp.p5 = bool(request.data.get('B5'))
+
+        if ordine_C == "L":
+            sp.l1 = bool(request.data.get('C1'))
+            sp.l2 = bool(request.data.get('C2'))
+            sp.l3 = bool(request.data.get('C3'))
+            sp.l4 = bool(request.data.get('C4'))
+            sp.l5 = bool(request.data.get('C5'))
+        elif ordine_C == "R":
+            sp.r1 = bool(request.data.get('C1'))
+            sp.r2 = bool(request.data.get('C2'))
+            sp.r3 = bool(request.data.get('C3'))
+            sp.r4 = bool(request.data.get('C4'))
+            sp.r5 = bool(request.data.get('C5'))
+        else:
+            sp.p1 = bool(request.data.get('C1'))
+            sp.p2 = bool(request.data.get('C2'))
+            sp.p3 = bool(request.data.get('C3'))
+            sp.p4 = bool(request.data.get('C4'))
+            sp.p5 = bool(request.data.get('C5'))
+
+
+        sp.data_fine = datetime.now()
+        sp.test_completato = True
+
+        sp.save()
+        return Response(status=200)
 
 
 

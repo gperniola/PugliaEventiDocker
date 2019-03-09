@@ -268,14 +268,33 @@ def find_events_recommendations(user, user_location, distance, weather_condition
 
     recommended_events = []
     for place in recommended_places:
-        if len(events) > 20:
-            queryset_events = events.filter(place=place.name)[:2]
-        elif len(weather_filtered_events) > 10:
-            queryset_events = events.filter(place=place.name)[:3]
-        else:
-            queryset_events = events.filter(place=place.name)
+        queryset_events = events.filter(place=place.name)[:1]
         for e in queryset_events:
             recommended_events.append(e)
+    if(len(recommended_events) < 5):
+        recommended_events = []
+        for place in recommended_places:
+            queryset_events = events.filter(place=place.name)[:2]
+            for e in queryset_events:
+                recommended_events.append(e)
+        if(len(recommended_events) < 5):
+            recommended_events = []
+            for place in recommended_places:
+                queryset_events = events.filter(place=place.name)
+                for e in queryset_events:
+                    recommended_events.append(e)
+
+    #for place in recommended_places:
+        #if len(events) > 20:
+        #    queryset_events = events.filter(place=place.name)[:2]
+        #elif len(weather_filtered_events) > 10:
+        #    queryset_events = events.filter(place=place.name)[:3]
+        #if len(events) > 5:
+        #    queryset_events = events.filter(place=place.name)[:1]
+        #else:
+            #queryset_events = events.filter(place=place.name)
+        #for e in queryset_events:
+        #    recommended_events.append(e)
 
 
     #for event in weather_filtered_events:

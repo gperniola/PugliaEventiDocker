@@ -367,7 +367,9 @@ class Sperimentazione(models.Model):
     p3 = models.BooleanField(default=False)
     p4 = models.BooleanField(default=False)
     p5 = models.BooleanField(default=False)
-    lista_preferita = models.TextField(blank=True, null=True)
+    lista_preferita_interesse = models.TextField(blank=True, null=True)
+    lista_preferita_personalita = models.TextField(blank=True, null=True)
+    note = models.TextField(blank=True, null=True)
 
     class Meta:
         db_table = 'sperimentazione'

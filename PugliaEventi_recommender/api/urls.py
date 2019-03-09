@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import UserSignup, UserLogin, AddUserModel, FindPlaceRecommendations, FindEventRecommendations, getAllEvents, getAllPlaces, addRating, getRatings, getUserConfig, getComuni, getEventi, getLuoghi, RuleBasedRecommender, CreateMyrrorUserModel
+from .views import UserSignup, UserLogin, AddUserModel, FindPlaceRecommendations, FindEventRecommendations, getAllEvents, getAllPlaces, addRating, getRatings, getUserConfig, getComuni, getEventi, getLuoghi, RuleBasedRecommender, CreateMyrrorUserModel, FindEventRecommendationsAllRecommenders, SendSperimentazione
 
 urlpatterns = {
 		url(r'UserSignup/$',UserSignup.as_view()),
@@ -9,6 +9,8 @@ urlpatterns = {
 		url(r'AddUserModel/$',AddUserModel.as_view()),
 		url(r'FindPlaceRecommendations/$',FindPlaceRecommendations.as_view()),
 		url(r'FindEventRecommendations/$',FindEventRecommendations.as_view()),
+		url(r'FindEventRecommendationsAllRecommenders/$',FindEventRecommendationsAllRecommenders.as_view()),
+		url(r'SendSperimentazione/$',SendSperimentazione.as_view()),
 		url(r'RuleBasedRecommender/$',RuleBasedRecommender.as_view()),
 		url(r'getAllEvents/$',getAllEvents.as_view()),
 		url(r'getAllPlaces/$',getAllPlaces.as_view()),

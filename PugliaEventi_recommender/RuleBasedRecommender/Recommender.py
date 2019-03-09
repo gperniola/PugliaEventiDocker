@@ -10,7 +10,7 @@ from api.models import Place, Distanza, Event
 
 
 
-N_OF_RECOMMENDATIONS = 10
+N_OF_RECOMMENDATIONS = 5
 
 
 def formula(emotion, empathy):
@@ -256,4 +256,4 @@ def find_recommendations(data, location_filter, range, weather, no_weather_data)
             recommended_events.append(e)
         #recommended_events.sort(key=lambda x: x.date_to)
 
-    return recommended_events
+    return recommended_events[:N_OF_RECOMMENDATIONS]
