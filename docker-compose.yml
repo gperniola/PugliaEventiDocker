@@ -2,7 +2,7 @@ version: '3'
 services:
     postgres:
         build:
-            context: ./PugliaEventi_db 
+            context: ./PugliaEventi_db
         ports:
             - "5432:5432"
         restart: on-failure
