@@ -5,11 +5,16 @@ var end_date = moment().add(7,'days').format('YYYY-MM-DD');
 
 
 function printCellEvento(containerId, indiceEvento, cellId, titolo, linkEvento, comune, posto, linkPosto, data, descrizione, distanza, tags, meteo){
-	document.getElementById(containerId).innerHTML = 	document.getElementById(containerId).innerHTML + 
+	document.getElementById(containerId).innerHTML = 	document.getElementById(containerId).innerHTML +
 			"<a name ='anchor_"+cellId+"' id ='anchor_"+cellId+"'/></a>" +
 			" <div class='event_box'><div class='event_info'>" +
 			"<div class='event_title' style='font-size:16px'>" +
 			"<span style='font-size:24px; color:red;'>"+indiceEvento+".</span>&nbsp;&nbsp;&nbsp;<a href='"+ linkEvento +"' target=_'blank'>"+titolo+"</a></div> " +
+
+			'<div class="form-group form-inline"><label class="form-check-label" for="checkEvent'+cellId+'"><b style="color:red;">Aggiungi evento &nbsp;</b></label><input class="form-control form-control-lg" type="checkbox" id="checkEvent'+cellId+'" value=true></div>'+
+
+
+
 			"<div class='speakers'><strong>Luogo: </strong><span> " + comune + "<a href='"+ linkPosto +"' target=_'blank'><b>"+posto+"</b></a></span></div>"
 			+ distanza + data + meteo + tags +
 			"<div><a data-toggle='collapse' data-target='#readMore"+cellId+"' aria-expanded='false' aria-controls='readMore"+cellId+"' style='text-decoration:underline; color:#f50136;''/><b>Leggi tutto &#187;</b></a></div>"+
@@ -18,25 +23,25 @@ function printCellEvento(containerId, indiceEvento, cellId, titolo, linkEvento, 
 
 function printEventi(data,i, cellOffset, container){
 	var obj = data;
-	
+
 	var dat_da = new Date(obj.data_da);
     var dat_a = new Date(obj.data_a);
     var da = dat_da.getDate()  + "/" + (dat_da.getMonth()+1) + "/" + dat_da.getFullYear();
     var a = dat_a.getDate()  + "/" + (dat_a.getMonth()+1) + "/" + dat_a.getFullYear();
-    
+
     var distanza = "";
     if (obj.distanza != null && obj.distanza != ''){
     	distanza = "<div class='event_distance'><strong style='color: black;'>Distanza: </strong><span> circa "+parseInt(obj.distanza)+" km";
-    	if(obj.centro_distanza != null && obj.centro_distanza != '') 
+    	if(obj.centro_distanza != null && obj.centro_distanza != '')
     		distanza = distanza + " da " + obj.centro_distanza;
-    	distanza = distanza + "</span></div>";	
+    	distanza = distanza + "</span></div>";
     }
-    
-    
+
+
     var meteoSingleLine = "";
     var meteo = "";
     if(obj.previsioni_evento && obj.previsioni_evento.length > 0){
-    	if (obj.previsioni_evento.length == 1 && da == a){	
+    	if (obj.previsioni_evento.length == 1 && da == a){
     		meteoSingleLine = "<span style='color:black'> | </span>" + obj.previsioni_evento[0].bollettino.condizioni + "  " + obj.previsioni_evento[0].bollettino.temp + "°C";
     	}
     	else{
@@ -46,11 +51,11 @@ function printEventi(data,i, cellOffset, container){
     		for ( z = 0; z < obj.previsioni_evento.length; z++){
     			var dat = new Date(obj.previsioni_evento[z].bollettino.data);
     			var dataFormatted = dat.getDate()  + '/' + (dat.getMonth()+1) + '/' + dat.getFullYear();
-    			
+
     			var startDate = new Date(start_date.slice(0,4), start_date.slice(5,7)-1, start_date.slice(8,10));
     			var endDate   = new Date(end_date.slice(0,4), end_date.slice(5,7)-1, end_date.slice(8,10));
     			var date_f  = new Date(dat.getFullYear(), dat.getMonth(), dat.getDate());
-    					
+
     			var evidenzia = "";
     			if (date_f >= startDate && date_f <= endDate && date_f >= dat_da && date_f <= dat_a){
     				evidenzia = "style='color:black;'";
@@ -60,62 +65,62 @@ function printEventi(data,i, cellOffset, container){
     		meteo = meteo + "</ul></div></div>";
     	}
     }
-    
+
     var date = "";
     if (da == a) date = "<div class='event_date'><span style='color:black'>Data:</span> "+da+ meteoSingleLine+"</div>";
-    else date = "<div class='event_date'> <span style='color:black'>Dal:</span> "+da+" <span style='color:black'>al:</span> "+a+ meteoSingleLine+"</div>"; 
-    
+    else date = "<div class='event_date'> <span style='color:black'>Dal:</span> "+da+" <span style='color:black'>al:</span> "+a+ meteoSingleLine+"</div>";
+
     var tags = "";
     if (obj.tags != null && obj.tags.length > 0){
     	tags = "<div class='event_tags'><span style='color:black'>Tags: </span>";
-    	obj.tags.forEach(function(x, i, arr){ 
-    		tags = tags + x; 
+    	obj.tags.forEach(function(x, i, arr){
+    		tags = tags + x;
     		if (i < arr.length - 1) tags = tags + ", ";
     		});
     	tags = tags + "</div>";
     }
-    	
+
     var comune = obj.comune;
     if (obj.posto_nome != "") comune = comune + " | ";
-    
-       
+
+
     printCellEvento(container, i+1, cellOffset, obj.titolo, obj.link, comune, obj.posto_nome, obj.posto_link, date, obj.descrizione, distanza, tags, meteo);
 }
 
 
 function createPlaceModal(placeId, placeName){
-	
+
 	placeModal =	'<div class="modal fade" id="placeModal'+placeId+'" tabindex="-1" role="dialog" aria-labelledby="placeModalLabel'+placeId+'" aria-hidden="true">'
 					+'<div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header">'
 					+'<h5 class="modal-title" id="placeModalLabel'+placeId+'">Aggiungi '+placeName+'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>'
 					+'</button></div><div class="form" id="placeEvalForm" method="post" enctype="multipart/form-data"><div class="modal-body">'
-					
+
 					+'<span><b>Seleziona la compagnia e lo stato emotivo in cui ti trovavi quando hai visitato questo posto</b></span>'
-					
+
 					+'<div class="form-group form-inline">'
-					
+
 					+'<input type="hidden" id="placeEvalId" value='+placeId+'>'
 					+'<div><select class="form-control " id="emotionEval'+placeId+'">'
 					+'<option value="joyful">Felice</option><option value ="sad">Triste</option><option value="angry">Arrabbiato</option></select></div>'
 					+'<div><select class="form-control" id="companionshipEval'+placeId+'">'
 					+'<option value="withFriends">In compagnia</option><option value="alone">Solo</option></select></div></div>'
-					
+
 					+'<small class="form-text text-muted"><i>Aggiungendo questo luogo alla tua lista dei posti visitati riceverai suggerimenti più accurati!</i></small>'
-				
+
 					+'</div><div class="modal-footer"><button type="button" class="btn btn-primary" onclick="sendSingleRating('+placeId+');" data-dismiss="modal">Conferma</button>'
 					+'<button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>'
-					
+
 					+'</div></form></div></div></div>';
 	return placeModal;
 }
 
-function sendEval(placeId,emotion,companionship, callback){	
+function sendEval(placeId,emotion,companionship, callback){
 	for (var i = 0; i < allPlaces.length; i++){
 		if(allPlaces[i].placeId == placeId)
 			allPlaces[i].valutato = true;
 	}
-	
-	
+
+
     $.ajax({
         type: 'post',
         url: 'http://127.0.0.1:8000/api/addRating/',
@@ -126,7 +131,7 @@ function sendEval(placeId,emotion,companionship, callback){
         	"companionship":companionship
         },
         success: function (response) {
-        	document.getElementById("buttonStatus" + placeId).innerHTML = '<span class="badge badge-info" data-toggle="tooltip" data-placement="right" title="Luogo visitato"><i class="fa fa-check"></i></span>';	
+        	document.getElementById("buttonStatus" + placeId).innerHTML = '<span class="badge badge-info" data-toggle="tooltip" data-placement="right" title="Luogo visitato"><i class="fa fa-check"></i></span>';
         	console.log("rating added to " + placeId);
         	if(callback != null) {
         		callback();
@@ -141,8 +146,8 @@ function sendEval(placeId,emotion,companionship, callback){
 }
 
 function sendSingleRating(placeId){
-	var mood = $("#emotionEval"+placeId).val(); 
-	var comp = $("#companionshipEval"+placeId).val(); 
+	var mood = $("#emotionEval"+placeId).val();
+	var comp = $("#companionshipEval"+placeId).val();
 	sendEval(placeId,mood, comp,null);
 }
 
@@ -155,12 +160,12 @@ function sendConfigRating(placeId){
 
 
 function printCellPlace(containerId, indicePlace, cellId, nome, link, comune, indirizzo, contatti, tipo, distanza, tags, eventiProgrammati, buttonEvaluated, placeModal){
-	document.getElementById(containerId).innerHTML = 	document.getElementById(containerId).innerHTML + "<div class='col-sm-6'>" + 
+	document.getElementById(containerId).innerHTML = 	document.getElementById(containerId).innerHTML + "<div class='col-sm-6'>" +
 	"<a name ='anchor_"+cellId+"' id ='anchor_"+cellId+"'/></a>" +
 	" <div class='event_box'><div class='event_info'>" +
 	"<div class='event_title' style='font-size:16px'>" +
 	"<span style='font-size:24px; color:red;'>"+indicePlace+".</span>&nbsp;&nbsp;&nbsp;<a href='"+ link +"' target=_'blank' rel='noopener noreferrer'>"+nome+"</a>"+ buttonEvaluated + "</div>" +
-	"<div class='speakers'><span> " + comune + "<b>"+tipo+"</b></span></div>"+ distanza + contatti + tags + eventiProgrammati + "</div>"+placeModal;		
+	"<div class='speakers'><span> " + comune + "<b>"+tipo+"</b></span></div>"+ distanza + contatti + tags + eventiProgrammati + "</div>"+placeModal;
 }
 
 
@@ -181,33 +186,33 @@ function printPlaces(data,i, cellOffset, container){
 	else{
 		buttonEvaluated = '&nbsp;&nbsp;<span id="buttonStatus'+obj.placeId+'"><button type="button" class="btn-val btn btn-danger btn-sm" onClick="sendConfigRating('+obj.placeId+')"><i class="fa fa-plus"></i></button></span>';
 	}
-	
-	
+
+
     var distanza = "";
     if (obj.distanza != null && obj.distanza != ''){
     	distanza = "<div class='event_distance'><strong style='color: black;'>Distanza: </strong><span> circa "+parseInt(obj.distanza)+" km";
-    	if(obj.centro_distanza != null && obj.centro_distanza != '') 
+    	if(obj.centro_distanza != null && obj.centro_distanza != '')
     		distanza = distanza + " da " + obj.centro_distanza;
-    	distanza = distanza + "</span></div>";	
+    	distanza = distanza + "</span></div>";
     }
-    
+
     var tags = "";
     if (obj.tags != null && obj.tags.length > 0){
     	tags = "<div class='event_tags'><span style='color:black'>Tags: </span>";
-    	obj.tags.forEach(function(x, i, arr){ 
-    		tags = tags + x; 
+    	obj.tags.forEach(function(x, i, arr){
+    		tags = tags + x;
     		if (i < arr.length - 1) tags = tags + ", ";
     		});
     	tags = tags + "</div>";
     }
-    	
+
     var comune = obj.location;
     if (obj.tipo != "") comune = comune + " | ";
-        
-    contatti = "<div class='event_date'><span style='color:black'>Contatti: </span>" + obj.telefono; 
+
+    contatti = "<div class='event_date'><span style='color:black'>Contatti: </span>" + obj.telefono;
     if (obj.sitoweb !="") contatti = contatti + "<span style='color:black'> | </span>" + "<a href='" + obj.sitoweb + "' target = '_blank' rel='noopener noreferrer'/>sito web &#187;</a>" ;
     contatti = contatti + "</div>";
-	
+
     eventiProgrammati = "";
     if(obj.eventi_programmati.length > 0){
     	eventiProgrammati = "<div><a data-toggle='collapse' data-target='#readEvents"+cellOffset+"' aria-expanded='false' aria-controls='readEvents"+cellOffset+"' style='text-decoration:underline; color:#f50136;'/><b>Eventi programmati &#187;</b></a></div>"+
@@ -218,18 +223,18 @@ function printPlaces(data,i, cellOffset, container){
 		    var dat_a = new Date(obj.eventi_programmati[z].data_a);
 		    var dataInizio = dat_da.getDate()  + "/" + (dat_da.getMonth()+1) + "/" + dat_da.getFullYear();
 		    var dataFine = dat_a.getDate()  + "/" + (dat_a.getMonth()+1) + "/" + dat_a.getFullYear();
-			
+
 		    eventiProgrammati = eventiProgrammati + "<li class='list-group-item'><a href='"+obj.eventi_programmati[z].link+"' target='_blank' style='text-decoration:underline;'><b>"+ obj.eventi_programmati[z].titolo+"</b></a><br>";
 			if(dataInizio == dataFine)
 				eventiProgrammati = eventiProgrammati + "Data: "+ dataInizio + "</li>";
 			else
 				eventiProgrammati = eventiProgrammati + "Dal: "+ dataInizio + " al: " + dataFine + "</li>";
-			
+
 		}
-    	
+
     	eventiProgrammati = eventiProgrammati + "</ul></div>";
     }
-       
+
     printCellPlace(container, i+1, cellOffset, obj.name, obj.link, comune, obj.indirizzo, contatti, obj.tipo, distanza, tags, eventiProgrammati, buttonEvaluated, placeModal);
 }
 
@@ -253,7 +258,7 @@ $('#pagination-demo').twbsPagination({
             $('#page-content').text('Page ' + page);
             if (tipo == 0)loadPageEvents(page);
             else loadPagePlaces(page);
-            
+
 
 
         }
@@ -271,7 +276,7 @@ function makePages(len, tipo){
 }
 
 
-function createPayloadData(topicData, noWeatherData){	
+function createPayloadData(topicData, noWeatherData){
 	var location = '"location":' +'"'+ document.getElementById("comune").value+'"';
 	var range = '"range":' + document.getElementById("slider-value").innerHTML;
 	var weather = '"weather":' + document.getElementById("sliderMeteo-value").innerHTML;
@@ -285,7 +290,7 @@ function createPayloadData(topicData, noWeatherData){
 		 			'}';
  	var topics = '"topics":'+JSON.stringify(topicData.results.entry);
 	var payload = '{"data":{'+location+ ', '+ range + ', ' + weather + ', ' + NoWeatherData + ', ' + behavior + ", " + topics + '}}';
-	return payload;  
+	return payload;
 }
 
 
@@ -351,14 +356,6 @@ $(function() {
 
 
 
-
-
-
-
-
-
-
-
 /*function countEv(){
 
 
@@ -369,10 +366,10 @@ $.ajax({
     success: function (response) {
         //var obj = response[0];
         var numP = parseInt(allEvents.length);
-		
+
         //mostra numero di eventi trovati
         //showNumFoundEvents(numP);
-        
+
         numev = Math.floor((numP / 10));
 
         if(numP%10 != 0){
@@ -433,7 +430,7 @@ $.ajax({
         url: 'http://127.0.0.1:8080/PugliaEventi/rest/services/getEvents/' + URIConstructor()+ '/0',
         contentType: "application/json",
         success: function (response) {
-   
+
           $("#eventiContainer").html("");
           for (var i = 0; i < Math.min(10, response.length); i++){
             //var obj = response[i];

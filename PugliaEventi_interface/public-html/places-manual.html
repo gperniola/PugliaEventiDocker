@@ -42,8 +42,8 @@
 </div>
 
 <!--header start here -->
-<header class="header navbar fixed-top navbar-expand-md">
-    <div class="container">
+<!-- <header class="header navbar fixed-top navbar-expand-md">
+     <div class="container">
         <a class="navbar-brand logo" href="#">
             <img src="assets/img/logo.png" alt="Evento"/>
         </a>
@@ -70,7 +70,7 @@
             </ul>
         </div>
     </div>
-</header>
+</header> -->
 <!--header end here-->
 
 <!--page title section-->
@@ -150,7 +150,7 @@
 		<div style="display: inline-block; padding-right:15px;" id="listPlaceholder"><h1>Punti di interesse</h1></div>
 		<div style="display: inline-block;"><h3 id="counterPlaces"></h3></div>
 
-		<div class="card text-white bg-danger d-none col-sm-6 mx-auto text-center" id="placePickerHelp">
+		<div class="card text-white bg-danger d-none col-sm-6 mx-auto text-center sticky-top" id="placePickerHelp">
 			<div class="card-body">
 				<span class="card-text text-white">Seleziona <b><span id="nSelect"></span></b> luoghi che hai visitato nel contesto: <b><span id="targetContext"></span></b></span>
 			</div>
@@ -369,6 +369,7 @@ $.ajax({
     		$("#firstConfigHelp").addClass('d-none');
     		$("#placePickerHelp").addClass('d-none');
     		//loadPagePlaces(page);
+        document.location.href = "recommender-manual.html";
     	}
     	$.holdReady(false);
     },

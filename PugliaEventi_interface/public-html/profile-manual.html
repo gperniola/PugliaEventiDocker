@@ -25,10 +25,10 @@
     <link rel="stylesheet" href="assets/css/animate.min.css">
     <!-- Custom styles for this template -->
     <link href="assets/css/main.css" rel="stylesheet">
-    
-    
-        
-  <script>  
+
+
+
+  <script>
     function myrror_getUser() {
     	var x = window.open("", "newWindow", "width=1000,height=800");
     	var obj={};
@@ -42,9 +42,9 @@
 		     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
 		     success: function (response) {
 		       //alert("success " + response.demographics.name.value + " - " + response.demographics.location[0].value);
-		       
+
 		       var myjson = JSON.stringify(response, null, 2);
-		       
+
 		       x.document.open();
 		       x.document.write('<html><body><h2>PROFILE AND DEMOGRAPHIC DATA</h2><pre>' + myjson + '</pre></body></html>');
 		       x.document.close();
@@ -55,7 +55,7 @@
 		     }
 		});
 	}
-    
+
     function myrror_getInterests(){
     	var x = window.open("", "newWindow", "width=1000,height=800");
     	$.ajax({
@@ -63,26 +63,26 @@
 			 //http://90.147.102.243:5000/api/stats/interests/wordcloud?db=gperniola&from=2019-01-01T11:06:12.506Z&to=2019-01-06T11:06:12.506Z&
 		     url: MYRROR_API_ADDR+'api/stats/interests/wordcloud',
 		     contentType: "application/json",
-		     data: { 
-		    	    db: sessionStorage.getItem('userPugliaEvent'), 
+		     data: {
+		    	    db: sessionStorage.getItem('userPugliaEvent'),
 		    	    source: "message_tag"
 		   			},
 		     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
 		     success: function (response) {
 		    	 var myjson = JSON.stringify(response, null, 2);
-		    	 
-		    	 
-		    	 var info = JSON.parse(myjson);    
+
+
+		    	 var info = JSON.parse(myjson);
 		    	 console.log("wo:::" + myjson);
 		    	 //var values = info[0].value;
-		    	 
+
 		    	 var op = info.map(function(item) {
 		    		  return item.value;
 		    		});
 		    	 console.log(op.slice(0,10));
 		    	 myrror_getOpinionMining(op.slice(0,10));
-		    	 
-		    	 
+
+
 		    	 x.document.open();
 			       x.document.write('<html><body><h2>INTERESTS DATA</h2><pre>' + myjson + '</pre></body></html>');
 			       x.document.close();
@@ -92,9 +92,9 @@
 		       alert("failure getInterests");
 		     }
 		});
-    	
+
     }
-    
+
     function myrror_getMap(){
 		var x = window.open("", "newWindow", "width=1000,height=800");
     	$.ajax({
@@ -102,13 +102,13 @@
 			 //http://90.147.102.243:5000/api/stats/map?db=gperniola&from=2019-01-01T13:40:39.952Z&to=2019-01-06T13:40:39.952Z&
 		     url: MYRROR_API_ADDR+'api/stats/map',
 		     contentType: "application/json",
-		     data: { 
-		    	    db: sessionStorage.getItem('userPugliaEvent'), 
+		     data: {
+		    	    db: sessionStorage.getItem('userPugliaEvent'),
 		   			},
 		     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
 		     success: function (response) {
 		    	 var myjson = JSON.stringify(response, null, 2);
-		    	 
+
 		    	 x.document.open();
 			       x.document.write('<html><body><h2>MAP DATA</h2><pre>' + myjson + '</pre></body></html>');
 			       x.document.close();
@@ -118,9 +118,9 @@
 		       alert("failure getMap");
 		     }
 		});
-    	
+
     }
-    
+
     function myrror_getPosts(){
 		var x = window.open("", "newWindow", "width=1000,height=800");
 		var messages = 10;
@@ -132,7 +132,7 @@
 		     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
 		     success: function (response) {
 		    	 var myjson = JSON.stringify(response, null, 2);
-		    	 
+
 		    	 x.document.open();
 			       x.document.write('<html><body><h2>POST DATA</h2><pre>' + myjson + '</pre></body></html>');
 			       x.document.close();
@@ -142,9 +142,9 @@
 		       alert("failure getPosts");
 		     }
 		});
-    	
+
     }
-    
+
     function myrror_getSentiment(){
 		var x = window.open("", "newWindow", "width=1000,height=800");
     	$.ajax({
@@ -152,8 +152,8 @@
 			 //http://90.147.102.243:5000/api/stats/sentiment/timeline?db=gperniola&from=2019-01-07T15:14:46.962Z&to=2019-01-07T15:14:46.962Z&
 		     url: MYRROR_API_ADDR+'api/stats/sentiment/timeline',
 		     contentType: "application/json",
-		     data: { 
-		    	    db: sessionStorage.getItem('userPugliaEvent'), 
+		     data: {
+		    	    db: sessionStorage.getItem('userPugliaEvent'),
 		   			},
 		     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
 		     success: function (response) {
@@ -167,9 +167,9 @@
 		       alert("failure getMap");
 		     }
 		});
-    	
+
     }
-    
+
     function myrror_getEmotion(){
 		var x = window.open("", "newWindow", "width=1000,height=800");
     	$.ajax({
@@ -177,8 +177,8 @@
 			 //http://90.147.102.243:5000/api/stats/emotion/timeline?db=gperniola&from=2019-01-07T15:14:46.962Z&to=2019-01-07T15:14:46.962Z&
 		     url: MYRROR_API_ADDR+'api/stats/emotion/timeline',
 		     contentType: "application/json",
-		     data: { 
-		    	    db: sessionStorage.getItem('userPugliaEvent'), 
+		     data: {
+		    	    db: sessionStorage.getItem('userPugliaEvent'),
 		   			},
 		     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
 		     success: function (response) {
@@ -192,9 +192,9 @@
 		       alert("failure getMap");
 		     }
 		});
-    	
+
     }
-    
+
     function myrror_getOpinionMining(data){
 		var x = window.open("", "newWindow", "width=1000,height=800");
 		var messages = data;
@@ -221,11 +221,11 @@
 		       alert("failure getMap");
 		     }
 		});
-    	
+
     }
-        
+
 </script>
-    
+
 </head>
 <body>
 <div class="loader">
@@ -236,7 +236,7 @@
 <!--header start here -->
 <!--header start here -->
 <header class="header navbar fixed-top navbar-expand-md">
-    <div class="container">
+    <!-- <div class="container">
         <a class="navbar-brand logo" href="#">
             <img src="assets/img/logo.png" alt="Evento"/>
         </a>
@@ -262,7 +262,7 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div> -->
 </header>
 <!--header end here-->
 
@@ -288,7 +288,7 @@
 
         <div class="breadcrumbs">
             <ul>
-                <li><span>Social Accounts</span></li>
+                <li><span>Profilo</span></li>
             </ul>
         </div>
     </div>
@@ -299,28 +299,97 @@
         <div class="event_box">
             <div class="event_info">
                 <div class="event_title">
-                   Le tue identità online
+                   <!-- Le tue identità online -->
                 </div>
                 <div>
                   <div _ngcontent-c18="" class="main-content-page ng-star-inserted">
                   <h5 ><ul id ="checkMyrror"></ul></h5>
-                  <p _ngcontent-c18="">Collega i tuoi account social per poter usufruire dei nostri contenuti personalizzati!<br> L'account Facebook per noi è indispensbile per capire i tuoi interessi, in aggiunta puoi anche collegare  Twetter e LinkedIn.</p>
-                  <h5>Usa la piattaforma Myrror per connettere tutte le tue identità in un singolo posto!</h5><br>
-                  <button id="linkAccount" class=" btn btn-primary btn-rounded" onclick="linkAccountClick()" _ngcontent-c18="" class="mat-raised-button mat-primary" color="primary" mat-raised-button=""><span class="mat-button-wrapper">Collega Account</span><div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div></button>
-                
-                
+                  <div class="card text-white bg-primary" id="firstConfigHelp">
+                  <div class="card-body">
+                    <h5 class="card-title text-white">Configura il tuo profilo!</h5>
+                    <p class="card-text text-white">Inserisci le informazioni sulla tua personalità e i tuoi interessi per ricevere dei suggerimenti personalizzati sui prossivi eventi in Puglia!</p>
+                    <p class="card-text text-white">Segui le istruzioni qui sotto riportare per procedere.</p>
+                  </div>
+                </div>
+                <br><br>
+                    <h5>1.&nbsp&nbspDefinisci i tratti principali della tua personalità selezionando per ogni opzione un punteggio da 1 a 5.</h5>
+                    <form>
+                    <div class="form-group row"><label for="openness" class="col-sm-2 col-form-label" style="color:black;"><b>Apertura Mentale: </b></label>
+          	    			<div class="col-sm-2"><select class="form-control " id="openness">
+          		      			<option value="1">1 (Molto basso)</option>
+          		      			<option value ="2">2 (Basso)</option>
+          		      			<option value="3" selected>3 (Medio)</option>
+                          <option value ="4">4 (Alto)</option>
+                          <option value ="5">5 (Molto alto)</option>
+          	    		</select></div>
+                    <div class="col-sm-8" >Un punteggio elevato indica una persona alternativa, creativa, intellettuale, curiosa, con una fervida immaginazione e che ama ascoltare opinioni nuove e insolite. Un punteggio basso indica una persona convenzionale, tradizionale che non ama le cose diverse e inconsuete e che detesta essere a contatto con idee e punti di vista bizzarri.</div>
+                  </div>
+                    <div class="form-group row"><label for="conscientiousness" class="col-sm-2 col-form-label" style="color:black;"><b>Coscienziosità: </b></label>
+          	    			<div class="col-sm-2"><select class="form-control " id="conscientiousness">
+          		      			<option value="1">1 (Molto basso)</option>
+          		      			<option value ="2">2 (Basso)</option>
+          		      			<option value="3" selected>3 (Medio)</option>
+                          <option value ="4">4 (Alto)</option>
+                          <option value ="5">5 (Molto alto)</option>
+          	    		  </select></div>
+                      <div class="col-sm-8" >Un punteggio elevato indica una persona ben organizzata e autodisciplinata, efficiente e ordinata. Un punteggio basso indica una persona distratta, che trova difficoltà nel motivarsi e non si preoccupa dell’incompletezza o delle imprecisioni. Le persone con un punteggio basso possono nache essere viste come più spontanee e giocose, mentre livelli elevati potrebbero indicare una persona perfezionista.</div>
+                    </div>
+                    <div class="form-group row"><label for="extroversion" class="col-sm-2 col-form-label" style="color:black;"><b>Estroversione: </b></label>
+          	    			<div class="col-sm-2"><select class="form-control " id="extroversion">
+          		      			<option value="1">1 (Molto basso)</option>
+          		      			<option value ="2">2 (Basso)</option>
+          		      			<option value="3" selected>3 (Medio)</option>
+                          <option value ="4">4 (Alto)</option>
+                          <option value ="5">5 (Molto alto)</option>
+                        </select></div>
+                        <div class="col-sm-8" >Un punteggio elevato indica una persona estroversa, vivace, socievole e loquace. Un punteggio basso indica una persona riservata, silenziosa, di basso profilo e che ha bisogno di più tempo da sola per sentirsi a proprio agio.</div>
+                      </div>
+                    <div class="form-group row"><label for="agreeableness" class="col-sm-2 col-form-label" style="color:black;"><b>Piacevolezza: </b></label>
+          	    			<div class="col-sm-2"><select class="form-control " id="agreeableness">
+          		      			<option value="1">1 (Molto basso)</option>
+          		      			<option value ="2">2 (Basso)</option>
+          		      			<option value="3" selected>3 (Medio)</option>
+                          <option value ="4">4 (Alto)</option>
+                          <option value ="5">5 (Molto alto)</option>
+                        </select></div>
+                        <div class="col-sm-8" >Un punteggio elevato indica una persona tollerante, mite, gentile e permissiva. Sono flessibili nelle proprie opinioni e riluttanti a criticare o giudicare. Le persone con un basso punteggio sono scettiche, testarde e brusche. Tendono anche a difendere i pronti punti di vista e le proprie opinioni con forza. </div>
+                      </div>
+                    <div class="form-group row"><label for="neuroticism" class="col-sm-2 col-form-label" style="color:black;"><b>Nevroticismo: </b></label>
+          	    			<div class="col-sm-2"><select class="form-control " id="neuroticism">
+          		      			<option value="1">1 (Molto basso)</option>
+          		      			<option value ="2">2 (Basso)</option>
+          		      			<option value="3" selected>3 (Medio)</option>
+                          <option value ="4">4 (Alto)</option>
+                          <option value ="5">5 (Molto alto)</option>
+                        </select></div>
+                        <div class="col-sm-8" >Un punteggio elevato indica una persona ansiosa, pessimista e vulnerabile allo stress e alla depressione.Le persone con un basso punteggio sono calme, serene, non prone alle preoccupazioni e difficilmente irritabili. </div>
+                      </div>
+                    <div class="form-group row"><label for="empathy" class="col-sm-2 col-form-label" style="color:black;"><b>Empatia: </b></label>
+          	    			<div class="col-sm-2"><select class="form-control " id="empathy">
+          		      			<option value="1">1 (Molto basso)</option>
+          		      			<option value ="2">2 (Basso)</option>
+          		      			<option value="3" selected>3 (Medio)</option>
+                          <option value ="4">4 (Alto)</option>
+                          <option value ="5">5 (Molto alto)</option>
+                        </select></div>
+                        <div class="col-sm-8" >Un punteggio elevato indica una persona cooperativa, in grado di capire e venire incontro alle necessità e i bisogni degli altri.  Un punteggio basso indica una persona poco attenta o indifferente ai bisogni e allo stato emotivo degli altri.</div>
+                      </div>
+                    </form>
+                    <h5>2. Inserisci 5 frasi che rappresentano te e i tuoi interessi.</h5>
+                    <div>Puoi anche inserire dei messaggi che hai lasciato di recente su social network, oppure un elenco che indichi i tuoi interessi principali.</div>
+                    <form>
+              				<div class="form-group row"><div class="col-sm-10"><input type="text" class="form-control" id="status1" required placeholder="Inserisci una frase..."/></div></div>
+                      <div class="form-group row"><div class="col-sm-10"><input type="text" class="form-control" id="status2" required placeholder="Inserisci una frase..."/></div></div>
+                      <div class="form-group row"><div class="col-sm-10"><input type="text" class="form-control" id="status3" required placeholder="Inserisci una frase..."/></div></div>
+                      <div class="form-group row"><div class="col-sm-10"><input type="text" class="form-control" id="status4" required placeholder="Inserisci una frase..."/></div></div>
+                      <div class="form-group row"><div class="col-sm-10"><input type="text" class="form-control" id="status5" required placeholder="Inserisci una frase..."/></div></div>
+                      <div class="form-group"><a  class=" btn btn-primary mb-2" style="color:white;" onclick="prepareData();">Prosegui</a></div>
+                  </form>
+
                 </div>
                 </div>
-              </div>  				
+              </div>
         </div>
-		<br><br>
-		<button class=" btn " onclick="myrror_getUser();">User Data</button>
-		<button class=" btn " onclick="myrror_getInterests();">Interests Data</button>
-		<button class=" btn " onclick="myrror_getMap();">Map Data</button>
-		<button class=" btn " onclick="myrror_getSentiment();">Sentiment Data</button>
-		<button class=" btn " onclick="myrror_getEmotion();">Emotion Data</button>
-		<button class=" btn " onclick="myrror_getOpinionMining();">Opinion Mining</button>
-		<button class=" btn " onclick="myrror_getPosts();">Posts</button>
     </div>
 </section>
 <!--event section end -->
@@ -478,19 +547,39 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 
 <script type='text/javascript'>
-$(document).ready(function(){ 
+
+console.log("starting getuserconfig call...");
+$.ajax({
+    type: 'post',
+    url: DJANGO_API_ADDR+'getUserConfig/',
+    data:{
+    	'username': sessionStorage.getItem('userPugliaEvent'),
+    },
+    success: function (response) {
+    	console.log("response received");
+    	firstConfigDone = response.first_config_done;
+    	if(firstConfigDone)
+    		window.location.replace("recommender-manual.html");
+    },
+    error: function(e) {
+      var je = JSON.parse(e.responseText);
+       alert("ko");
+    }
+});
+
+$(document).ready(function(){
 	var userData = JSON.parse(sessionStorage.getItem('userData'));
-	
-	
+
+
 	if (userData.demographics.hasOwnProperty('name'))
 	 	document.getElementById("userName").innerHTML = userData.demographics.name.value;
 	else document.getElementById("userName").innerHTML = sessionStorage.getItem("userPugliaEvent") ;
-	 
+
 	if (userData.hasOwnProperty('pictureUrl'))
 	 	document.getElementById("profileImage").src = userData.pictureUrl;
-	
-	checkConnectedSocials(userData);
-	getBehaviorData(userData);
+
+	//checkConnectedSocials(userData);
+	//getBehaviorData(userData);
 });
 
 
@@ -500,57 +589,208 @@ function checkConnectedSocials(data){
 		NoSocialConnected = false;
 		var li = document.createElement("li");
 		li.appendChild(document.createTextNode("Twitter - " + data.identities.twitter.screen_name));
-		document.getElementById("checkMyrror").appendChild(li); 
+		document.getElementById("checkMyrror").appendChild(li);
 	}
 	if (data.identities.hasOwnProperty('linkedIn')){
 		NoSocialConnected = false;
 		var li = document.createElement("li");
 		li.appendChild(document.createTextNode("LinkedIn - " + data.identities.linkedIn.emailAddress));
-		document.getElementById("checkMyrror").appendChild(li); 
+		document.getElementById("checkMyrror").appendChild(li);
 	}
 	if (data.identities.hasOwnProperty('instagram')){
 		NoSocialConnected = false;
 		var li = document.createElement("li");
-		li.appendChild(document.createTextNode("Instagram - " + data.identities.instagram.username)); 
-		document.getElementById("checkMyrror").appendChild(li); 
+		li.appendChild(document.createTextNode("Instagram - " + data.identities.instagram.username));
+		document.getElementById("checkMyrror").appendChild(li);
 	}
 	if (data.identities.hasOwnProperty('fitbit')){
 		NoSocialConnected = false;
 		var li = document.createElement("li");
-		li.appendChild(document.createTextNode("Fitbit - " + data.identities.fitbit.displayName)); 
-		document.getElementById("checkMyrror").appendChild(li); 
+		li.appendChild(document.createTextNode("Fitbit - " + data.identities.fitbit.displayName));
+		document.getElementById("checkMyrror").appendChild(li);
 	}
 	if (NoSocialConnected){
 		var li = document.createElement("li");
-	li.appendChild(document.createTextNode("No linked account")); 
-	document.getElementById("checkMyrror").appendChild(li); 
+	//li.appendChild(document.createTextNode("No linked account"));
+//	document.getElementById("checkMyrror").appendChild(li);
 	}
 }
 
-function getBehaviorData(data){
-	if (data.hasOwnProperty("empathies") && data.hasOwnProperty("personalities")){
-		
-		sessionStorage.setItem('empathy', data.empathies[data.empathies.length-1].value);
-		sessionStorage.setItem('agreeableness', data.personalities[data.personalities.length-1].agreeableness);
-		sessionStorage.setItem('conscientiousness', data.personalities[data.personalities.length-1].conscientiousness);
-		sessionStorage.setItem('extroversion', data.personalities[data.personalities.length-1].extroversion);
-		sessionStorage.setItem('neuroticism', data.personalities[data.personalities.length-1].neuroticism);
-		sessionStorage.setItem('openness', data.personalities[data.personalities.length-1].openness);
-		
-		console.log(	"emp: " + sessionStorage.getItem('empathy') + 
-						"\nagr: " + sessionStorage.getItem('agreeableness') + 
-						"\ncon: " + sessionStorage.getItem('conscientiousness') + 
-						"\next: " + sessionStorage.getItem('extroversion') + 
-						"\nneu: " + sessionStorage.getItem('neuroticism') + 
+
+
+
+function calculateVal(value){
+  return Math.round(((value/5)-0.1) * 10 ) / 10;
+}
+
+
+function prepareData(){
+		sessionStorage.setItem('empathy', calculateVal($("#empathy").val()));
+		sessionStorage.setItem('agreeableness', calculateVal($("#agreeableness").val()));
+		sessionStorage.setItem('conscientiousness', calculateVal($("#conscientiousness").val()));
+		sessionStorage.setItem('extroversion', calculateVal($("#extroversion").val()));
+		sessionStorage.setItem('neuroticism', calculateVal($("#neuroticism").val()));
+		sessionStorage.setItem('openness', calculateVal($("#openness").val()));
+
+		console.log(	"emp: " + sessionStorage.getItem('empathy') +
+						"\nagr: " + sessionStorage.getItem('agreeableness') +
+						"\ncon: " + sessionStorage.getItem('conscientiousness') +
+						"\next: " + sessionStorage.getItem('extroversion') +
+						"\nneu: " + sessionStorage.getItem('neuroticism') +
 						"\nope: " + sessionStorage.getItem('openness')
 		);
-	}
+    statusFilled = true;
+    for (var i = 1; i <=5; i++){
+      if(!$("#status"+i).val())
+        statusFilled = false;
+      else
+        sessionStorage.setItem('status'+i, $("#status"+i).val());
+    }
+    if(!statusFilled)
+      console.log("status not filled");
+    else
+      document.location.href = "places-manual.html";
+
 }
 
 function linkAccountClick(){
 	window.open("http://90.147.102.243:9090/identities/");
 }
 
+
+
+
+
+
+/*
+var interests = null;
+
+function sendInterestsData(){
+  if (insertedTags < 3){
+    alert("Inserire almeno 3 tag per proseguire");
+    return;
+  }
+
+  var payload = {
+    username: sessionStorage.getItem('userPugliaEvent'),
+    interessi:[]
+  }
+  for (var i = 0; i < interests.length; i++){
+    var interest = {
+        nome: interests[i],
+        tags: []
+    };
+    for (var j = 0; j < 3; j++){
+      interest.tags.push({
+        tag:$("#tag"+i+"t"+j).val(),
+        mood:$("#emotion"+i+"t"+j).val(),
+        companionship:$("#companionship"+i+"t"+j).val()
+      });
+    }
+    payload.interessi.push(interest);
+  }
+
+$.ajax({
+    type: 'post',
+    url: DJANGO_API_ADDR+'CreateMyrrorUserModel/',
+    contentType: "application/json",
+    data: JSON.stringify(payload),
+    success: function (response) {
+      console.log("success")
+      document.location.href = "recommender.html";
+    },
+    error: function(e) {
+      var je = JSON.parse(e.responseText);
+       alert("ko");
+    }
+});
+
+}*/
+
+
+
+
+
+/*
+function loadInterests(){
+  $.ajax({
+   type: 'get',
+     url: MYRROR_API_ADDR+'api/stats/interests/wordcloud',
+     contentType: "application/json",
+     data: {
+          db: sessionStorage.getItem('userPugliaEvent'),
+          source: "message_tag"
+        },
+     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
+     success: function (response) {
+       var myjson = JSON.stringify(response, null, 2);
+
+
+       var info = JSON.parse(myjson);
+       console.log("wo:::" + myjson);
+       //var values = info[0].value;
+
+       var ops = info.map(function(item) {
+          return item.value;
+        });
+       var op = ops.slice(0,9);
+       interests = op;
+       console.log(op);
+       if (op.length > 0){
+         $("#interessiMyrror").empty();
+         var formHTML = "";
+         for (var i = 0; i < op.length; i++){
+           formHTML = formHTML + '<div class="row"><div class="col-sm-3" id="interest'+i+'"><b>'+op[i]+'</b><br><a onClick="formClick('+i+')" style="text-decoration:underline; color:#f50136;"><b>Visualizza i tag &#187;</b></a></div>'+
+                      '<div class="col-sm-9 d-none" id="form-row'+i+'">';
+
+           for (var j = 0; j < 3; j++ ){
+              formHTML = formHTML +
+                '<div class="form-group form-inline col-sm-9">'+
+                '<select class="selectInterest form-control" id="tag'+i+'t'+j+'">'+
+                    '<option value="Nessuno">Nessuno</option>'+
+                    '<option value ="Bere">Bere</option>'+
+                    '<option value="Mangiare">Mangiare</option>'+
+                    '<option value="Benessere">Benessere</option>'+
+                    '<option value="Dormire">Dormire</option>'+
+                    '<option value="Goloso">Goloso</option>'+
+                    '<option value="Libri">Libri</option>'+
+                    '<option value="Romantico">Romantico</option>'+
+                    '<option value="Museo">Museo</option>'+
+                    '<option value="Spiaggia">Spiaggia</option>'+
+                    '<option value="Teatro">Teatro</option>'+
+                '</select>'+
+                '<select class="form-control " id="emotion'+i+'t'+j+'">'+
+                    '<option value="joyful">Felice</option>'+
+                    '<option value ="sad">Triste</option>'+
+                    '<option value="angry">Arrabbiato</option>'+
+                '</select>'+
+                '<select class="form-control" id="companionship'+i+'t'+j+'">'+
+                    '<option value="withFriends">In compagnia</option>'+
+                    '<option value="alone">Solo</option>'+
+                '</select>'+
+                '</div>';
+           }
+           formHTML = formHTML + '</div></div><hr/>';
+         }
+
+          $("#interessiMyrror").append(formHTML + '<div class="form-group"><a  class=" btn btn-primary mb-2" style="color:white;" onclick="sendInterestsData();">Prosegui</a></div>'+'</div>');
+       }
+       else {
+         $("#interessiMyrror").append( "<div class='row'>Myrror non è riuscito a generare degli interessi per te. I tuoi messaggi twitter potrebbero non essere in numero sufficiente oppure Myrror ha bisogno di ulteriore tempo per analizzarli.<br>Riprova nuovamente tra qualche ora.</div>");
+       }
+     },
+     error: function(e) {
+       var je = JSON.parse(e.responseText);
+       alert("failure getInterests");
+     }
+});
+}
+
+function formClick(x){
+  $("#form-row"+x).toggleClass('d-none');
+}
+
+*/
 
   </script>
 

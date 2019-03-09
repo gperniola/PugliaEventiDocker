@@ -3195,3 +3195,10 @@ textarea.form-control {
 .ui-autocomplete {
     z-index: 1100;
 }
+
+.custom-control-label::before,
+.custom-control-label::after {
+top: .8rem;
+width: 1.25rem;
+height: 1.25rem;
+}

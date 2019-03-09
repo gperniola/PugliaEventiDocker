@@ -502,7 +502,7 @@ $.ajax({
     	console.log("response received");
     	firstConfigDone = response.first_config_done;
     	if(firstConfigDone)
-    		window.location.replace("recommender.html");
+    		window.location.replace("recommender-myrror.html");
     },
     error: function(e) {
       var je = JSON.parse(e.responseText);
@@ -620,7 +620,7 @@ $.ajax({
     data: JSON.stringify(payload),
     success: function (response) {
       console.log("success")
-      document.location.href = "recommender.html";
+      document.location.href = "recommender-myrror.html";
     },
     error: function(e) {
       var je = JSON.parse(e.responseText);
