@@ -15,7 +15,7 @@ from RuleBasedRecommender import Recommender
 from PopularityRecommender import Recommender as PopRecommender
 #from recommender_webapp.models import Comune, Distanza, Place, Mood, Companionship, Event
 from .models import Place, Mood, Companionship, Valutazione, Utente, Comune, Event, Distanza, PrevisioniEventi, PrevisioniComuni, WeatherConditions, Sperimentazione, DummyPlace
-from .serializers import UtenteSerializer, PlaceSerializer, EventSerializer, ValutazioneSerializer
+from .serializers import UtenteSerializer, PlaceSerializer, EventSerializer, ValutazioneSerializer, SperimentazioneSerializer
 
 from .common.data_loader import DataLoader
 
@@ -23,6 +23,12 @@ def addUserDb(username, location):
     utente = Utente.create(username,location)
     utente.save()
     return str(utente.id)
+
+class getDatiSperimentazione(APIView):
+    def get(self, request):
+        sp = Sperimentazione.objects.all()
+        serializer = SperimentazioneSerializer(instance=sp, many=True)
+        return JsonResponse(serializer.data,safe=False, status=200)
 
 
 class getComuni(APIView):

@@ -1,0 +1,333 @@
+<html lang="en">
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- ========== Title ========== -->
+    <title> Risultati</title>
+    <!-- ========== Favicon Ico ========== -->
+    <!--<link rel="icon" href="fav.ico">-->
+    <!-- ========== STYLESHEETS ========== -->
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts Icon CSS -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/et-line.css" rel="stylesheet">
+    <link href="assets/css/ionicons.min.css" rel="stylesheet">
+    <!-- Carousel CSS -->
+    <link href="assets/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="assets/css/owl.theme.default.min.css" rel="stylesheet">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <!-- Custom styles for this template -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+    <link href="assets/css/spinner.css" rel="stylesheet">
+</head>
+
+  <body>
+    <section class="pt100 pb100">
+        <div class="container"  id="main-container" style="color:black;">
+          <table class="table" style="color:black;">
+          <tbody>
+          <tr><th scope="row ">Numero di test effettuati:</th><td id="n1">0</td></tr>
+          <tr><th scope="row ">Numero di test effettuati con Myrror:</th><td id="n2">0</td></tr>
+          <tr><th scope="row ">Numero di test effettuati con inserimento manuale:</th><td id="n3">0</td></tr>
+          </tbody></table>
+          <br><br>
+
+          <table class="table" style="color:black;">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">All</th>
+                <th scope="col">Myrror</th>
+                <th scope="col">Manual</th>
+              </tr>
+            </thead>
+          <tbody>
+          <tr><th scope="row ">Lista preferita per interesse:</th><td id="l_int_all">0</td><td id="l_int_myrror">0</td><td id="l_int_manual">0</td></tr>
+          <tr><th scope="row ">Lista preferita per personalità:</th><td id="l_pers_all">0</td><td id="l_pers_myrror">0</td><td id="l_pers_manual">0</td></tr>
+          </tbody></table>
+          <br><br>
+
+          <table class="table" style="color:black;" id="stats-table">
+            <thead>
+              <tr>
+                <th scope="col">Precision@K</th>
+                <th scope="col">All</th>
+                <th scope="col">Myrror</th>
+                <th scope="col">Manual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Precision@5 (LightFM)</th>
+                <td id="p11">0</td>
+                <td id="p12">0</td>
+                <td id="p13">0</td>
+              </tr>
+              <tr>
+                <th scope="row">Precision@5 (Rule-based)</th>
+                <td id="p21">0</td>
+                <td id="p22">0</td>
+                <td id="p23">0</td>
+              </tr>
+              <tr>
+                <th scope="row">Precision@5 (Popularity)</th>
+                <td id="p31">0</td>
+                <td id="p32">0</td>
+                <td id="p33">0</td>
+              </tr>
+            </tbody>
+          </table>
+          <br><br>
+          <h5 class = "row">Commenti degli utenti:</h5>
+          <div id="note"></div>
+
+          <!-- <table class="table" style="color:black;" id="global-table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Rule-based</th>
+                <th scope="col">LightFM</th>
+                <th scope="col">Popularity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td id="g11">0</td>
+                <td id="g12">0</td>
+                <td id="g13">0</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td id="g21">0</td>
+                <td id="g22">0</td>
+                <td id="g23">0</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td id="g31">0</td>
+                <td id="g32">0</td>
+                <td id="g33">0</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td id="g41">0</td>
+                <td id="g42">0</td>
+                <td id="g43">0</td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td id="g51">0</td>
+                <td id="g52">0</td>
+                <td id="g53">0</td>
+              </tr>
+              <tr>
+                <th scope="row">Lista preferita per interesse</th>
+                <td id="g_pref_int">LightFM</td>
+              </tr>
+              <tr>
+                <th scope="row">Lista preferita per personalità</th>
+                <td id="g_pref_pers">LightFM</td>
+              </tr>
+            </tbody>
+          </table> -->
+        </div>
+    </section>
+
+      <!-- jquery -->
+      <script src="assets/js/jquery.min.js"></script>
+      <!-- bootstrap -->
+      <script src="assets/js/popper.js"></script>
+      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="assets/js/waypoints.min.js"></script>
+      <!--slick carousel -->
+      <script src="assets/js/owl.carousel.min.js"></script>
+      <!--parallax -->
+      <script src="assets/js/parallax.min.js"></script>
+      <!--Counter up -->
+      <script src="assets/js/jquery.counterup.min.js"></script>
+      <!--Counter down -->
+      <script src="assets/js/jquery.countdown.min.js"></script>
+      <!-- WOW JS -->
+      <script src="assets/js/wow.min.js"></script>
+      <!-- Custom js -->
+      <script src="assets/js/custom/main.js"></script>
+
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.js"></script>
+
+      <!-- Date picker -->
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+      <!-- Custom js - Functions and constants -->
+      <script src="assets/js/custom/constants.js"></script>
+      <script src="assets/js/custom/utils.js"></script>
+
+      <script>
+
+      $.ajax({
+          type: 'get',
+          url: DJANGO_API_ADDR+'getDatiSperimentazione/',
+          success: function (response) {
+            //$("#main-container").html(JSON.stringify(response));
+
+            numAll = 0;
+            numMyr = 0;
+            numMan = 0;
+
+            //lista indice 1 = lightfm, 2 = rule-based, 3 = popularity
+            listaIntMyr = {LightFM:0, Rulebased:0, Popularity:0};
+            listaPerMyr = {LightFM:0, Rulebased:0, Popularity:0};
+            listaIntMan = {LightFM:0, Rulebased:0, Popularity:0};
+            listaPerMan = {LightFM:0, Rulebased:0, Popularity:0};
+
+            for (var i = 0; i < response.length; i++){
+              var x = response[i];
+
+              numAll++;
+              if (x.schema == "myrror"){
+                 numMyr++;
+                 if (x.lista_preferita_interesse == "L") listaIntMyr.LightFM++;
+                 else if (x.lista_preferita_interesse == "R") listaIntMyr.Rulebased++;
+                 else listaIntMyr.Popularity++;
+
+                 if (x.lista_preferita_personalita == "L") listaPerMyr.LightFM++;
+                 else if (x.lista_preferita_personalita == "R") listaPerMyr.Rulebased++;
+                 else listaPerMyr.Popularity++;
+              }
+              else{
+                 numMan++;
+                 if (x.lista_preferita_interesse == "L") listaIntMan.LightFM++;
+                 else if (x.lista_preferita_interesse == "R") listaIntMan.Rulebased++;
+                 else listaIntMan.Popularity++;
+
+                 if (x.lista_preferita_personalita == "L") listaPerMan.LightFM++;
+                 else if (x.lista_preferita_personalita == "R") listaPerMan.Rulebased++;
+                 else listaPerMan.Popularity++;
+              }
+
+            }
+
+            listaIntALL = {LightFM:listaIntMyr.LightFM+listaIntMan.LightFM, Rulebased:listaIntMyr.Rulebased+listaIntMan.Rulebased, Popularity:listaIntMyr.Popularity+listaIntMan.Popularity};
+            listaPerALL = {LightFM:listaPerMyr.LightFM+listaPerMan.LightFM, Rulebased:listaPerMyr.Rulebased+listaPerMan.Rulebased, Popularity:listaPerMyr.Popularity+listaPerMan.Popularity};
+
+
+
+            $("#n1").html(numAll);
+            $("#n2").html(numMyr);
+            $("#n3").html(numMan);
+
+            var obj = listaIntALL;
+            var key = Object.keys(obj).reduce(function(a, b){ return obj[a] > obj[b] ? a : b})
+            var val = Math.round(obj[key]*100/numAll);
+            $("#l_int_all").html(key + " ("+val+"%)");
+
+            var obj = listaPerALL;
+            var key = Object.keys(obj).reduce(function(a, b){ return obj[a] > obj[b] ? a : b})
+            var val = Math.round(obj[key]*100/numAll);
+            $("#l_pers_all").html(key + " ("+val+"%)");
+
+            var obj = listaIntMyr;
+            var key = Object.keys(obj).reduce(function(a, b){ return obj[a] > obj[b] ? a : b})
+            var val = Math.round(obj[key]*100/numMyr);
+            $("#l_int_myrror").html(key + " ("+val+"%)");
+
+            var obj = listaPerMyr;
+            var key = Object.keys(obj).reduce(function(a, b){ return obj[a] > obj[b] ? a : b})
+            var val = Math.round(obj[key]*100/numMyr);
+            $("#l_pers_myrror").html(key + " ("+val+"%)");
+
+            var obj = listaIntMan;
+            var key = Object.keys(obj).reduce(function(a, b){ return obj[a] > obj[b] ? a : b})
+            var val = Math.round(obj[key]*100/numMan);
+            $("#l_int_manual").html(key + " ("+val+"%)");
+
+            var obj = listaPerMan;
+            var key = Object.keys(obj).reduce(function(a, b){ return obj[a] > obj[b] ? a : b})
+            var val = Math.round(obj[key]*100/numMan);
+            $("#l_pers_manual").html(key + " ("+val+"%)");
+
+
+            P_MyrLight = 0;
+            P_MyrRule = 0;
+            P_MyrPop = 0;
+            P_ManLight = 0;
+            P_ManRule = 0;
+            P_ManPop = 0;
+            for (var i = 0; i < response.length; i++){
+              var x = response[i];
+              if (x.schema == "myrror"){
+                var PrecLight = 0;
+                var PrecRule = 0;
+                var PrecPop = 0;
+                for(var z = 1; z <=5; z++){
+                  if(x["l"+z] == true)
+                    PrecLight++;
+                  if(x["r"+z] == true)
+                    PrecRule++;
+                  if(x["p"+z] == true)
+                    PrecPop++;
+                }
+                PrecLight = PrecLight/5;
+                PrecRule = PrecRule/5;
+                PrecPop = PrecPop/5;
+                P_MyrLight = P_MyrLight + PrecLight;
+                P_MyrRule = P_MyrRule + PrecRule;
+                P_MyrPop = P_MyrPop + PrecPop;
+              }
+
+              else{
+                var PrecLight = 0;
+                var PrecRule = 0;
+                var PrecPop = 0;
+                for(var z = 1; z <=5; z++){
+                  if(x["l"+z] == true)
+                    PrecLight++;
+                  if(x["r"+z] == true)
+                    PrecRule++;
+                  if(x["p"+z] == true)
+                    PrecPop++;
+                }
+                PrecLight = PrecLight/5;
+                PrecRule = PrecRule/5;
+                PrecPop = PrecPop/5;
+                P_ManLight = P_ManLight + PrecLight;
+                P_ManRule = P_ManRule + PrecRule;
+                P_ManPop = P_ManPop + PrecPop;
+              }
+            }
+
+            $("#p11").html(((P_MyrLight + P_ManLight)/numAll).toFixed(2));
+            $("#p12").html((P_MyrLight/numMyr).toFixed(2));
+            $("#p13").html((P_ManLight/numMan).toFixed(2));
+            $("#p21").html(((P_MyrRule + P_ManRule)/numAll).toFixed(2));
+            $("#p22").html((P_MyrRule/numMyr).toFixed(2));
+            $("#p23").html((P_ManRule/numMan).toFixed(2));
+            $("#p31").html(((P_MyrPop + P_ManPop)/numAll).toFixed(2));
+            $("#p32").html((P_MyrPop/numMyr).toFixed(2));
+            $("#p33").html((P_ManPop/numMan).toFixed(2));
+
+            for (var i = 0; i < response.length; i++){
+              var x = response[i];
+              if (x.note != "")
+                $("#note").append("<div class='row'><b>>User test " + x.schema + ": &nbsp;</b>" + x.note + "</div>");
+            }
+
+          },
+          error: function(e) {
+            var je = JSON.parse(e.responseText);
+            alert("ko");
+          }
+      });
+
+
+
+      </script>
+  </body>
+</html>

@@ -156,7 +156,7 @@ class Place(models.Model):
             labels += constant.ARTE + ', '
         if self.cultura == 1:
             labels += constant.CULTURA + ', '
-        if self.foklore == 1:
+        if self.folklore == 1:
             labels += constant.FOLKLORE + ', '
         if self.cittadinanza == 1:
             labels += constant.CITTADINANZA + ', '

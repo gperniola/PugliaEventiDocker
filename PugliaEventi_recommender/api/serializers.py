@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Utente, Place, Event, Distanza, PrevisioniEventi, PrevisioniComuni, Valutazione
+from .models import Utente, Place, Event, Distanza, PrevisioniEventi, PrevisioniComuni, Valutazione, Sperimentazione
 
 from datetime import datetime
 
@@ -46,7 +46,6 @@ class PlaceSerializer(serializers.ModelSerializer):
 		if obj.romantico == 1: tags.append('romantico')
 		if obj.museo == 1: tags.append('museo')
 		if obj.spiaggia == 1: tags.append('spiaggia')
-
 		if obj.freeEntry == 1: tags.append('free entry')
 		if obj.arte == 1: tags.append('arte')
 		if obj.avventura == 1: tags.append('avventura')
@@ -183,6 +182,14 @@ class EventSerializer(serializers.ModelSerializer):
 		if obj.teatro == 1: tags.append('teatro')
 		if obj.vita_notturna == 1: tags.append('vita notturna')
 		if obj.featured == 1: tags.append('featured')
+		#prendi tags anche dal posto
+		#if obj.place:
+		#	p = Place.objects.get(name=obj.place)
+		#	for x in p.labels().split(','):
+		#		x.strip()
+		#		tags.append(x)
+		#	tags.pop()
+		#	tags = list(set(tags))
 		return tags
 
 
@@ -190,3 +197,8 @@ class ValutazioneSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Valutazione
 		fields = ('mood', 'companionship', 'place','rating')
+
+class SperimentazioneSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Sperimentazione
+		fields = '__all__'
