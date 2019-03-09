@@ -390,6 +390,22 @@ function placePicker(data){
 
 	ancoraDaInserire = nAngryAloneToSelect + nAngryFriendsToSelect + nJoyfulAloneToSelect + nJoyfulFriendsToSelect + nSadAloneToSelect + nSadFriendsToSelect;
 
+  if (nJoyfulFriendsToSelect > 0){
+    n_select = nJoyfulFriendsToSelect;
+    contextString = "Felice, In compagnia";
+    targetMood= "joyful";
+    targetCompanionship="withFriends";
+    ancoraDaInserire--;
+    return;
+  }
+  if (nJoyfulAloneToSelect > 0){
+    n_select = nJoyfulAloneToSelect;
+    contextString = "Felice, Da solo";
+    targetMood= "joyful";
+    targetCompanionship="alone";
+    ancoraDaInserire--;
+    return;
+  }
 	if (nAngryAloneToSelect > 0){
 		//document.getElementById("nSelect").innerHTMl = nAngryAloneToSelect;
 		//document.getElementById("actualContext").innerHTMl = "Arrabbiato, Da solo";
@@ -409,22 +425,7 @@ function placePicker(data){
 		ancoraDaInserire--;
 		return;
 	}
-	if (nJoyfulAloneToSelect > 0){
-		n_select = nJoyfulAloneToSelect;
-		contextString = "Felice, Da solo";
-		targetMood= "joyful";
-		targetCompanionship="alone";
-		ancoraDaInserire--;
-		return;
-	}
-	if (nJoyfulFriendsToSelect > 0){
-		n_select = nJoyfulFriendsToSelect;
-		contextString = "Felice, In compagnia";
-		targetMood= "joyful";
-		targetCompanionship="withFriends";
-		ancoraDaInserire--;
-		return;
-	}
+
 	if (nSadAloneToSelect > 0){
 		n_select = nSadAloneToSelect;
 		contextString = "Triste, Da solo";

@@ -603,7 +603,7 @@ function sendInterestsData(){
         nome: interests[i],
         tags: []
     };
-    for (var j = 0; j < 3; j++){
+    for (var j = 0; j < 5; j++){
       interest.tags.push({
         tag:$("#tag"+i+"t"+j).val(),
         mood:$("#emotion"+i+"t"+j).val(),
@@ -666,7 +666,7 @@ function loadInterests(){
            formHTML = formHTML + '<div class="row"><div class="col-sm-3" id="interest'+i+'"><b>'+op[i]+'</b><br><a onClick="formClick('+i+')" style="text-decoration:underline; color:#f50136;"><b>Visualizza i tag &#187;</b></a></div>'+
                       '<div class="col-sm-9 d-none" id="form-row'+i+'">';
 
-           for (var j = 0; j < 3; j++ ){
+           for (var j = 0; j < 5; j++ ){
               formHTML = formHTML +
                 '<div class="form-group form-inline col-sm-9">'+
                 '<select class="selectInterest form-control" id="tag'+i+'t'+j+'">'+
@@ -681,6 +681,21 @@ function loadInterests(){
                     '<option value="Museo">Museo</option>'+
                     '<option value="Spiaggia">Spiaggia</option>'+
                     '<option value="Teatro">Teatro</option>'+
+                    '<option value="Informale">Informale</option>'+
+                    '<option value="Raffinato">Raffinato</option>'+
+                    '<option value="Avventura">Avventura</option>'+
+                    '<option value="Cinema">Cinema</option>'+
+                    '<option value="Arte">Arte</option>'+
+                    '<option value="Cultura">Cultura</option>'+
+                    '<option value="Folklore">Folklore</option>'+
+                    '<option value="Cittadinanza">Cittadinanza</option>'+
+                    '<option value="Vita_notturna">Vita notturna</option>'+
+                    '<option value="Concerti">Concerti</option>'+
+                    '<option value="Jazz">Jazz</option>'+
+                    '<option value="Musica_classica">Musica classica</option>'+
+                    '<option value="Geek">Geek</option>'+
+                    '<option value="Bambini">Bambini</option>'+
+                    '<option value="Free_entry">Free entry</option>'+
                 '</select>'+
                 '<select class="form-control " id="emotion'+i+'t'+j+'">'+
                     '<option value="joyful">Felice</option>'+

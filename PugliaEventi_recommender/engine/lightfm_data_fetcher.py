@@ -12,7 +12,10 @@ def load_items_from_db():
     for line in Place.objects.all():
             db_items.append(str(line.placeId) + "," + str(line.name).replace(",", "-") + "," + str(line.location).replace(",", "-") + "," + str(line.freeEntry) + "," + \
             str(line.bere) + "," + str(line.mangiare) + "," + str(line.benessere) + "," + str(line.dormire) + "," + str(line.goloso) + "," \
-            + str(line.libri) + "," + str(line.romantico) + "," + str(line.museo) + "," + str(line.spiaggia) + "," + str(line.teatro))
+            + str(line.libri) + "," + str(line.romantico) + "," + str(line.museo) + "," + str(line.spiaggia) + "," + str(line.teatro) \
+            + "," + str(line.informale) + "," + str(line.raffinato) + "," + str(line.avventura) + "," + str(line.cinema) + "," + str(line.arte) + "," + str(line.cultura) \
+            + "," + str(line.folklore) + "," + str(line.cittadinanza) + "," + str(line.vita_notturna) + "," + str(line.concerti) + "," + str(line.jazz) + "," + str(line.musica_classica) \
+            + "," + str(line.geek) + "," + str(line.bambini))
     return db_items
 
 

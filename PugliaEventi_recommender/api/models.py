@@ -144,6 +144,34 @@ class Place(models.Model):
             labels += constant.SPIAGGIA + ', '
         if self.teatro == 1:
             labels += constant.TEATRO + ', '
+        if self.informale == 1:
+            labels += constant.INFORMALE + ', '
+        if self.raffinato == 1:
+            labels += constant.RAFFINATO + ', '
+        if self.avventura == 1:
+            labels += constant.AVVENTURA + ', '
+        if self.cinema == 1:
+            labels += constant.CINEMA + ', '
+        if self.arte == 1:
+            labels += constant.ARTE + ', '
+        if self.cultura == 1:
+            labels += constant.CULTURA + ', '
+        if self.foklore == 1:
+            labels += constant.FOLKLORE + ', '
+        if self.cittadinanza == 1:
+            labels += constant.CITTADINANZA + ', '
+        if self.vita_notturna == 1:
+            labels += constant.VITA_NOTTURNA + ', '
+        if self.concerti == 1:
+            labels += constant.CONCERTI + ', '
+        if self.jazz == 1:
+            labels += constant.JAZZ + ', '
+        if self.musica_classica == 1:
+            labels += constant.MUSICA_CLASSICA + ', '
+        if self.geek== 1:
+            labels += constant.GEEK + ', '
+        if self.bambini == 1:
+            labels += constant.BAMBINI + ', '
         return labels
 
     def __str__(self):
