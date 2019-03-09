@@ -486,7 +486,7 @@ class FindEventRecommendationsAllRecommenders(APIView):
 
         if location_filter == '':
             location = users[0].location
-            range = 250
+            range = 300
         else:
             location = location_filter
 
