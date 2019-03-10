@@ -1,12 +1,14 @@
 from operator import itemgetter
 from django.db.models import Q
 from datetime import datetime
+import datedelta
 from django.db.models import Max
 
 
 from api.common import constant
 from api.models import Place, Distanza, Event
-from PopularityRecommender import Recommender as PopRecommender
+
+import random
 
 
 
@@ -36,11 +38,11 @@ def prefiltering (user_location, distance, weather_conditions, no_weather_data):
     filtered_events = Event.objects.filter(date_to__gte=datetime.today().date())
     print("+++++[RULEBASED]: n. of filtered events by date: " + str(len(filtered_events)))
     if int(distance):
-        locations_in_range = [distance[0] for distance in
+        locations_in_rangex = [distance[0] for distance in
                               Distanza.objects.filter(cittaA=user_location,distanza__lte=distance).order_by('distanza').values_list('cittaB')]
 
-        locations_in_range = [user_location] + locations_in_range
-        filtered_events = filtered_events.filter(comune__in=locations_in_range)
+        locations_in_rangex = [user_location] + locations_in_rangex
+        filtered_events = filtered_events.filter(comune__in=locations_in_rangex)
         print("+++++[RULEBASED]: n. of filtered events by range: " + str(len(filtered_events)))
 
     weather_filtered_events = []
@@ -75,7 +77,7 @@ def prefiltering (user_location, distance, weather_conditions, no_weather_data):
     return events
 
 
-def find_recommendations(data, location_filter, range, weather, no_weather_data):
+def find_recommendations(data, location_filter, rangex, weather, no_weather_data):
     emp = float(data["behavior"]["empathy"])
     agr = float(data["behavior"]["agreeableness"])
     con = float(data["behavior"]["conscientiousness"])
@@ -109,7 +111,7 @@ def find_recommendations(data, location_filter, range, weather, no_weather_data)
 
 
 
-    filtered_events = prefiltering(location_filter, range, weather, no_weather_data)
+    filtered_events = prefiltering(location_filter, rangex, weather, no_weather_data)
     recommended_events = []
     resto_inserimenti = 0
     #### RULES
@@ -256,10 +258,17 @@ def find_recommendations(data, location_filter, range, weather, no_weather_data)
             recommended_events.append(e)
         #recommended_events.sort(key=lambda x: x.date_to)
 
+    print("recs found: " + str(len(recommended_events)) + " n.max: " + str(N_OF_RECOMMENDATIONS))
+    if len(recommended_events) < N_OF_RECOMMENDATIONS:
+        print("getting recs from popularity")
 
-    if (len(recommended_events < N_OF_RECOMMENDATIONS)):
-        pop_recs = PopRecommender.find_recommendations()
+        date_today = datetime.today().date()
+        max_date = date_today + datedelta.datedelta(days=30)
+        pop_events = Event.objects.filter(date_to__gte=date_today, date_from__lte=max_date).order_by('-popularity')[:50]
+
         num = N_OF_RECOMMENDATIONS - len(recommended_events)
-        recommended_events.append(pop_recs[:num])
+        #print(num)
+        for x in range(num):
+            recommended_events.append(random.choice(pop_events))
 
     return recommended_events[:N_OF_RECOMMENDATIONS]
