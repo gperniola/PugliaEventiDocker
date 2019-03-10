@@ -6,7 +6,7 @@ from django.db.models import Max
 
 from api.common import constant
 from api.models import Place, Distanza, Event
-
+from PopularityRecommender import Recommender as PopRecommender
 
 
 
@@ -255,5 +255,11 @@ def find_recommendations(data, location_filter, range, weather, no_weather_data)
         for e in evs:
             recommended_events.append(e)
         #recommended_events.sort(key=lambda x: x.date_to)
+
+
+    if (len(recommended_events < N_OF_RECOMMENDATIONS)):
+        pop_recs = PopRecommender.find_recommendations()
+        num = N_OF_RECOMMENDATIONS - len(recommended_events)
+        recommended_events.append(pop_recs[:num])
 
     return recommended_events[:N_OF_RECOMMENDATIONS]
