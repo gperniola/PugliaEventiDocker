@@ -346,7 +346,7 @@ class CreateMyrrorUserModel(APIView):
 
         if not user_config_done:
             for d in data:
-                print("INT: " +str(d["nome"]))
+                #print("INT: " +str(d["nome"]))
                 tags = d["tags"]
                 for t in tags:
                     #print(t)
@@ -356,7 +356,7 @@ class CreateMyrrorUserModel(APIView):
                         dummyplace_id = p.placeId
                         mood = str(t["mood"])
                         companionship = str(t["companionship"])
-                        print(str(p) + " (" + mood + " " + companionship +")")
+                        #print(str(p) + " (" + mood + " " + companionship +")")
 
                         user_context_id = str(user_id + 100) + str(Mood[mood].value) + str(Companionship[companionship].value)
 
@@ -514,7 +514,7 @@ class FindEventRecommendationsAllRecommenders(APIView):
                 resp["Lista"+str(i)] = serializerPopular.data
             i = i + 1
 
-        print(shuffled_lists)
+        #print(shuffled_lists)
         sp = Sperimentazione.objects.get(user=users[0])
         sp.ordine_lista_a = shuffled_lists[:1]
         sp.ordine_lista_b = shuffled_lists[1:2]

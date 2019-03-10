@@ -19,6 +19,6 @@ def find_recommendations():
     max_date = date_today + datedelta.datedelta(days=30)
     filtered_events = Event.objects.filter(date_to__gte=date_today, date_from__lte=max_date).order_by('-popularity')
     evs = filtered_events[:5]
-    for ev in evs:
-        print(str(ev) + "pop: " + str(ev.popularity))
+    #for ev in evs:
+        #print(str(ev) + "pop: " + str(ev.popularity))
     return evs

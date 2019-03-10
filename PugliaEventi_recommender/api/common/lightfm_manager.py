@@ -172,7 +172,7 @@ def find_events_recommendations(user, user_location, distance, weather_condition
     Come il metodo find_recommendations, ma restituisce la lista degli eventi anziche' dei luoghi
     #####
     """
-    print("PAGE IS: LIGHTFM_MANAGER.PY >> find_events_recommendations(" + str(user) + ", " + str(user_location) + ", " + str(distance) + ")")
+    #print("PAGE IS: LIGHTFM_MANAGER.PY >> find_events_recommendations(" + str(user) + ", " + str(user_location) + ", " + str(distance) + ")")
     recommended_places = []
     places_dict = data_loader.data_in_memory['places_dict']
     user = int(user) - 1   # LightFM uses a zero-based indexing
