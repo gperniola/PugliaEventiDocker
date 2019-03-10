@@ -104,7 +104,7 @@ class DataLoader:
         p[-1].arte = 1
         p.append(Place.create("Dummy Place Cultura"))
         p[-1].cultura = 1
-        p.append(Place.create("Dummy Place Foklore"))
+        p.append(Place.create("Dummy Place Folklore"))
         p[-1].folklore = 1
         p.append(Place.create("Dummy Place Cittadinanza"))
         p[-1].cittadinanza = 1

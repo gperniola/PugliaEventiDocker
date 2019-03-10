@@ -16,6 +16,8 @@ def load_items_from_db():
             + "," + str(line.informale) + "," + str(line.raffinato) + "," + str(line.avventura) + "," + str(line.cinema) + "," + str(line.arte) + "," + str(line.cultura) \
             + "," + str(line.folklore) + "," + str(line.cittadinanza) + "," + str(line.vita_notturna) + "," + str(line.concerti) + "," + str(line.jazz) + "," + str(line.musica_classica) \
             + "," + str(line.geek) + "," + str(line.bambini))
+
+    #print(str(db_items[-1]))
     return db_items
 
 
@@ -95,16 +97,24 @@ def _get_dimensions(train_data, test_data):
     else:
         data = train_data
 
+    #for t in data:
+    #    if t[1] >= 8673 and t[1] <= 8700:
+    #        print(str(t))
+
     for uid, iid, _ in data:
         uids.add(uid)
+        #if iid >= 8673 and iid <= 8700:
+        #    print(str(iid))
         iids.add(iid)
 
+    #print(str(iids))
     rows = max(uids) + 1
-    cols = max(iids) + 1
+    cols = max(iids) + 25 #fix temporaneo
 
 
-    print("max: " + str(max(uids)) + "  len: " + str(len(uids)))
-    cut = str(max(uids))[:-2]
+    print("max: " + str(rows) + "  len: " + str(len(uids)))
+    print("max: " + str(cols) + "  len: " + str(len(iids)))
+    cut = str(rows)[:-2]
     print("last digit removed " + cut)
     newmax = cut + "32"
     print("new max: " + newmax)
@@ -297,9 +307,10 @@ def fetch_pugliaeventi(indicator_features=True, tag_features=False, min_rating=0
     # Figure out the dimensions
     num_users, num_items = _get_dimensions(_parse(ratings_train), _parse(ratings_test))
 
+    #print ("before " + str(num_items))
     # The maximum item_id is not included into the ratings set. So, I have to set the correct number of items
-    num_items = _parse_items(items)[-1]
-    #print (num_items)
+    #num_items = _parse_items(items)[-1]
+    #print ("after " + str(num_items))
 
     # Load train interactions
     train = _build_interaction_matrix(num_users,
