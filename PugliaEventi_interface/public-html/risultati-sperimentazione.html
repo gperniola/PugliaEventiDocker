@@ -175,7 +175,13 @@
           type: 'get',
           url: DJANGO_API_ADDR+'getDatiSperimentazione/',
           success: function (response) {
-            //$("#main-container").html(JSON.stringify(response));
+            //$("#main-container").html(JSON.stringify(tests));
+
+            tests = [];
+            for (var i = 0; i < response.length; i++){
+              if(response[i].test_completato == true)
+                tests.push(response[i]);
+            }
 
             numAll = 0;
             numMyr = 0;
@@ -187,8 +193,8 @@
             listaIntMan = {LightFM:0, Rulebased:0, Popularity:0};
             listaPerMan = {LightFM:0, Rulebased:0, Popularity:0};
 
-            for (var i = 0; i < response.length; i++){
-              var x = response[i];
+            for (var i = 0; i < tests.length; i++){
+              var x = tests[i];
 
               numAll++;
               if (x.schema == "myrror"){
@@ -260,8 +266,8 @@
             P_ManLight = 0;
             P_ManRule = 0;
             P_ManPop = 0;
-            for (var i = 0; i < response.length; i++){
-              var x = response[i];
+            for (var i = 0; i < tests.length; i++){
+              var x = tests[i];
               if (x.schema == "myrror"){
                 var PrecLight = 0;
                 var PrecRule = 0;
@@ -313,15 +319,15 @@
             $("#p32").html((P_MyrPop/numMyr).toFixed(2));
             $("#p33").html((P_ManPop/numMan).toFixed(2));
 
-            for (var i = 0; i < response.length; i++){
-              var x = response[i];
+            for (var i = 0; i < tests.length; i++){
+              var x = tests[i];
               if (x.note != "")
                 $("#note").append("<div class='row'><b>>User test " + x.schema + ": &nbsp;</b>" + x.note + "</div>");
             }
 
           },
           error: function(e) {
-            var je = JSON.parse(e.responseText);
+            var je = JSON.parse(e.testsText);
             alert("ko");
           }
       });
