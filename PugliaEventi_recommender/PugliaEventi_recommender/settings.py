@@ -93,9 +93,12 @@ DATABASES = {
     'PugliaEventi': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'PugliaEventi',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'postgres',
+        #'USER': 'postgres',
+        #'PASSWORD': 'postgres',
+        #'HOST': 'postgres',
+        'USER': 'perniola',
+        'PASSWORD': 'perniola12319',
+        'HOST': 'localhost',
         'PORT': 5432
     }
 }
