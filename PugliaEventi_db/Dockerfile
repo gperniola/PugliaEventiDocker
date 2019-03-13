@@ -1,4 +1,4 @@
-FROM postgres:latest
+FROM postgres:9.1
 MAINTAINER Giuseppe Perniola <g.perniola22@gmail.com>
 
 EXPOSE 5432
