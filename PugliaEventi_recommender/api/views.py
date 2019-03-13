@@ -301,23 +301,32 @@ class UserLogin(APIView):
         utenti = Utente.objects.filter(username=username)
 
         if not utenti:
+            #Uso Bari come valore predefinito dato che l'utente non si è registrato su feelathome
             utente = Utente.create(username,"Bari")
             utente.save()
-            sp = Sperimentazione.create(utente,schema, datetime.now())
-            sp.save()
         else:
             utente = utenti[0]
-            sps = Sperimentazione.objects.filter(user_id=utente)
-            if not sps:
-                sp = Sperimentazione.create(utente,schema, datetime.now())
-                sp.save()
-            else:
-                sp = sps[0]
-                sp.schema = schema
-                sp.save()
+
+        sps = Sperimentazione.objects.filter(user_id=utente)
+        if not sps:
+            #creo 3 copie
+            sp = Sperimentazione.create(utente,schema, datetime.now())
+            sp.save()
+            sp.id = None
+            sp.save()
+            sp.id = None
+            sp.save()
+        else:
+            sps.update(schema=schema)
+
+        all_sps_complete = Sperimentazione.objects.filter(user_id=utente, test_completato=False)
+        if not all_sps_complete:
+            test_completato = True
+        else:
+            test_completato = False
 
         #DataLoader.load_dummy_places()
-        return Response(data={"user_location":str(utente.location), "sperimentazione_completata":str(sp.test_completato)}, status=200)
+        return Response(data={"user_location":str(utente.location), "sperimentazione_completata":str(test_completato)}, status=200)
 
 
 class UserSignup(APIView):
@@ -329,7 +338,12 @@ class UserSignup(APIView):
         utente = Utente.create(username,location)
         utente.save()
 
+        #creo 3 copie
         sp = Sperimentazione.create(utente,schema, datetime.now())
+        sp.save()
+        sp.id = None
+        sp.save()
+        sp.id = None
         sp.save()
 
         return Response(data={"user_id":utente.id})
