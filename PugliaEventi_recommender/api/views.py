@@ -490,10 +490,6 @@ class FindEventRecommendationsAllRecommenders(APIView):
 
         data = request.data
 
-
-
-
-
         users = Utente.objects.filter(username=username)
         user_id = users[0].id
 
@@ -529,7 +525,13 @@ class FindEventRecommendationsAllRecommenders(APIView):
             i = i + 1
 
         #print(shuffled_lists)
-        sp = Sperimentazione.objects.get(user=users[0])
+        sps = Sperimentazione.objects.filter(user=users[0], test_completato=False)
+
+        if not sps:
+            return JsonResponse({},safe=False, status=201)
+
+        sp = sps[0]
+        resp["testcode"] = sp.id
         sp.ordine_lista_a = shuffled_lists[:1]
         sp.ordine_lista_b = shuffled_lists[1:2]
         sp.ordine_lista_c = shuffled_lists[2:3]
