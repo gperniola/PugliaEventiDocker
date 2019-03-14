@@ -84,7 +84,7 @@ def _parse_items(items):
         iid = int(line.split(',')[0])
         iids.append(iid)
 
-    return iids
+    return max(iids)
 
 
 def _get_dimensions(train_data, test_data):
@@ -307,10 +307,11 @@ def fetch_pugliaeventi(indicator_features=True, tag_features=False, min_rating=0
     # Figure out the dimensions
     num_users, num_items = _get_dimensions(_parse(ratings_train), _parse(ratings_test))
 
-    #print ("before " + str(num_items))
+    print ("before item count fix: " + str(num_items))
     # The maximum item_id is not included into the ratings set. So, I have to set the correct number of items
     #num_items = _parse_items(items)[-1]
-    #print ("after " + str(num_items))
+    num_items = _parse_items(items)
+    print ("after item count fix: " + str(num_items))
 
     # Load train interactions
     train = _build_interaction_matrix(num_users,
