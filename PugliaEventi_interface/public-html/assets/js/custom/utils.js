@@ -115,6 +115,13 @@ function createPlaceModal(placeId, placeName){
 }
 
 function sendEval(placeId,emotion,companionship, callback){
+	console.log("load1");
+ $("#loadMe").modal({
+		 backdrop: "static", //remove ability to close modal with click
+		 keyboard: false, //remove option to close with keyboard
+	 });
+	 $("#loadMe").modal("show");
+	 console.log("load2");
 	for (var i = 0; i < allPlaces.length; i++){
 		if(allPlaces[i].placeId == placeId)
 			allPlaces[i].valutato = true;
@@ -131,6 +138,11 @@ function sendEval(placeId,emotion,companionship, callback){
         	"companionship":companionship
         },
         success: function (response) {
+					console.log("unload3");
+					setTimeout(function() {
+      			$("#loadMe").modal("hide");
+    			}, 1000);
+					console.log("unload4");
         	document.getElementById("buttonStatus" + placeId).innerHTML = '<span class="badge badge-info" data-toggle="tooltip" data-placement="right" title="Luogo visitato"><i class="fa fa-check"></i></span>';
         	console.log("rating added to " + placeId);
         	if(callback != null) {
@@ -176,14 +188,14 @@ function printPlaces(data,i, cellOffset, container){
 
 	var buttonEvaluated = "";
 	var placeModal="";
-	if(obj.valutato){
+	if(obj.valutato){	//Aggiunge una label che indica che il posto è già stato valutato
 		buttonEvaluated = '&nbsp;&nbsp;<span id="buttonStatus'+obj.placeId+'"><span class="badge badge-info" data-toggle="tooltip" data-placement="right" title="Luogo visitato"><i class="fa fa-check"></i></span></span>';
 	}
-	else if(!isFirstConfig) {
+	else if(!isFirstConfig) {	//Aggiunge un pulsante che apre un modal per l'inserimento del contesto
 		buttonEvaluated = '&nbsp;&nbsp;<span id="buttonStatus'+obj.placeId+'"><button type="button" class="btn-val btn btn-danger btn-sm" data-toggle="modal" data-target="#placeModal'+obj.placeId+'"><i class="fa fa-plus"></i></button></span>';
 		placeModal = createPlaceModal(obj.placeId, obj.name);
 	}
-	else{
+	else{	//Aggiunge un pulsante che invia direttamente i dati al server, il contesto è preso dallo stato attuale della configurazione iniziale
 		buttonEvaluated = '&nbsp;&nbsp;<span id="buttonStatus'+obj.placeId+'"><button type="button" class="btn-val btn btn-danger btn-sm" onClick="sendConfigRating('+obj.placeId+')"><i class="fa fa-plus"></i></button></span>';
 	}
 

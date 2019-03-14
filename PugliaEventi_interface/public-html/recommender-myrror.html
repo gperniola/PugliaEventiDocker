@@ -139,6 +139,7 @@
         <div class="card-body">
           <p class="card-text text-white">Una volta visualizzati i suggerimenti, seleziona gli eventi che ritieni più interessanti cliccando su <b>"Aggiungi evento"</b>.</p>
           <p class="card-text text-white">Infine, rispondi alle domande finali e premi <b>"Conferma"</b>.</p>
+          <p class="card-text text-white"><b>Il sistema richiederà di effettuare tre test. Si prega ad ogni test, di cambiare la combinazione del contesto emotivo/compagnia in modo tale da ricevere suggerimenti diversi.</b></p>
         </div>
       </div>
     	<div class="border border-danger" style="margin-top:5px; margin-bottom:15px;"></div>
@@ -559,7 +560,7 @@ function sendSperimentazione(){
 
 			  	         	success: function(response){
 
-                      sessionStorage.setItem('testcode') = response.testcode;
+                      sessionStorage.setItem('testcode',response.testcode);
 
     									document.getElementById("eventiContainer1").innerHTML = "<h3>Lista A</h3>";
     				  		    for (var i = 0; i < Math.min(5, response.Lista1.length); i++){
