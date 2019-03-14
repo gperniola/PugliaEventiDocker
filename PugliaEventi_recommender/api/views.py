@@ -632,9 +632,10 @@ class AddUserModel(APIView):
 class SendSperimentazione(APIView):
     def post(self,request,*args,**kwargs):
         username = str(request.data.get('username'))
+        testcode = int(request.data.get('testcode'))
 
         user = Utente.objects.get(username=username)
-        sp = Sperimentazione.objects.get(user=user)
+        sp = Sperimentazione.objects.get(user=user, id=testcode)
 
 
         lista_interesse = str(request.data.get('listaInteressante'))
@@ -725,8 +726,12 @@ class SendSperimentazione(APIView):
         sp.test_completato = True
 
         sp.save()
-        return Response(status=200)
 
+        new_sp = Sperimentazione.objects.filter(user=user, test_completato=False)
+        if not new_sp:
+            return JsonResponse({"all_tests_complete":True}, safe=False,status=201)
+        else:
+            return JsonResponse({"all_tests_complete":False}, safe=False,status=201)
 
 
 
