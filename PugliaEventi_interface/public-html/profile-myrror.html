@@ -233,6 +233,20 @@
     <div class="loader-inner"></div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="loadMe" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <div class="loader2"></div>
+        <div clas="loader-txt">
+          <p>Caricamento in corso...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!--header start here -->
 <!--header start here -->
 <header class="header navbar fixed-top navbar-expand-md">
@@ -594,6 +608,13 @@ function sendInterestsData(){
     return;
   }
 
+
+  $("#loadMe").modal({
+ 		 backdrop: "static", //remove ability to close modal with click
+ 		 keyboard: false, //remove option to close with keyboard
+ 	 });
+ 	 $("#loadMe").modal("show");
+
   var payload = {
     username: sessionStorage.getItem('userPugliaEvent'),
     interessi:[]
@@ -620,6 +641,9 @@ $.ajax({
     data: JSON.stringify(payload),
     success: function (response) {
       console.log("success")
+      setTimeout(function() {
+        $("#loadMe").modal("hide");
+      }, 1000);
       document.location.href = "recommender-myrror.html";
     },
     error: function(e) {

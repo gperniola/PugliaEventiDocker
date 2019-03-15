@@ -115,13 +115,11 @@ function createPlaceModal(placeId, placeName){
 }
 
 function sendEval(placeId,emotion,companionship, callback){
-	console.log("load1");
  $("#loadMe").modal({
 		 backdrop: "static", //remove ability to close modal with click
 		 keyboard: false, //remove option to close with keyboard
 	 });
 	 $("#loadMe").modal("show");
-	 console.log("load2");
 	for (var i = 0; i < allPlaces.length; i++){
 		if(allPlaces[i].placeId == placeId)
 			allPlaces[i].valutato = true;
@@ -138,11 +136,9 @@ function sendEval(placeId,emotion,companionship, callback){
         	"companionship":companionship
         },
         success: function (response) {
-					console.log("unload3");
 					setTimeout(function() {
       			$("#loadMe").modal("hide");
     			}, 1000);
-					console.log("unload4");
         	document.getElementById("buttonStatus" + placeId).innerHTML = '<span class="badge badge-info" data-toggle="tooltip" data-placement="right" title="Luogo visitato"><i class="fa fa-check"></i></span>';
         	console.log("rating added to " + placeId);
         	if(callback != null) {

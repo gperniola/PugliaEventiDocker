@@ -264,7 +264,7 @@ def find_recommendations(data, location_filter, rangex, weather, no_weather_data
 
         date_today = datetime.today().date()
         max_date = date_today + datedelta.datedelta(days=30)
-        pop_events = Event.objects.filter(date_to__gte=date_today, date_from__lte=max_date).order_by('-popularity')[:100]
+        pop_events = Event.objects.filter(date_to__gte=date_today, date_from__lte=max_date).order_by('-popularity')[:50]
 
         num = N_OF_RECOMMENDATIONS - len(recommended_events)
         #print(num)
