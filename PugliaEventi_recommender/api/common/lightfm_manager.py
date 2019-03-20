@@ -66,20 +66,26 @@ def add_rating(contextual_lightfm_user_id, place_id, rating):
     max_user_id = 0
     max_item_id = 0
     # I need the max user ID and the max item ID
+    #with open(r'engine/data/users.csv', encoding="utf8", newline='') as csvfile:
+    #    for row in reversed(list(csv.reader(csvfile, delimiter=','))):
+    #        max_user_id = int(row[0])
+    #        break
+    #with open(r'engine/data/items.csv', encoding="utf8", newline='') as csvfile:
+    #    for row in reversed(list(csv.reader(csvfile, delimiter=','))):
+    #        max_item_id = int(row[0])
+    #        break
+
+    # I need the max user ID and the max item ID
+    user_ids = []
     with open(r'engine/data/users.csv', encoding="utf8", newline='') as csvfile:
-        for row in reversed(list(csv.reader(csvfile, delimiter=','))):
-            max_user_id = int(row[0])
-            break
-    with open(r'engine/data/items.csv', encoding="utf8", newline='') as csvfile:
-        for row in reversed(list(csv.reader(csvfile, delimiter=','))):
-            max_item_id = int(row[0])
-            break
+        for row in list(csv.reader(csvfile, delimiter=',')):
+            user_ids.append(int(row[0]))
+    max_user_id = max(user_ids)
 
     items = Place.objects.all()
     max = items.aggregate(Max('placeId'))
     max_item_id = int(max['placeId__max'])
 
-    #print("max user id: " + str(max_user_id) + "  max item id: " + str(max_item_id))
     # Add new rating to LightFM model
     lightfm_pugliaeventi.add_rating_to_model(int(max_user_id), int(max_item_id), int(contextual_lightfm_user_id), int(place_id), int(rating))
 
