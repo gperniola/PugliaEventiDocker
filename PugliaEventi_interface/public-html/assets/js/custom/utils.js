@@ -128,7 +128,7 @@ function sendEval(placeId,emotion,companionship, callback){
 
     $.ajax({
         type: 'post',
-        url: 'http://127.0.0.1:8000/api/addRating/',
+        url: DJANGO_API_ADDR + 'addRating/',
         data:{
         	'username': sessionStorage.getItem('userPugliaEvent'),
         	'place-id':placeId,
