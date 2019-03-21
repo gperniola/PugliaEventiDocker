@@ -228,7 +228,10 @@ def find_events_recommendations(user, user_location, distance, weather_condition
 
     events = []
     for place in recommended_places:
-            for ev in Event.objects.filter(place=place.name, date_to__gte=datetime.today().date()).order_by('date_to'):
+            for ev in Event.objects.filter(place=place.name,comune=place.location, date_to__gte=datetime.today().date()).order_by('date_to'):
+                print("***")
+                print(str(place))
+                print(str(ev))
                 events.append(ev)
 
 
@@ -273,62 +276,44 @@ def find_events_recommendations(user, user_location, distance, weather_condition
     events = Event.objects.filter(eventId__in=weather_filtered_events)
 
     recommended_events = []
+    list_titles_events = []
     for place in recommended_places:
-        queryset_events = events.filter(place=place.name)[:1]
+        #print("p: " + str(place) + " LEN: " +str(len( events.filter(place=place.name,comune=place.location))))
+        #queryset_events = events.filter(place=place.name)
+        #for e in queryset_events:
+        #    print("DEB: " +  str(e))
+
+        queryset_events = events.filter(place=place.name,comune=place.location)[:1]
         for e in queryset_events:
+            #if e.title not in list_titles_events:
+            #    list_titles_events.append(e.title)
             recommended_events.append(e)
     if(len(recommended_events) < 5):
         recommended_events = []
+        list_titles_events = []
         for place in recommended_places:
-            queryset_events = events.filter(place=place.name)[:2]
+            queryset_events = events.filter(place=place.name,comune=place.location)[:2]
             for e in queryset_events:
+                #if e.title not in list_titles_events:
+                #    list_titles_events.append(e.title)
                 recommended_events.append(e)
         if(len(recommended_events) < 5):
             recommended_events = []
+            list_titles_events = []
             for place in recommended_places:
-                queryset_events = events.filter(place=place.name)
+                queryset_events = events.filter(place=place.name,comune=place.location)
                 for e in queryset_events:
+                    #if e.title not in list_titles_events:
+                    #    list_titles_events.append(e.title)
                     recommended_events.append(e)
 
-    #for place in recommended_places:
-        #if len(events) > 20:
-        #    queryset_events = events.filter(place=place.name)[:2]
-        #elif len(weather_filtered_events) > 10:
-        #    queryset_events = events.filter(place=place.name)[:3]
-        #if len(events) > 5:
-        #    queryset_events = events.filter(place=place.name)[:1]
-        #else:
-            #queryset_events = events.filter(place=place.name)
-        #for e in queryset_events:
-        #    recommended_events.append(e)
-
-
-    #for event in weather_filtered_events:
-    #    recommended_events.append(event)
-    #    if len(recommended_events) == constant.NUM_RECOMMENDATIONS_TO_SHOW:
-    #        break
-
-    #print("+++++[LIGHTFM]  N. of recommended events found: " + str(len(recommended_events)))
-    #print("+ Returning recommended_events")
 
     ####### DEBUG EVENTI ##########
     i = 1
     for ev in recommended_events:
         print(str(i) + ") +++ " + ev.title + "|" + ev.place + "|" + str(ev.comune) + "|" + str(ev.date_from) + " - " + str(ev.date_to))
         i = i + 1
+    ###########################
 
-    #for place in recommended_places:
-    #    if Event.objects.filter(place=place.name, date_to__gte=datetime.today().date()).exists():
-    #        print("+++++++++ " + place.name + " " +str(len(Event.objects.filter(place=place.name, date_to__gte=datetime.today().date()))))
-    #        # MAX 2 EVENTS FOR EACH PLACE
-    #        for ev in Event.objects.filter(place=place.name, date_to__gte=datetime.today().date()):
-    #            print(str(i) + ") " + ev.title + "|" + ev.place + "|" + str(ev.comune) + "|" + str(ev.date_from) + " - " + str(ev.date_to))
-    #            i = i + 1
-    #print(len(Event.objects.filter(date_from__gte=datetime.today().date())))
-    #print(len(Event.objects.filter(date_to__gte=datetime.today().date())))
-    #print(len(Event.objects.filter(place__exact='', date_to__gte=datetime.today().date())))
-    #print(len(Event.objects.filter(date_to__gte=datetime.today().date()).exclude(place__exact='')))
-    #print(len(Event.objects.filter(place__exact='')))
-    #print(len(Event.objects.exclude(place__exact='')))
 
     return recommended_events[:constant.NUM_RECOMMENDATIONS_TO_SHOW]
