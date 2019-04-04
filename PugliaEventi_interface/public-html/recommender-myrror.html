@@ -99,6 +99,7 @@
     	<div class="border border-danger" style="margin-top:5px; margin-bottom:15px;"></div>
     	<div>
   			<h5>Filtri aggiuntivi per i suggerimenti</h5>
+        <div id="emotionFound"></div>
   			<form>
 				<div class="form-group form-inline d-none">
 					<label for="comune" class="col-sm-2 col-form-label">Città in cui cercare </label>
@@ -344,6 +345,29 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="assets/js/custom/utils.js"></script>
 
 <script>
+
+if(sessionStorage.getItem('lastEmotion') != ""){
+  var lastEmotion = sessionStorage.getItem('lastEmotion');
+  var emotion_ita = "";
+  if(lastEmotion == "joyful"){
+    $( "#emotion" ).val("joyful");
+    emotion_ita = "Felice";
+  }
+  else{
+    if (lastEmotion == "sad"){
+      $( "#emotion" ).val("sad");
+      emotion_ita = "Triste";
+    }
+    else{
+      $( "#emotion" ).val("angry");
+      emotion_ita = "Arrabbiato";
+    }
+  }
+  $( "#emotion" ).prop( "disabled", true );
+  $( "#emotionFound" ).append("Il tuo stato emotivo relativo all'ultimo post da te pubblicato su twitter risulta essere: <b>" + emotion_ita + "</b>. Per il primo test utilizza questo stato emotivo per generare i suggerimenti.");
+}
+
+
 console.log("starting getuserconfig call...");
 $.ajax({
     type: 'post',
@@ -427,6 +451,9 @@ function sendSperimentazione(){
 
   payload.username = sessionStorage.getItem('userPugliaEvent');
   payload.testcode = sessionStorage.getItem('testcode');
+
+  if (sessionStorage.getItem('lastEmotion') != "")
+    sessionStorage.setItem('lastEmotion', "");
 
   $.ajax({
       type: 'post',

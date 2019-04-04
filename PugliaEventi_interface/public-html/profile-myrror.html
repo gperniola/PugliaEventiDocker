@@ -142,7 +142,47 @@
 		       alert("failure getPosts");
 		     }
 		});
+    }
 
+    function myrror_getLastEmotion(){
+    //console.log("getemotion...");
+    //var x = window.open("", "newWindow", "width=1000,height=800");
+    var res = "";
+		var messages = 1;
+    	$.ajax({
+			 type: 'post',
+		     url: MYRROR_API_ADDR+'api/twitter/user_timeline',
+		     contentType: "application/json",
+		     data: JSON.stringify({messages}),
+		     headers: {'x-access-token' : sessionStorage.getItem('tokenPugliaEvent')},
+		     success: function (response) {
+		    	 var myjson = JSON.stringify(response, null, 2);
+           var info = JSON.parse(myjson);
+           //res = JSON.stringify(info.messages[0].emotion);
+           res = info.messages[0].emotion;
+           res = res.substring(0, res.length - 1);
+		    	 //x.document.open();
+			     //x.document.write('<html><body><h2>POST DATA</h2><pre>' + res + '</pre></body></html>');
+			     //x.document.close();
+           if (res == "disgust" || res == "anger")
+              sessionStorage.setItem('lastEmotion', "angry");
+           else{
+             if (res == "joy" || res == "surprise")
+                sessionStorage.setItem('lastEmotion', "joyful");
+             else{
+                if (res == "sad" || res == "fear")
+                  sessionStorage.setItem('lastEmotion', "sad");
+              }
+            }
+          console.log("last emotion: " + res + "  ->  " + sessionStorage.getItem('lastEmotion'));
+		     },
+		     error: function(e) {
+		       var je = JSON.parse(e.responseText);
+           sessionStorage.setItem('lastEmotion', res);
+		       alert("failure getLastEmotion");
+		     }
+		});
+    return res;
     }
 
     function myrror_getSentiment(){
@@ -504,6 +544,8 @@ $(document).on('change','.selectInterest',function(){
       insertedTags++;
     }
 });
+
+myrror_getLastEmotion();
 
 console.log("starting getuserconfig call...");
 $.ajax({
