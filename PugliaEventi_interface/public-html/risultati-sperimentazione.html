@@ -23,11 +23,13 @@
     <link href="assets/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
     <link href="assets/css/spinner.css" rel="stylesheet">
+
+
 </head>
 
   <body>
-    <section class="pt100 pb100">
-        <div class="container"  id="main-container" style="color:black;">
+    <section style="padding-left:50px; padding-right:50px;">
+        <!-- <div class="container"  id="main-container" style="color:black;"> -->
           <table class="table" style="color:black;">
           <tbody>
           <tr><th scope="row ">Numero di test effettuati:</th><td id="n1">0</td></tr>
@@ -50,6 +52,64 @@
           <tr><th scope="row ">Lista preferita per personalità:</th><td id="l_pers_all">0</td><td id="l_pers_myrror">0</td><td id="l_pers_manual">0</td></tr>
           </tbody></table>
           <br><br>
+
+          <!-- <div class="row">
+            <div id="piechart1" style="width: 550px; height: 350px;"></div>
+            <div id="piechart2" style="width: 550px; height: 350px;"></div>
+          </div>
+          <div class="row">
+            <div id="piechart3" style="width: 550px; height: 350px;"></div>
+            <div id="piechart4" style="width: 550px; height: 350px;"></div>
+            <div id="piechart5" style="width: 550px; height: 350px;"></div>
+          </div> -->
+
+          <div class="row" style="margin:0 !important;">
+            <div id="piechart6" class="col-md-4" style="width: 100%; min-height: 450px;"></div>
+            <div id="piechart7" class="col-md-4" style="width: 100%; min-height: 450px;"></div>
+            <div id="piechart8" class="col-md-4" style="width: 100%; min-height: 450px;"></div>
+          </div>
+          <div class="row" style="margin:0 !important;">
+            <div id="piechart9" class="col-md-4" style="width: 100%; min-height: 450px;"></div>
+            <div id="piechart10" class="col-md-4" style="width: 100%; min-height: 450px;"></div>
+            <div id="piechart11" class="col-md-4" style="width: 100%; min-height: 450px;"></div>
+          </div>
+
+          <div class="row" style="margin:0 !important;">
+            <div id="piechart1" class="col-md-6" style="width: 100%; min-height: 450px;"></div>
+            <div id="piechart2" class="col-md-6" style="width: 100%; min-height: 450px;"></div>
+          </div>
+          <div class="row" style="margin:0 !important;">
+            <div id="piechart3" class="col-md-4" style="width: 100%; min-height: 450px;"></div>
+            <div id="piechart4" class="col-md-4" style="width: 100%; min-height: 450px;"></div>
+            <div id="piechart5" class="col-md-4" style="width: 100%; min-height: 450px;"></div>
+          </div>
+
+        <!--  <table class="table" style="color:black;">
+            <thead>
+              <tr>
+                <th scope="col">Domande test Myrror</th>
+                <th scope="col">Media risposte</th>
+              </tr>
+            </thead>
+          <tbody>
+          <tr><th scope="row ">Selezione degli interessi:</th><td id="myrror_interessi">0</td></tr>
+          <tr><th scope="row ">Stato emotivo da Myrror:</th><td id="myrror_statoEmotivo">0</td></tr>
+          </tbody></table>
+          <br><br>
+
+          <table class="table" style="color:black;">
+            <thead>
+              <tr>
+                <th scope="col">Domande test Manuale</th>
+                <th scope="col">Media risposte</th>
+              </tr>
+            </thead>
+          <tbody>
+          <tr><th scope="row ">Selezione della personalita:</th><td id="manuale_personalita">0</td></tr>
+          <tr><th scope="row ">Inserimento degli interessi:</th><td id="manuale_interessi">0</td></tr>
+          <tr><th scope="row ">Selezione dei luoghi:</th><td id="manuale_luoghi">0</td></tr>
+          </tbody></table>
+          <br><br> -->
 
           <table class="table" style="color:black;" id="stats-table">
             <thead>
@@ -84,59 +144,7 @@
           <br><br>
           <h5 class = "row">Commenti degli utenti:</h5>
           <div id="note"></div>
-
-          <!-- <table class="table" style="color:black;" id="global-table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Rule-based</th>
-                <th scope="col">LightFM</th>
-                <th scope="col">Popularity</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td id="g11">0</td>
-                <td id="g12">0</td>
-                <td id="g13">0</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td id="g21">0</td>
-                <td id="g22">0</td>
-                <td id="g23">0</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td id="g31">0</td>
-                <td id="g32">0</td>
-                <td id="g33">0</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td id="g41">0</td>
-                <td id="g42">0</td>
-                <td id="g43">0</td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td id="g51">0</td>
-                <td id="g52">0</td>
-                <td id="g53">0</td>
-              </tr>
-              <tr>
-                <th scope="row">Lista preferita per interesse</th>
-                <td id="g_pref_int">LightFM</td>
-              </tr>
-              <tr>
-                <th scope="row">Lista preferita per personalità</th>
-                <td id="g_pref_pers">LightFM</td>
-              </tr>
-            </tbody>
-          </table> -->
-        </div>
-    </section>
+</section>
 
       <!-- jquery -->
       <script src="assets/js/jquery.min.js"></script>
@@ -169,7 +177,25 @@
       <script src="assets/js/custom/constants.js"></script>
       <script src="assets/js/custom/utils.js"></script>
 
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
       <script>
+
+      Object.defineProperties(Array.prototype, {
+          count: {
+              value: function(query) {
+                  /*
+                     Counts number of occurrences of query in array, an integer >= 0
+                     Uses the javascript == notion of equality.
+                  */
+                  var count = 0;
+                  for(let i=0; i<this.length; i++)
+                      if (this[i]==query)
+                          count++;
+                  return count;
+              }
+          }
+      });
 
       $.ajax({
           type: 'get',
@@ -193,6 +219,12 @@
             listaIntMan = {LightFM:0, Rulebased:0, Popularity:0};
             listaPerMan = {LightFM:0, Rulebased:0, Popularity:0};
 
+            myrror_interessi = [];
+            myrror_statoEmotivo = [];
+            manuale_personalita = [];
+            manuale_interessi = [];
+            manuale_luoghi = [];
+
             for (var i = 0; i < tests.length; i++){
               var x = tests[i];
 
@@ -206,6 +238,12 @@
                  if (x.lista_preferita_personalita == "L") listaPerMyr.LightFM++;
                  else if (x.lista_preferita_personalita == "R") listaPerMyr.Rulebased++;
                  else listaPerMyr.Popularity++;
+
+                 if(x.myrror_interessi != 0 && x.myrror_statoEmotivo != 0){
+                   myrror_interessi.push(x.myrror_interessi);
+                   myrror_statoEmotivo.push(x.myrror_statoEmotivo);
+                 }
+
               }
               else{
                  numMan++;
@@ -216,6 +254,12 @@
                  if (x.lista_preferita_personalita == "L") listaPerMan.LightFM++;
                  else if (x.lista_preferita_personalita == "R") listaPerMan.Rulebased++;
                  else listaPerMan.Popularity++;
+
+                 if(x.manuale_personalita != 0 && x.manuale_interessi != 0 && x.manuale_luoghi != 0){
+                   manuale_personalita.push(x.manuale_personalita);
+                   manuale_interessi.push(x.manuale_interessi);
+                   manuale_luoghi.push(x.manuale_luoghi);
+                 }
               }
 
             }
@@ -325,6 +369,28 @@
                 $("#note").append("<div class='row'><b>>User test " + x.schema + ": &nbsp;</b>" + x.note + "</div>");
             }
 
+
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            //xz = [1,1,3,2,3,3,3,2,3,5,4,4];
+            function drawChart() {
+              drawCustomChart('piechart1', 'Myrror: Domanda sugli interessi selezionati', myrror_interessi);
+              drawCustomChart('piechart2', 'Myrror: Domanda sullo stato emotivo selezionato', myrror_statoEmotivo);
+              drawCustomChart('piechart3', 'Manuale: Domanda sulla selezione della personalità', manuale_personalita);
+              drawCustomChart('piechart4', 'Manuale: Domanda sull\'inserimento degli interessi', manuale_interessi);
+              drawCustomChart('piechart5', 'Manuale: Domanda sulla selezione dei luoghi visitati', manuale_luoghi);
+
+              drawCustomChart2('piechart6', 'Myrror: Algoritmo preferito per interessi', listaIntMyr);
+              drawCustomChart2('piechart7', 'Manuale: Algoritmo preferito per interessi', listaIntMan);
+              drawCustomChart2('piechart8', 'Totale: Algoritmo preferito per interessi', listaIntALL);
+
+              drawCustomChart2('piechart9', 'Myrror: Algoritmo preferito per personalità', listaPerMyr);
+              drawCustomChart2('piechart10', 'Manuale: Algoritmo preferito per personalità', listaPerMan);
+              drawCustomChart2('piechart11', 'Totale: Algoritmo preferito per personalità', listaPerALL);
+            }
+
+
           },
           error: function(e) {
             var je = JSON.parse(e.testsText);
@@ -332,6 +398,47 @@
           }
       });
 
+
+      function drawCustomChart(id, titolo, lista){
+        var mean = 0;
+        if ( lista.length > 0){
+          var sum = 0;
+          for (var i = 0; i < lista.length; i++)
+            sum = sum + lista[i];
+          mean = sum/lista.length;
+        }
+
+        var data = google.visualization.arrayToDataTable([
+          ['Risposta', 'Numero'],
+          ['(1) Per nulla', lista.count(1)],
+          ['(2) Poco', lista.count(2)],
+          ['(3) Abbastanza', lista.count(3)],
+          ['(4) Molto', lista.count(4)],
+          ['(5) Moltissimo',lista.count(5)]
+        ]);
+        var options = {
+          title: titolo+'\n(Punteggio medio: ' + mean.toFixed(2) +')',
+        };
+        var chart = new google.visualization.PieChart(document.getElementById(id));
+        chart.draw(data, options);
+      }
+
+
+
+      function drawCustomChart2(id, titolo, lista){
+        var data = google.visualization.arrayToDataTable([
+          ['Algoritmo', 'Numero'],
+          ['LightFM', lista.LightFM],
+          ['Rule-based', lista.RuleBased],
+          ['Popularity', lista.Popularity]
+
+        ]);
+        var options = {
+          title: titolo
+        };
+        var chart = new google.visualization.PieChart(document.getElementById(id));
+        chart.draw(data, options);
+      }
 
 
       </script>

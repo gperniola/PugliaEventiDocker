@@ -154,22 +154,40 @@
     <div class="card border-primary d-none" id="domandeFinali">
         <div class="card-body">
           <h5 class="card-title">Domande finali</h5>
-          <div class="form-group form-inline">
-            <label for="listaInteressante" class="col-sm-4 col-form-label" style="color:black;"><b>Qual'è la lista che più ritieni interessante?</b></label>
-            <div class="col-sm-2"><select class="form-control " id="listaInteressante">
+          <div class="form-group">
+            <label for="listaInteressante" class="col-sm-12 col-form-label" style="color:black;"><b>1. Qual'è la lista che più ritieni interessante in base al contesto (stato emotivo, compagnia) che hai selezionato? </b></label>
+            <div class="col-sm-4"><select class="form-control " id="listaInteressante">
                 <option value="A">Lista A</option>
                 <option value ="B">Lista B</option>
                 <option value="C">Lista C</option>
           </select></div></div>
-          <div class="form-group form-inline">
-          <label for="listaPersonalita" class="col-sm-4 col-form-label" style="color:black;"><b>Qual'è la lista che più rispecchia la tua personalità?</b></label>
-            <div class="col-sm-2"><select class="form-control" id="listaPersonalita">
+          <div class="form-group">
+          <label for="listaPersonalita" class="col-sm-12 col-form-label" style="color:black;"><b>2. Qual'è la lista che più secondo te rispecchia la tua personalità?</b></label>
+            <div class="col-sm-4"><select class="form-control" id="listaPersonalita">
               <option value="A">Lista A</option>
               <option value ="B">Lista B</option>
               <option value="C">Lista C</option>
           </select></div></div>
+          <div class="form-group domande-profilo">
+          <label for="profilazioneInteressiMyrror" class="col-sm-12 col-form-label" style="color:black;"><b>3. Ritieni che la selezione degli interessi turistici effettuata alla configurazione del profilo sia stata utile al fine di generare suggerimenti accettabili?</b></label>
+            <div class="col-sm-4"><select class="form-control" id="profilazioneInteressiMyrror">
+              <option value="1">1 - Per nulla</option>
+              <option value ="2">2 - Poco</option>
+              <option value="3" selected>3 - Abbastanza</option>
+              <option value="3">4 - Molto</option>
+              <option value="3">5 - Moltissimo</option>
+          </select></div></div>
+          <div class="form-group domande-profilo">
+          <label for="statoEmotivoMyrror" class="col-sm-12 col-form-label" style="color:black;"><b>4. Ritieni che lo stato emotivo selezionato da Myrror corrisponda allo stato emotivo dei tuoi ultimi post pubblicati su Twitter?</b></label>
+            <div class="col-sm-4"><select class="form-control" id="statoEmotivoMyrror">
+              <option value="1">1 - Per nulla</option>
+              <option value ="2">2 - Poco</option>
+              <option value="3" selected>3 - Abbastanza</option>
+              <option value="3">4 - Molto</option>
+              <option value="3">5 - Moltissimo</option>
+          </select></div></div>
           <div class="form-group">
-              <label for="comment" class="col-sm-4 col-form-label" style="color:black;"><b>Note aggiuntive (opzionale):</b></label>
+              <label for="comment" class="col-sm-6 col-form-label" style="color:black;"><b>Note aggiuntive (opzionale):</b></label>
                 <div class="col-sm-8"><textarea class="form-control" rows="3" id="comment"></textarea></div>
           </div>
           <div class="form-group">
@@ -447,6 +465,19 @@ function sendSperimentazione(){
 
   payload.listaInteressante = $("#listaInteressante").val();
   payload.listaPersonalita = $("#listaPersonalita").val();
+
+  if (sessionStorage.getItem('numTest') == 1){
+    payload.myrrorProfilazioneInteressi = $("#profilazioneInteressiMyrror").val();
+    payload.myrrorStatoEmotivo = $("#statoEmotivoMyrror").val();
+  }
+  else{
+    payload.myrrorProfilazioneInteressi = 0;
+    payload.myrrorStatoEmotivo = 0;
+  }
+  payload.manualePersonalita = 0;
+  payload.manualeInteressi = 0;
+  payload.manualePosti = 0;
+
   payload.comment = $("#comment").val();
 
   payload.username = sessionStorage.getItem('userPugliaEvent');
@@ -464,6 +495,11 @@ function sendSperimentazione(){
     success: function(response){
       console.log("data sent");
       if (response.all_tests_complete == false){
+
+        var numTest = sessionStorage.getItem('numTest');
+        numTest = numTest + 1;
+        sessionStorage.setItem('numTest', numTest);
+
         window.location.reload();
       }
       else {
@@ -606,6 +642,10 @@ function sendSperimentazione(){
 
                       document.getElementById("waiting").innerHTML = "";
                       $("#domandeFinali").removeClass('d-none');
+                      if (sessionStorage.getItem('numTest') == 1)
+                        $(".domande-profilo").removeClass('d-none');
+                      else
+                        $(".domande-profilo").addClass('d-none');
 
 			  	          }
 			  		    	}) //close python

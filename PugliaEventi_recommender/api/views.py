@@ -637,10 +637,14 @@ class SendSperimentazione(APIView):
         user = Utente.objects.get(username=username)
         sp = Sperimentazione.objects.get(user=user, id=testcode)
 
+        sp.myrror_interessi = int(request.data.get('myrrorProfilazioneInteressi'))
+        sp.myrror_statoEmotivo = int(request.data.get('myrrorStatoEmotivo'))
+        sp.manuale_personalita = int(request.data.get('manualePersonalita'))
+        sp.manuale_interessi = int(request.data.get('manualeInteressi'))
+        sp.manuale_luoghi = int(request.data.get('manualePosti'))
 
         lista_interesse = str(request.data.get('listaInteressante'))
         lista_personalita = str(request.data.get('listaPersonalita'))
-
 
         if lista_interesse == "A":
             sp.lista_preferita_interesse = sp.ordine_lista_a

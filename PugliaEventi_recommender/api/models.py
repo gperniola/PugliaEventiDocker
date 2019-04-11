@@ -399,10 +399,17 @@ class Sperimentazione(models.Model):
     lista_preferita_personalita = models.TextField(blank=True, null=True)
     note = models.TextField(blank=True, null=True)
 
+    myrror_interessi = models.SmallIntegerField(blank=True, null=True)
+    myrror_statoEmotivo = models.SmallIntegerField(blank=True, null=True)
+    manuale_personalita = models.SmallIntegerField(blank=True, null=True)
+    manuale_interessi = models.SmallIntegerField(blank=True, null=True)
+    manuale_luoghi = models.SmallIntegerField(blank=True, null=True)
+
     class Meta:
         db_table = 'sperimentazione'
         app_label = 'api'
-        managed = True
+        managed = False
+        #managed = True
 
     @classmethod
     def create(cls, user, schema, data_inizio):

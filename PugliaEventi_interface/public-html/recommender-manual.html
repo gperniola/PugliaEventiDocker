@@ -154,18 +154,45 @@
             <div class="card-body">
               <h5 class="card-title">Domande finali</h5>
               <div class="form-group form-inline">
-                <label for="listaInteressante" class="col-sm-4 col-form-label" style="color:black;"><b>Qual'è la lista che più ritieni interessante?</b></label>
+                <label for="listaInteressante" class="col-sm-4 col-form-label" style="color:black;"><b>1. Qual'è la lista che più ritieni interessante in base al contesto (stato emotivo, compagnia) che hai selezionato?</b></label>
                 <div class="col-sm-2"><select class="form-control " id="listaInteressante">
                     <option value="A">Lista A</option>
                     <option value ="B">Lista B</option>
                     <option value="C">Lista C</option>
               </select></div></div>
               <div class="form-group form-inline">
-              <label for="listaPersonalita" class="col-sm-4 col-form-label" style="color:black;"><b>Qual'è la lista che più rispecchia la tua personalità?</b></label>
+              <label for="listaPersonalita" class="col-sm-4 col-form-label" style="color:black;"><b>2. Qual'è la lista che più secondo te rispecchia la tua personalità?</b></label>
                 <div class="col-sm-2"><select class="form-control" id="listaPersonalita">
                   <option value="A">Lista A</option>
                   <option value ="B">Lista B</option>
                   <option value="C">Lista C</option>
+              </select></div></div>
+              <div class="form-group domande-profilo">
+              <label for="personalitaManuale" class="col-sm-12 col-form-label" style="color:black;"><b>3. Ritieni che la selezione dei tratti della tua personalità, nella fase di configurazione del profilo, sia stata utile al fine di generare suggerimenti accettabili?</b></label>
+                <div class="col-sm-4"><select class="form-control" id="personalitaManuale">
+                  <option value="1">1 - Per nulla</option>
+                  <option value ="2">2 - Poco</option>
+                  <option value="3" selected>3 - Abbastanza</option>
+                  <option value="3">4 - Molto</option>
+                  <option value="3">5 - Moltissimo</option>
+              </select></div></div>
+              <div class="form-group domande-profilo">
+              <label for="interessiManuale" class="col-sm-12 col-form-label" style="color:black;"><b>4. Ritieni che l'inserimento della lista dei tuoi interessi, nella fase di configurazione del profilo, sia stata utile al fine di generare suggerimenti accettabili?</b></label>
+                <div class="col-sm-4"><select class="form-control" id="interessiManuale">
+                  <option value="1">1 - Per nulla</option>
+                  <option value ="2">2 - Poco</option>
+                  <option value="3" selected>3 - Abbastanza</option>
+                  <option value="3">4 - Molto</option>
+                  <option value="3">5 - Moltissimo</option>
+              </select></div></div>
+              <div class="form-group domande-profilo">
+              <label for="postiManuale" class="col-sm-12 col-form-label" style="color:black;"><b>5. Ritieni che la selezione dei luoghi già visitati sia stata utile al fine di generare suggerimenti accettabili?</b></label>
+                <div class="col-sm-4"><select class="form-control" id="postiManuale">
+                  <option value="1">1 - Per nulla</option>
+                  <option value ="2">2 - Poco</option>
+                  <option value="3" selected>3 - Abbastanza</option>
+                  <option value="3">4 - Molto</option>
+                  <option value="3">5 - Moltissimo</option>
               </select></div></div>
               <div class="form-group">
                   <label for="comment" class="col-sm-4 col-form-label" style="color:black;"><b>Note aggiuntive (opzionale):</b></label>
@@ -424,6 +451,20 @@ function sendSperimentazione(){
 
   payload.listaInteressante = $("#listaInteressante").val();
   payload.listaPersonalita = $("#listaPersonalita").val();
+
+  if (sessionStorage.getItem('numTest') == 1){
+    payload.manualePersonalita = $("#personalitaManuale").val();
+    payload.manualeInteressi = $("#interessiManuale").val();
+    payload.manualePosti = $("#postiManuale").val();
+  }
+  else{
+    payload.manualePersonalita = 0;
+    payload.manualeInteressi = 0;
+    payload.manualePosti = 0;
+  }
+  payload.myrrorProfilazioneInteressi = 0;
+  payload.myrrorStatoEmotivo = 0;
+
   payload.comment = $("#comment").val();
 
   payload.username = sessionStorage.getItem('userPugliaEvent');
@@ -438,6 +479,11 @@ function sendSperimentazione(){
     success: function(response){
       console.log("data sent");
       if (response.all_tests_complete == false){
+
+        var numTest = sessionStorage.getItem('numTest');
+        numTest = numTest + 1;
+        sessionStorage.setItem('numTest', numTest);
+
         window.location.reload();
       }
       else {
@@ -533,6 +579,10 @@ function sendSperimentazione(){
 
                       document.getElementById("waiting").innerHTML = "";
                       $("#domandeFinali").removeClass('d-none');
+                      if (sessionStorage.getItem('numTest') == 1)
+                        $(".domande-profilo").removeClass('d-none');
+                      else
+                        $(".domande-profilo").addClass('d-none');
 
 			  	          }
 			  		    	}) //close python
