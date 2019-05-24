@@ -372,8 +372,8 @@
                     <h5>3. <button id="linkAccount" class=" btn btn-primary btn-rounded" onclick="loadInterests()" _ngcontent-c18="" class="mat-raised-button mat-primary" color="primary" mat-raised-button=""  style="width:200px;"><span class="mat-button-wrapper">Indica i tuoi interessi</span><div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div></button> e collegali ai nostri tag turistici.</h5>
                 </div>
                 </div>
-                <div class="card border-danger text-dark">
-                <div class="card-header text-danger">Qui sotto ti riportiamo gli interessi generati da Myrror per te. Indicaci per ognuno di essi i tag turistici che ritieni più appropriato collegare.<br>Per ogni interesse o concetto selezionato, associare il contesto rappresentato dallo stato emotivo e dalla compagnia. <b>E' necessario selezionare almeno 3 tag.</b></div>
+                <div class="card border-danger text-dark d-none" id="interessiCard">
+                <div class="card-header text-danger"><b><u>IMPORTANTE</u>: Qui sotto riportiamo gli interessi generati da Myrror per te. Indicaci per ognuno di essi i tag turistici che ritieni più appropriato collegare, cliccando sulla voce "Visualizza i tag".<br>Per ogni tag turistico selezionato, associa il contesto rappresentato dallo stato emotivo e dalla compagnia.<br><br>Se per alcuni interessi non sai quali tag collegare, puoi decidere di ignorarli. <u>L'importante è selezionare un minimo di 3 tag in totale tra tutti gli interessi a disposizione.</u><br><br><u>ESEMPIO</u>: Se ami il cinema e tra gli interessi trovi la parola "film", potresti decidere di collegare ad essa i tag "cinema", "arte" e "cultura". Se ami andare al cinema quando sei felice, sia da solo che con gli amici, potresti selezionare il tag "cinema" due volte, indicando la prima volta il contesto "felice - in compagnia" e la seconda volta "felice - da solo".</b></div>
                 <div class="card-body text-dark">
                   <div class="card-text" id="interessiMyrror"></div>
                 </div>
@@ -703,6 +703,7 @@ $.ajax({
 
 
 function loadInterests(){
+  $("#interessiCard").removeClass("d-none");
   $.ajax({
    type: 'get',
      url: MYRROR_API_ADDR+'api/stats/interests/wordcloud',
@@ -729,8 +730,10 @@ function loadInterests(){
        if (op.length > 0){
          $("#interessiMyrror").empty();
          var formHTML = "";
+         formHTML = formHTML + '<div class="row"><div class="col-sm-3"><b><u>I TUOI INTERESSI</u></b></div><div class="col-sm-9"><b><u>TAG TURISTICI SELEZIONABILI</u></b></div></div>';
+         formHTML = formHTML + '<div class="row"><div class="col-sm-3">&nbsp</div><div class="col-sm-9">&nbsp</div></div>';
          for (var i = 0; i < op.length; i++){
-           formHTML = formHTML + '<div class="row"><div class="col-sm-3" id="interest'+i+'"><b>'+op[i]+'</b><br><a onClick="formClick('+i+')" style="text-decoration:underline; color:#f50136;"><b>Visualizza i tag &#187;</b></a></div>'+
+           formHTML = formHTML + '<div class="row"><div class="col-sm-3" id="interest'+i+'"><b>'+(i+1) + ')&nbsp&nbsp'+ op[i]+'</b><br><a onClick="formClick('+i+')" style="text-decoration:underline; color:#f50136;"><b>Visualizza i tag &#187;</b></a></div>'+
                       '<div class="col-sm-9 d-none" id="form-row'+i+'">';
 
            for (var j = 0; j < 5; j++ ){

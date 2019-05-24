@@ -37,6 +37,26 @@
     <div class="loader-inner"></div>
 </div>
 
+<div class="modal" id="testModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><b>Clicca su "Prosegui" per effettuare il prossimo test. Ti preghiamo di cambiare la combinazione di stato emotivo e compagnia per ricevere risultati differenti da valutare.<br><br>
+        Puoi effettuare fino ad un massimo di 3 test oppure lasciare la pagina se non desideri proseguire.</b></p>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+        <a  class=" btn btn-primary btn-rounded mb-2" style="color:white;" onclick="prossimoTest();">Prosegui</a>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!--header start here -->
 <header class="header navbar fixed-top navbar-expand-md">
     <!-- <div class="container">
@@ -96,6 +116,14 @@
 <!--events section -->
 <section class="pt100 pb100" style="max-width:90%;">
     <div class="container" style="max-width:90%;">
+      <div class="card text-white bg-primary" id="firstConfigHelp">
+      <div class="card-body">
+        <p class="card-text text-white">Seleziona il tuo stato emotivo e la compagnia per cui vorresti ricevere dei suggerimenti, quindi clicca<b>"Cerca suggerimenti"</b> e attendi che il sistema generi i tuoi suggerimenti.</p>
+        <p class="card-text text-white">Una volta visualizzati i suggerimenti, seleziona gli eventi che ritieni più interessanti cliccando su <b>"Aggiungi evento"</b>.</p>
+        <p class="card-text text-white">Infine, rispondi alle domande finali e premi <b>"Invia dati"</b>.</p>
+          <p class="card-text text-white"><b>Il sistema richiederà di effettuare tre test. Si prega ad ogni test, di cambiare la combinazione del contesto emotivo/compagnia in modo tale da ricevere suggerimenti diversi.</b></p>
+      </div>
+    </div>
     	<div class="border border-danger" style="margin-top:5px; margin-bottom:15px;"></div>
     	<div>
   			<h5>Filtri aggiuntivi per i suggerimenti</h5>
@@ -136,13 +164,6 @@
   			</form>
 		</div>
 
-        <div class="card text-white bg-primary" id="firstConfigHelp">
-        <div class="card-body">
-          <p class="card-text text-white">Una volta visualizzati i suggerimenti, seleziona gli eventi che ritieni più interessanti cliccando su <b>"Aggiungi evento"</b>.</p>
-          <p class="card-text text-white">Infine, rispondi alle domande finali e premi <b>"Conferma"</b>.</p>
-          <p class="card-text text-white"><b>Il sistema richiederà di effettuare tre test. Si prega ad ogni test, di cambiare la combinazione del contesto emotivo/compagnia in modo tale da ricevere suggerimenti diversi.</b></p>
-        </div>
-      </div>
     	<div class="border border-danger" style="margin-top:5px; margin-bottom:15px;"></div>
     	<div id ="waiting"></div>
 
@@ -174,8 +195,8 @@
               <option value="1">1 - Per nulla</option>
               <option value ="2">2 - Poco</option>
               <option value="3" selected>3 - Abbastanza</option>
-              <option value="3">4 - Molto</option>
-              <option value="3">5 - Moltissimo</option>
+              <option value="4">4 - Molto</option>
+              <option value="5">5 - Moltissimo</option>
           </select></div></div>
           <div class="form-group domande-profilo">
           <label for="statoEmotivoMyrror" class="col-sm-12 col-form-label" style="color:black;"><b>4. Ritieni che lo stato emotivo selezionato da Myrror corrisponda allo stato emotivo dei tuoi ultimi post pubblicati su Twitter?</b></label>
@@ -183,8 +204,8 @@
               <option value="1">1 - Per nulla</option>
               <option value ="2">2 - Poco</option>
               <option value="3" selected>3 - Abbastanza</option>
-              <option value="3">4 - Molto</option>
-              <option value="3">5 - Moltissimo</option>
+              <option value="4">4 - Molto</option>
+              <option value="5">5 - Moltissimo</option>
           </select></div></div>
           <div class="form-group">
               <label for="comment" class="col-sm-6 col-form-label" style="color:black;"><b>Note aggiuntive (opzionale):</b></label>
@@ -499,8 +520,8 @@ function sendSperimentazione(){
         var numTest = sessionStorage.getItem('numTest');
         numTest = numTest + 1;
         sessionStorage.setItem('numTest', numTest);
-
-        window.location.reload();
+        $('#testModal').modal('show');
+        //window.location.reload();
       }
       else {
         window.location.replace("test-completed.html");
@@ -510,6 +531,10 @@ function sendSperimentazione(){
   })
 }
 
+function prossimoTest(){
+  $('#testModal').modal('hide');
+  window.location.reload();
+}
 
  function loadRecommenders(){
 	 var noWeatherData = 0;
