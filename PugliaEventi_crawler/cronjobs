@@ -1,2 +1,2 @@
-55 16 * * * java -jar /app/crawlerEventi.java > /proc/1/fd/1 2>/proc/1/fd/2
+55 16 * * * java -jar /app/crawlerEventi.jar > /proc/1/fd/1 2>/proc/1/fd/2
 # remember to end this file with an empty new line
