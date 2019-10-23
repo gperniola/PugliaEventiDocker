@@ -96,9 +96,9 @@ DATABASES = {
         #'USER': 'postgres',
         #'PASSWORD': 'postgres',
         #'HOST': 'postgres',
-        'USER': 'perniola',
-        'PASSWORD': 'perniola12319',
-        'HOST': 'localhost',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'postgres',
         'PORT': 5432
     }
 }
